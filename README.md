@@ -3,10 +3,10 @@
 İpek'le birlikte dede çiftliğini yeniden canlandırdığın, sakin bir 2.5D çiftlik oyunu. Telefonda ve bilgisayarda oynanır, ana ekrana uygulama gibi eklenebilir.
 
 ## Dünya
-- **Çiftlik:** Tarla, Taş Ev, İpek, kediler Luna ile Mia, papağan Şakir Paşa, Zeynep'in tohum arabası
-- **Gül Kasabası** (köprüden doğuya): Muhtarlık ve köy panosu, Gül Pazarı, Kahvehane, Marangozhane, okul, çeşmeli meydan; Muhtar Hasan, Ayşe Teyze, Usta Mehmet, Küçük Ali
+- **Çiftlik:** Tarla, Taş Ev, İpek, kediler Luna ile Mia, papağan Şakir Paşa, Zeynep'in tohum arabası; Usta Mehmet'e yaptırılan **Kümes** (tavuk → yumurta) ve **Ahır** (inek → süt, koyun → yün)
+- **Gül Kasabası** (köprüden doğuya): Muhtarlık ve köy panosu, Gül Pazarı, Kahvehane, **Gül Kafe** (yemeklerini %25 fazlasına alır), Marangozhane, okul, çeşmeli meydan; Muhtar Hasan, Ayşe Teyze, Usta Mehmet, Küçük Ali
 - **Çam Ormanı ve Sonbahar Korusu** (güneydeki tüneli 150 altın + 20 odunla aç): toplanabilir ürünler, hayvanlar, taş çember
-- **Sahil:** İskele, deniz balıkçılığı, kırık tekne
+- **Sahil:** İskele, deniz balıkçılığı, kırık tekne, akşamları açılan **Martı Bar** (köylüler geceleri burada)
 
 ## Yapay zekâ ile sohbet (Groq)
 Karakterler yazdığına göre cevap verir ve sevgi puanları buna göre değişir. İstekler `api/chat.js` üzerinden Groq'a gider.

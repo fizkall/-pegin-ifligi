@@ -207,6 +207,7 @@ const CROPS={
  kabak:{n:'Kabak',s:2,g:12,seed:100,sell:320,c:['#6aa84f','#f28c1e'],sh:'pumpkin'}};
 const FISH=[{k:'sazan',w:.45},{k:'alabalik',w:.28},{k:'turna',w:.12},{k:'cizme',w:.15}];
 const ITEMS={odun:{n:'Odun',p:2},tas:{n:'Taş',p:2},lif:{n:'Lif',p:1},sazan:{n:'Sazan',p:30},alabalik:{n:'Alabalık',p:55},turna:{n:'Turna',p:90},cizme:{n:'Eski çizme',p:0},
+ yumurta:{n:'Yumurta',p:30},sut:{n:'Süt',p:70},yun:{n:'Yün',p:120},
  mantar:{n:'Mantar',p:40},kozalak:{n:'Kozalak',p:15},kestane:{n:'Kestane',p:45},yabanbali:{n:'Yaban balı',p:90},buz:{n:'Buz kristali',p:70},sifaliot:{n:'Şifalı ot',p:50},kabuk:{n:'Deniz kabuğu',p:35},levrek:{n:'Levrek',p:80},cipura:{n:'Çipura',p:90},kalamar:{n:'Kalamar',p:140}};
 const SEAFISH=[{k:'levrek',w:.42},{k:'cipura',w:.33},{k:'kalamar',w:.12},{k:'cizme',w:.13}];
 const FORAGE={cam:[['mantar','sifaliot'],['mantar','kozalak'],['mantar','kozalak'],['kozalak','buz']],sonbahar:[['sifaliot','yabanbali'],['yabanbali','sifaliot'],['kestane','yabanbali'],['buz','kestane']],sahil:[['kabuk'],['kabuk'],['kabuk'],['kabuk']]};
@@ -224,17 +225,20 @@ const RECIPES={
  salata:{n:'Közlenmiş patlıcan',i:{patlican:1,biber:1},e:40,p:150},
  tatli:{n:'Kabak tatlısı',i:{kabak:1},e:60,p:430},
  sote:{n:'Mantar sote',i:{mantar:2},e:40,p:140},
- kestanekebap:{n:'Kestane kebabı',i:{kestane:3},e:35,p:170}};
+ kestanekebap:{n:'Kestane kebabı',i:{kestane:3},e:35,p:170},
+ omlet:{n:'Köy omleti',i:{yumurta:2},e:35,p:110},
+ sutlac:{n:'Fırın sütlaç',i:{sut:2},e:45,p:190},
+ peynir:{n:'Köy peyniri',i:{sut:3},e:30,p:280}};
 for(const k in RECIPES)ITEMS[k]={n:RECIPES[k].n,p:RECIPES[k].p,dish:1,e:RECIPES[k].e};
 const FISHK=['sazan','alabalik','turna','levrek','cipura','kalamar'];
 const LIKES={
- ipek:{love:{cilek:80,aycicegi:80,kabak:70,alabalik:60,pasta:70},hate:{tas:-25,cizme:-30,lif:-15,odun:-10}},
+ ipek:{love:{cilek:80,aycicegi:80,kabak:70,alabalik:60,pasta:70,sutlac:80,yun:60},hate:{tas:-25,cizme:-30,lif:-15,odun:-10}},
  zeynep:{love:{cilek:70,pasta:80,tatli:80,aycicegi:50},hate:{cizme:-25,tas:-15,lif:-10}},
  pasa:{love:{aycicegi:90,misir:60,bugday:40},hate:{cizme:-20,tas:-20,sazan:-10,alabalik:-10,turna:-10}},
  muhtar:{love:{menemen:80,borek:70,levrek:70,yabanbali:50},hate:{cizme:-30,lif:-15,kabuk:-10}},
  ayse:{love:{pasta:80,tatli:80,sifaliot:70,aycicegi:60},hate:{cizme:-30,tas:-20}},
  mehmet:{love:{odun:60,kestanekebap:80,misirekmegi:70,corba:60},hate:{cizme:-20,kabuk:-10}},
- ali:{love:{cilek:80,pasta:90,kabuk:70,mantar:40},hate:{corba:-20,sifaliot:-15,cizme:-10}}};
+ ali:{love:{cilek:80,pasta:90,kabuk:70,mantar:40,sutlac:80},hate:{corba:-20,sifaliot:-15,cizme:-10}}};
 
 /* Karakterler: yapay zeka bu kişilik metinleriyle konuşur */
 const PEOPLE={
@@ -280,7 +284,10 @@ const BUILD=[
  {id:'kahve',n:'Kahvehane',x:84,z:9,w:6,d:4,wall:'#eef0e6',roof:'#c45a32',door:'#7a4a2a'},
  {id:'ayse',n:"Ayşe Teyze'nin evi",x:53,z:23,w:5,d:4,wall:'#f3eee4',roof:'#c45a32',door:'#2f6f8f'},
  {id:'marangoz',n:'Marangozhane',x:63,z:23,w:6,d:4,wall:'#e8dcc8',roof:'#8a5a2b',door:'#7a4a2a'},
- {id:'zeynepev',n:"Zeynep'in evi",x:83,z:23,w:5,d:4,wall:'#f3eee4',roof:'#c45a32',door:'#b8466a'}];
+ {id:'zeynepev',n:"Zeynep'in evi",x:83,z:23,w:5,d:4,wall:'#f3eee4',roof:'#c45a32',door:'#b8466a'},
+ {id:'kafe',n:'Gül Kafe',x:88,z:23,w:5,d:4,wall:'#f6dfe4',roof:'#b8466a',door:'#6b7a35'},
+ {id:'bar',n:'Martı Bar',x:74,z:55,w:6,d:4,wall:'#4f8fae',roof:'#d8c08a',door:'#f3eee4'}];
+const FARMB={kumes:{id:'kumes',n:'Kümes',x:26,z:4,w:4,d:3,wall:'#e8d2a0',roof:'#8a5a2b',door:'#7a4a2a',pad:[24.6,7.6,31,10.6],cap:8},ahir:{id:'ahir',n:'Ahır',x:32,z:4,w:6,d:4,wall:'#b5442e',roof:'#5a3a28',door:'#f3eee4',pad:[31,8.7,38,12.4],cap:6}};
 const doorTiles=b=>{const c=Math.floor(b.x+b.w/2);return[[c-1,b.z+b.d-1],[c,b.z+b.d-1]]};
 const LAMPS=[[67,15],[75,15],[67,23],[75,23]];
 function genMap(){
@@ -291,7 +298,7 @@ function genMap(){
   else if(z==RIDGE||z==RIDGE+1)ground[i]=(x==10||x==11)?PATH:CLIFF;else if(dc==2)ground[i]=SAND}}
  const path=(x0,z0,x1,z1)=>{for(let z=z0;z<=z1;z++)for(let x=x0;x<=x1;x++)if(inb(x,z)&&ground[idx(x,z)]==GR)ground[idx(x,z)]=PATH};
  path(10,10,11,BEACH-1);path(10,18,W-1,19);path(12,47,W-1,48);path(69,47,70,BEACH-1);
- path(70,13,71,28);path(50,13,91,14);path(51,27,90,28);
+ path(70,13,71,28);path(50,13,91,14);path(51,27,92,28);
  for(let z=12;z<=27;z++)for(let x=63;x<=79;x++){const t=ground[idx(x,z)];if(Math.hypot(x+.5-FOUNT[0],z+.5-FOUNT[1])<5.8&&(t==GR||t==PATH))ground[idx(x,z)]=PLAZA}
  for(const z of[18,19,47,48]){const c=rx(z);for(let x=c-2;x<=c+2;x++)ground[idx(x,z)]=BRIDGE}
  for(let z=SEA;z<=67;z++)for(const x of[60,61])ground[idx(x,z)]=BRIDGE;
@@ -300,7 +307,8 @@ function genMap(){
  if(!S.tun)blk(10,35,11,35);
  for(const b of BUILD)blk(b.x,b.z,b.x+b.w-1,b.z+b.d-1);
  blk(70,18,71,19);blk(76,23,77,24);blk(59,24,61,24);blk(69,25,69,26);blk(85,15,85,15);blk(88,15,88,15);blk(67,12,67,12);for(const[a,b]of LAMPS)blk(a,b,a,b);
- blk(6,52,6,52);
+ blk(6,52,6,52);blk(73,60,73,60);blk(80,60,80,60);
+ for(const k in FARMB)if(S.up&&S.up[k]){const b=FARMB[k];blk(b.x,b.z,b.x+b.w-1,b.z+b.d-1)}
  const tree=v=>({k:'tree',hp:v==1?3:4,v});
  const nearPath=(x,z)=>{for(let dz=-1;dz<=1;dz++)for(let dx=-1;dx<=1;dx++){const a=x+dx,b=z+dz;if(inb(a,b)){const i=idx(a,b),t=ground[i];if(t==PATH||t==PLAZA||t==BRIDGE||stat[i])return true}}return false};
  for(let z=3;z<BEACH;z++)for(let x=0;x<W;x++){
@@ -364,6 +372,9 @@ function drawPerson(g,o,dir,f){
 function drawAnimal(g,k,f){g.clearRect(0,0,64,64);g.lineWidth=2;g.strokeStyle='#2e2418';g.lineJoin='round';g.lineCap='round';const lg=f?3:-3;
  if(k=='tavsan'){g.translate(0,16);const C='#b8a48a';ell(g,47,30,4,4);fs(g,'#fff');for(const[x,o]of[[24,lg],[38,-lg]]){rr(g,x+o*.4,34,6,8,3);fs(g,C)}ell(g,36,30,13,9);fs(g,C);ell(g,22,24,8,7);fs(g,C);leaf(g,24,19,-.25,14,C);leaf(g,28,19,.15,14,C);g.fillStyle='#222';ell(g,18,23,1.4,1.6);g.fill();g.fillStyle='#e8a0a8';ell(g,14.5,26,1.2,1);g.fill()}
  if(k=='tilki'){g.translate(0,16);const C='#e07a2a';g.save();g.translate(48,26);g.rotate(f?-.15:.05);ell(g,8,0,12,6,-.2);fs(g,C);g.fillStyle='#fff';ell(g,17,-2,4,3.5,-.2);g.fill();g.restore();for(const[x,o]of[[22,lg],[28,-lg],[38,-lg],[44,lg]]){rr(g,x+o*.4,30,4.5,12,2);fs(g,'#5a3a22')}ell(g,34,27,14,8);fs(g,C);g.beginPath();g.moveTo(8,24);g.lineTo(20,18);g.lineTo(22,30);g.closePath();fs(g,C);ell(g,19,22,7,6.5);fs(g,C);g.fillStyle='#fff';ell(g,13,26,4,2.5);g.fill();g.beginPath();g.moveTo(16,17);g.lineTo(17,8);g.lineTo(22,15);g.closePath();fs(g,C);g.beginPath();g.moveTo(21,16);g.lineTo(25,8);g.lineTo(26,18);g.closePath();fs(g,C);g.fillStyle='#222';ell(g,16,21,1.3,1.5);g.fill();ell(g,8,24,1.4,1.2);g.fill()}
+ if(k=='tavuk'){g.translate(0,20);const C='#f7f3ea';for(const[x,o]of[[30,lg],[36,-lg]]){g.strokeStyle='#d8962a';g.lineWidth=2.4;g.beginPath();g.moveTo(x,34);g.lineTo(x+o*.5,42);g.stroke()}g.strokeStyle='#2e2418';g.lineWidth=2;g.beginPath();g.moveTo(46,22);g.lineTo(54,12);g.lineTo(52,26);g.closePath();fs(g,C);ell(g,36,26,13,10);fs(g,C);ell(g,22,16,7,7);fs(g,C);g.fillStyle='#e0393e';ell(g,21,8,3,3);g.fill();ell(g,17,21,2,3);g.fill();g.beginPath();g.moveTo(15,15);g.lineTo(10,17);g.lineTo(15,19);g.closePath();g.fillStyle='#e8a83a';g.fill();g.fillStyle='#222';ell(g,20,14,1.2,1.4);g.fill();ell(g,38,26,6,4,.3);g.strokeStyle='#d8cfbf';g.stroke()}
+ if(k=='inek'){const C='#f6f2ea',l2=f?3:-3;for(const[x,o]of[[18,l2],[26,-l2],[42,-l2],[50,l2]]){rr(g,x+o*.4,40,6,18,2);fs(g,C)}ell(g,35,36,19,11);fs(g,C);g.fillStyle='#2e2a33';ell(g,30,32,6,5,.4);g.fill();ell(g,44,38,5,4);g.fill();ell(g,14,28,8,7);fs(g,C);ell(g,9,32,5,4);fs(g,'#f0b4b4');g.fillStyle='#2e2a33';ell(g,16,24,4,3);g.fill();g.fillStyle='#222';ell(g,13,26,1.3,1.5);g.fill();g.strokeStyle='#c9bfae';g.lineWidth=2.4;g.beginPath();g.moveTo(12,21);g.lineTo(9,16);g.moveTo(18,21);g.lineTo(20,16);g.stroke();g.strokeStyle='#2e2418';g.lineWidth=2;g.beginPath();g.moveTo(54,32);g.quadraticCurveTo(58,40,56,46);g.stroke()}
+ if(k=='koyun'){g.translate(0,10);const C='#f3eee4',l2=f?3:-3;for(const[x,o]of[[24,l2],[30,-l2],[40,-l2],[46,l2]]){rr(g,x+o*.4,38,4,12,2);fs(g,'#3a3430')}for(const[a,b,r]of[[28,30,9],[36,26,10],[44,30,9],[36,34,9],[30,24,7],[42,23,7]]){ell(g,a,b,r,r);fs(g,C)}ell(g,18,28,6.5,7.5);fs(g,'#3a3430');g.fillStyle='#fff';ell(g,16,26,1.2,1.4);g.fill()}
  if(k=='geyik'){const C='#a8703a',l2=f?4:-4;for(const[x,o]of[[22,l2],[28,-l2],[40,-l2],[46,l2]]){g.beginPath();g.moveTo(x,40);g.lineTo(x+o*.5,60);g.lineWidth=5;g.strokeStyle='#2e2418';g.stroke();g.lineWidth=3;g.strokeStyle='#8a5a2b';g.stroke()}g.lineWidth=2;g.strokeStyle='#2e2418';
   ell(g,35,38,16,9);fs(g,C);g.fillStyle='#f3e3c3';for(const[a,b]of[[30,34],[36,33],[42,35],[34,39]]){ell(g,a,b,1.4,1.4);g.fill()}ell(g,51,34,3,3);fs(g,'#fff');
   g.beginPath();g.moveTo(22,36);g.lineTo(16,20);g.lineTo(24,18);g.lineTo(28,34);g.closePath();fs(g,C);ell(g,15,18,7,5.5,-.3);fs(g,C);
@@ -405,6 +416,9 @@ function dish(g,k,x,y,s){
  case'salata':ell(g,0,1,12,6);fs(g,'#8a6a4a');g.fillStyle='#5b3f8f';ell(g,-5,0,3,2);g.fill();g.fillStyle='#3f9a3a';ell(g,4,-1,2.2,1.4);g.fill();g.fillStyle='#d9362b';ell(g,1,2,2,1.4);g.fill();break;
  case'sote':ell(g,0,1,12,6);fs(g,'#a8743a');for(const[a,b]of[[-5,-1],[3,0],[-1,3]])fruit(g,'mantar',a,b-2,.3);break;
  case'kestanekebap':for(const[a,b]of[[-6,0],[0,-2],[6,1],[-2,3],[4,4]])fruit(g,'kestane',a,b,.32);break;
+ case'omlet':g.beginPath();g.moveTo(-12,4);g.quadraticCurveTo(0,-14,12,4);g.closePath();fs(g,'#f2c84a');g.fillStyle='#3f9a3a';ell(g,-3,-1,1.6,1.2);g.fill();ell(g,4,0,1.6,1.2);g.fill();break;
+ case'sutlac':ell(g,0,1,12,6);fs(g,'#fbf3e2');g.fillStyle='#c98a3a';ell(g,-2,0,6,2.6);g.fill();g.fillStyle='#8a5a2b';ell(g,3,1,1.4,1);g.fill();break;
+ case'peynir':rr(g,-10,-7,20,13,3);fs(g,'#fbf6e8');g.fillStyle='#e8dcc0';ell(g,-4,-1,2,1.6);g.fill();ell(g,4,2,1.6,1.3);g.fill();break;
  case'tatli':for(const a of[-6,2]){g.beginPath();g.moveTo(a-5,4);g.lineTo(a+5,4);g.lineTo(a+3,-8);g.closePath();fs(g,'#f28c1e')}g.fillStyle='#8a5a2b';ell(g,-5,-4,2,1.5);g.fill();ell(g,3,-3,2,1.5);g.fill();break}
  g.restore()}
 function fruit(g,k,x,y,s){
@@ -432,6 +446,9 @@ function fruit(g,k,x,y,s){
  case'sifaliot':for(const a of[-.6,-.2,.2,.6])leaf(g,0,14,a,26,'#4f9a3c');g.fillStyle='#b98ae0';for(const[a,b]of[[-7,-8],[0,-12],[7,-8]]){ell(g,a,b,2.6,2.6);g.fill()}break;
  case'kabuk':g.beginPath();g.moveTo(0,14);g.lineTo(-14,-2);g.quadraticCurveTo(0,-20,14,-2);g.closePath();fs(g,'#f3c6b0');g.strokeStyle='#c98a74';g.lineWidth=1.6;for(const a of[-8,-3,3,8]){g.beginPath();g.moveTo(0,13);g.lineTo(a,-9);g.stroke()}break;
  case'kalamar':g.strokeStyle='#c46a7a';g.lineWidth=2.4;for(let k2=-3;k2<=3;k2++){g.beginPath();g.moveTo(k2*2.2,4);g.quadraticCurveTo(k2*4,12,k2*3,18);g.stroke()}g.strokeStyle=OL;g.lineWidth=2.2;g.beginPath();g.moveTo(0,-18);g.quadraticCurveTo(11,-4,7,6);g.lineTo(-7,6);g.quadraticCurveTo(-11,-4,0,-18);g.closePath();fs(g,'#f0a6b4');g.fillStyle='#222';ell(g,-3,0,1.4,1.6);g.fill();ell(g,3,0,1.4,1.6);g.fill();break;
+ case'yumurta':ell(g,0,2,11,14);fs(g,'#f6efe0');g.fillStyle='rgba(255,255,255,.6)';ell(g,-4,-3,3,5,.3);g.fill();break;
+ case'sut':rr(g,-9,-6,18,22,5);fs(g,'#f7f7f2');rr(g,-6,-15,12,9,3);fs(g,'#f7f7f2');rr(g,-6,-18,12,5,2);fs(g,'#2f6f8f');g.fillStyle='#cfe3ec';g.fillRect(-9,2,18,4);break;
+ case'yun':ell(g,0,2,15,13);fs(g,'#f3eee4');g.strokeStyle='#c9bfae';g.lineWidth=1.8;for(const a of[-.8,0,.8]){g.beginPath();g.ellipse(0,2,13,6,a,0,Math.PI*2);g.stroke()}break;
  case'cizme':g.beginPath();g.moveTo(-6,-16);g.lineTo(6,-16);g.lineTo(6,6);g.lineTo(16,10);g.lineTo(16,16);g.lineTo(-8,16);g.closePath();fs(g,'#7a5434');g.fillStyle='#5a3a22';g.fillRect(-6,-16,12,4);break;
  case'odun':rr(g,-16,-7,30,14,6);fs(g,'#9a6b3c');ell(g,13,0,6,7);fs(g,'#e2c08a');g.lineWidth=1.4;ell(g,13,0,3,3.5);g.stroke();g.beginPath();g.moveTo(-10,-2);g.lineTo(4,-2);g.moveTo(-6,3);g.lineTo(6,3);g.stroke();break;
  case'tas':g.beginPath();g.moveTo(-14,8);g.lineTo(-10,-6);g.lineTo(0,-11);g.lineTo(11,-5);g.lineTo(14,8);g.closePath();fs(g,'#a19d93');g.fillStyle='#c9c5bb';g.beginPath();g.moveTo(-8,-4);g.lineTo(0,-8);g.lineTo(3,-3);g.closePath();g.fill();break;
@@ -709,6 +726,10 @@ function buildWorld2(){
   for(let z=59.5;z<=68;z+=2)for(const x of[60.05,61.95])cyl(.08,.08,1.2,dark,x,-.2,z,6)}
  // Kırık tekne
  {const g=new THREE.Group();g.position.set(63.6,.05,65);g.rotation.set(.12,.5,.18);scene.add(g);const hull=SM_('#7a4a2a'),tr=SM_('#2f6f8f');bx(1.3,.45,3,hull,0,.2,0,g);bx(1.4,.1,3.1,tr,0,.45,0,g);const pl=bx(.9,.06,.25,SM_('#b07a44'),.2,.5,.6,g);pl.rotation.z=.6;const ms=new THREE.Mesh(new THREE.CylinderGeometry(.05,.06,2,6),SM_('#8a5a2b'));ms.position.set(0,1.1,-.3);ms.rotation.z=.5;g.add(ms)}
+ // Martı Bar: ışık zinciri, masalar, şemsiye
+ for(let k=0;k<9;k++){const m=new THREE.Mesh(new THREE.SphereGeometry(.07,6,5),glow(['#ffd27a','#ff9bb5','#9fd6ea'][k%3]));m.position.set(74.2+k*.7,2.1-Math.sin(k/8*Math.PI)*.25,59.15);scene.add(m)}
+ lantern(77,1.8,59.6,8);
+ for(const tx of[73.5,80.5]){cyl(.4,.4,.06,SM_('#f3eee4'),tx,.72,60.5,14);cyl(.05,.07,.7,SM_('#6e4a2a'),tx,.36,60.5,6);cyl(.04,.04,2.2,SM_('#f3eee4'),tx,1.1,60.5,6);const u=new THREE.Mesh(new THREE.ConeGeometry(1.1,.5,8),SM_(tx<77?'#c4572e':'#2f6f8f'));u.position.set(tx,2.25,60.5);u.castShadow=true;scene.add(u)}
  // Kumsalda birkaç kaya
  for(const[a,b]of[[24,60.3],[45,59.6],[80,60.8],[90,59.9]])P.rock.add(M(a,.15,b,1.4,.8,1.2,a),new THREE.Color('#a9a294'));
  // Kasaba tabelası
@@ -716,15 +737,15 @@ function buildWorld2(){
 const roofTexCache={};
 
 /* ================= KÖYLÜLER / HAYVANLAR ================= */
-const VILL=[{id:'muhtar',area:[51,15,60,17.4],hours:[480,1200]},{id:'ayse',area:[52,29.2,62,31.6],hours:[420,1140]},{id:'mehmet',area:[62,29.2,70,31.6],hours:[480,1140]},{id:'ali',area:[64,14.5,79,25],hours:[720,1170],sp:2,kid:1}];
+const VILL=[{id:'muhtar',area:[51,15,60,17.4],hours:[480,1200],na:[72.5,59.4,79.5,60.8],nh:[1200,1440]},{id:'ayse',area:[52,29.2,62,31.6],hours:[420,1140]},{id:'mehmet',area:[62,29.2,70,31.6],hours:[480,1140],na:[72.5,59.4,79.5,60.8],nh:[1170,1440]},{id:'ali',area:[64,14.5,79,25],hours:[720,1170],sp:2,kid:1}];
 let villagers=[],animals=[];const ANT={};
 function animTex(k){if(ANT[k])return ANT[k];const fr=[0,1].map(f=>{const c=mk(64,64);drawAnimal(c.getContext('2d'),k,f);return c});return ANT[k]={left:fr.map(tex),right:fr.map(c=>tex(flipC(c)))}}
 function buildActors2(){
- villagers=VILL.map(v=>Object.assign(makeChar(LOOKS[v.id],v.kid?.8:1,v.kid?1.2:1.5),{id:v.id,name:PEOPLE[v.id].name,x:(v.area[0]+v.area[2])/2,z:(v.area[1]+v.area[3])/2,tx:(v.area[0]+v.area[2])/2,tz:(v.area[1]+v.area[3])/2,dir:'down',mv:false,wait:Math.random()*3,sp:v.sp||1.2,at:0,area:v.area,hours:v.hours}));
+ villagers=VILL.map(v=>Object.assign(makeChar(LOOKS[v.id],v.kid?.8:1,v.kid?1.2:1.5),{id:v.id,name:PEOPLE[v.id].name,x:(v.area[0]+v.area[2])/2,z:(v.area[1]+v.area[3])/2,tx:(v.area[0]+v.area[2])/2,tz:(v.area[1]+v.area[3])/2,dir:'down',mv:false,wait:Math.random()*3,sp:v.sp||1.2,at:0,area:v.area,hours:v.hours,na:v.na,nh:v.nh,atBar:false}));
  const cA=z=>[3,39,rx(z)-4,57],sA=[rx(48)+4,39,92,57],SPEC=[['tavsan',cA(48),4,.55,.55,1.6],['geyik',cA(48),2,1.25,1.25,1.3],['tilki',sA,2,.8,.8,1.5],['tavsan',sA,2,.55,.55,1.6]];
  for(const[k,ar,n,sx,sy,sp]of SPEC)for(let i=0;i<n;i++){const T=animTex(k),mat=sprMat(T.left[0]),s=new Bill(mat);s.center.set(.5,.04);s.scale.set(sx,sy,1);scene.add(s);const x=ar[0]+Math.random()*(ar[2]-ar[0]),z=ar[1]+Math.random()*(ar[3]-ar[1]);animals.push({k,s,mat,sh:blob(sx*.8,.3),x,z,tx:x,tz:z,area:ar,sp,wait:Math.random()*4,at:Math.random(),flee:0,face:'left'})}}
 function animUpdate(a,dt){const dx=a.x-pl.x,dz=a.z-pl.z,d=Math.hypot(dx,dz);
- if(d<2.6&&a.flee<=0){a.flee=1.4;const k=4/Math.max(d,.1);a.tx=clamp(a.x+dx*k,a.area[0],a.area[2]);a.tz=clamp(a.z+dz*k,a.area[1],a.area[3]);a.wait=0}
+ if(!a.farm&&d<2.6&&a.flee<=0){a.flee=1.4;const k=4/Math.max(d,.1);a.tx=clamp(a.x+dx*k,a.area[0],a.area[2]);a.tz=clamp(a.z+dz*k,a.area[1],a.area[3]);a.wait=0}
  if(a.flee>0)a.flee-=dt;const sp=a.sp*(a.flee>0?2.4:1);
  if(a.wait>0){a.wait-=dt;a.mv=false}else{const ex=a.tx-a.x,ez=a.tz-a.z,e=Math.hypot(ex,ez);if(e<.1){a.wait=2+Math.random()*5;a.mv=false;a.tx=a.area[0]+Math.random()*(a.area[2]-a.area[0]);a.tz=a.area[1]+Math.random()*(a.area[3]-a.area[1])}else{const st=Math.min(e,sp*dt);a.x+=ex/e*st;a.z+=ez/e*st;a.mv=true;if(Math.abs(ex)>.01)a.face=ex<0?'left':'right'}}
  a.at+=dt;a.s.position.set(a.x,0,a.z);a.sh.position.set(a.x,.025,a.z);a.mat.map=ANT[a.k][a.face][a.mv?Math.floor(a.at*(a.k=='tavsan'?8:6))%2:0]}
@@ -746,19 +767,57 @@ function buildingAct(id){const t=S.time;
  if(id=='kahve'){if(t<420||t>=1320)return toast('Kahvehane kapalı. 07:00–22:00');return openPanel('Kahvehane',`<p class="mu">Çınar gölgesinde demli çay ve köpüklü Türk kahvesi. Muhtar Hasan buranın müdavimi.</p>${[['cay','Demli çay',15,25],['kahve','Türk kahvesi',30,45],['salep','Sıcak salep',40,60]].map(([k,n,p,e])=>`<div class="row"><div class="nm">${n}<small>+${e} enerji</small></div><button class="btn" ${S.gold<p?'disabled':''} onclick="UI.drink(${p},${e},'${n}')">${p} altın</button></div>`).join('')}`)}
  if(id=='marangoz'){if(t<480||t>=1140)return toast('Marangozhane kapalı. 08:00–19:00');return marangozPanel()}
  if(id=='muhtarlik')return boardPanel();
+ if(id=='kafe'){if(t<540||t>=1260)return toast('Gül Kafe kapalı. 09:00–21:00');return kafePanel()}
+ if(id=='bar'){if(!(t>=1020||t<120))return toast('Martı Bar akşam 17:00’de açılıyor.');return barPanel()}
+ if(id=='kumes'||id=='ahir')return animalPanel(id);
  if(id=='okul')return toast(t>=480&&t<720?'Ders var. İçeriden Küçük Ali’nin sesi geliyor: “Öğretmenim, ben mi?”':'Okul kapalı. Küçük Ali meydanda oynuyordur.');
  if(id=='ayse')return toast('Kapıda bir not: “Arıların başındayım. Ayşe”');
  if(id=='zeynepev')return toast('Zeynep gündüzleri çiftliklerde dolaşır. Pencerede reçel kavanozları dizili.')}
 UI.drink=(p,e,n)=>{if(S.gold<p)return;S.gold-=p;S.energy=Math.min(S.maxE,S.energy+e);updHUD();toast(n+' içtin. +'+e+' enerji');closePanel()};
-const UPS=[{k:'kova',n:'Büyük kova',d:'Kova 40 su alır',g:400,i:{odun:25}},{k:'mutfak',n:'Mutfak tezgâhı',d:'İpek’in her yemeği 2 porsiyon çıkar',g:600,i:{odun:40,tas:20}},{k:'sandik',n:'Sağlam sandık',d:'Sevkiyattan %10 fazla kazanç',g:800,i:{odun:50,tas:30}}];
+const UPS=[{k:'kumes',n:'Kümes',d:'8 tavuğa yer, her sabah yumurta',g:800,i:{odun:60,tas:20}},{k:'ahir',n:'Ahır',d:'İnek ve koyunlara yer: süt ve yün',g:1500,i:{odun:100,tas:50}},{k:'kova',n:'Büyük kova',d:'Kova 40 su alır',g:400,i:{odun:25}},{k:'mutfak',n:'Mutfak tezgâhı',d:'İpek’in her yemeği 2 porsiyon çıkar',g:600,i:{odun:40,tas:20}},{k:'sandik',n:'Sağlam sandık',d:'Sevkiyattan %10 fazla kazanç',g:800,i:{odun:50,tas:30}}];
 function marangozPanel(){openPanel('Marangozhane',`<p class="mu">Usta Mehmet: “Ne lazımsa yaparız usta, yeter ki malzemesi olsun!”</p>`+UPS.map(u=>{const has=S.up[u.k],ok=!has&&S.gold>=u.g&&Object.entries(u.i).every(([a,n])=>(S.inv[a]||0)>=n);return `<div class="row"><div class="nm">${u.n}<small>${u.d} · ${u.g} altın, ${Object.entries(u.i).map(([a,n])=>n+' '+ITEMS[a].n.toLowerCase()).join(', ')}</small></div><button class="btn" ${ok?'':'disabled'} onclick="UI.up('${u.k}')">${has?'Yapıldı':'Yaptır'}</button></div>`}).join(''))}
-UI.up=k=>{const u=UPS.find(x=>x.k==k);if(S.up[k]||S.gold<u.g)return;for(const[a,n]of Object.entries(u.i))if((S.inv[a]||0)<n)return;S.gold-=u.g;for(const[a,n]of Object.entries(u.i))S.inv[a]-=n;S.up[k]=1;if(k=='kova'){S.canMax=40;S.can=40;buildHotbar()}updHUD();toast(u.n+' hazır!');marangozPanel()};
+UI.up=k=>{const u=UPS.find(x=>x.k==k);if(S.up[k]||S.gold<u.g)return;for(const[a,n]of Object.entries(u.i))if((S.inv[a]||0)<n)return;S.gold-=u.g;for(const[a,n]of Object.entries(u.i))S.inv[a]-=n;S.up[k]=1;if(k=='kova'){S.canMax=40;S.can=40;buildHotbar()}if(FARMB[k]){buildFarmB(k);toast(FARMB[k].n+' çiftliğinde hazır! Hayvanları kapısından alabilirsin.')}updHUD();toast(u.n+' hazır!');marangozPanel()};
 function boardPanel(){openPanel('Köy panosu',`<p class="mu">Muhtarlığın önündeki ilan panosu. Bugünün istekleri:</p>`+['muhtar','ayse','mehmet','ali'].map(id=>{const q=reqOf(id);return `<div class="row"><img alt="" src="${iconURL(q.k)}"><div class="nm">${PEOPLE[id].name}<small>${q.n} ${esc(LBL(q.k))} · ${fmt(q.r)} altın</small></div><span class="mu">${q.done?'Tamam':'Bekliyor'}</span></div>`}).join('')+`<p class="mu">İstenenleri kişinin kendisine götür: konuşurken “İstek” sekmesinden teslim edebilirsin.</p>`)}
 function boatPanel(){openPanel('Kırık tekne',`<p>Gövdesinde silik bir yazı var: <b>“Ada”</b>. Onarılırsa denizin ötesine gidilebilir.</p><p class="mu">Onarım için 40 odun, 20 taş ve 250 altın gerekecek. Ada bir sonraki sürümde açılacak.</p>`)}
-const REQPOOL={muhtar:['menemen','borek','corba','bugday','domates','levrek','sazan'],ayse:['sifaliot','mantar','cilek','aycicegi','kestane','pasta'],mehmet:['odun','tas','misirekmegi','corba','kestanekebap','patates'],ali:['cilek','kabuk','mantar','sazan','pasta','havuc']};
+/* ---- Kafe / Bar ---- */
+function kafePanel(){const ds=Object.entries(S.inv).filter(([k,v])=>v>0&&ITEMS[k].dish);
+ openPanel('Gül Kafe',`<p class="mu">Pembe panjurlu, mis kokulu küçük kafe. İpek’in yemeklerini %25 fazlasına alıyorlar.</p>`+
+ [['kek','Dilim kek',35,30],['limon','Ev limonatası',25,25],['kahve2','Sütlü kahve',30,35]].map(([k,n,p,e])=>`<div class="row"><div class="nm">${n}<small>+${e} enerji</small></div><button class="btn" ${S.gold<p?'disabled':''} onclick="UI.drink(${p},${e},'${n}')">${p} altın</button></div>`).join('')+
+ `<p class="mu" style="margin-top:12px"><b>Kafeye yemek sat</b></p>`+(ds.length?ds.map(([k,v])=>itemRow(k,v,`<button class="btn blue" onclick="UI.kafeSell('${k}')">${Math.round(ITEMS[k].p*1.25)}</button>`)).join(''):'<p class="mu">Çantanda yemek yok. İpek’le birlikte pişirebilirsin.</p>'))}
+UI.kafeSell=k=>{if(!S.inv[k])return;S.inv[k]--;const g=Math.round(ITEMS[k].p*1.25);S.gold+=g;stat_('earned',g);updHUD();toast(LBL(k)+' satıldı: +'+g+' altın');kafePanel()};
+function barPanel(){openPanel('Martı Bar',`<p class="mu">İskelenin yanında, ahşap verandalı küçük bir sahil barı. Akşamları Muhtar Hasan ile Usta Mehmet burada dertleşir, dalga sesine müzik karışır.</p>`+
+ [['Buzlu limonata',20,20],['Ayran',15,15],['Şalgam',20,20],['Meyve kokteyli (alkolsüz)',40,40]].map(([n,p,e])=>`<div class="row"><div class="nm">${n}<small>+${e} enerji</small></div><button class="btn" ${S.gold<p?'disabled':''} onclick="UI.drink(${p},${e},'${n}')">${p} altın</button></div>`).join('')+
+ `<div class="btns"><button class="btn blue" onclick="UI.tune()">Müzik kutusunu çal</button></div>`)}
+UI.tune=()=>{unlockAudio();if(actx){actx.resume&&actx.resume();barTune(true)}toast('Müzik kutusundan eski bir türkü yükseliyor…')};
+
+/* ---- Ahır / Kümes ---- */
+const FA={tavuk:{n:'Tavuk',b:'kumes',p:150,yem:1,prod:'yumurta',every:1},inek:{n:'İnek',b:'ahir',p:900,yem:2,prod:'sut',every:1},koyun:{n:'Koyun',b:'ahir',p:600,yem:2,prod:'yun',every:3}};
+const ANAMES=['Sarı','Benek','Pamuk','Fındık','Karaca','Zeytin','Bulut','Duman','Gül','Badem','Çiçek','Paşa','Lokum','Tarçın'];
+let farmAnims=[];
+function buildFarmB(k){const b=FARMB[k];for(let z=b.z-1;z<=Math.ceil(b.pad[3]);z++)for(let x=Math.floor(b.pad[0])-1;x<=b.x+b.w+1;x++)if(inb(x,z)&&objs[idx(x,z)])removeObj(idx(x,z));
+ for(let z=b.z;z<b.z+b.d;z++)for(let x=b.x;x<b.x+b.w;x++)stat[idx(x,z)]=1;house(b);
+ if(!INTER.some(it=>it.l==b.n))INTER.push({t:doorTiles(b),l:b.n,f:()=>buildingAct(b.id)});
+ const dark=SM_('#8a5a2b'),[x0,z0,x1,z1]=b.pad;for(let x=x0;x<=x1+.01;x+=1){bx(.08,.5,.08,dark,x,.25,z1+.3)}bx(x1-x0,.06,.06,dark,(x0+x1)/2,.4,z1+.3);bx(x1-x0,.06,.06,dark,(x0+x1)/2,.2,z1+.3)}
+function spawnFarmAnim(kind,name){const b=FARMB[FA[kind].b],sz={tavuk:[.45,.45],inek:[1.25,1.25],koyun:[.85,.85]}[kind],T=animTex(kind),mat=sprMat(T.left[0]),s=new Bill(mat);s.scale.set(sz[0],sz[1],1);scene.add(s);
+ const ar=b.pad,x=ar[0]+Math.random()*(ar[2]-ar[0]),z=ar[1]+Math.random()*(ar[3]-ar[1]);farmAnims.push({k:kind,s,mat,sh:blob(sz[0]*.7,.3),x,z,tx:x,tz:z,area:ar,sp:kind=='tavuk'?.9:.5,wait:Math.random()*4,at:Math.random(),flee:0,face:'left',name,farm:1})}
+function anTotal(b){return Object.entries(S.an||{}).filter(([k])=>FA[k].b==b).reduce((a,[k,v])=>a+v.length,0)}
+function animalPanel(b){const B=FARMB[b],kinds=Object.keys(FA).filter(k=>FA[k].b==b),pr=S.prod||{};
+ openPanel(B.n,`<p class="mu">${anTotal(b)} / ${B.cap} hayvan · Yem stoğu <b>${S.yem||0}</b>. Her gece her tavuk 1, her inek ve koyun 2 yem yer. Yem yoksa ürün çıkmaz.</p>`+
+ kinds.map(k=>`<div class="row"><img alt="" src="${iconURL(FA[k].prod)}"><div class="nm">${FA[k].n} ×${(S.an[k]||[]).length}<small>${(S.an[k]||[]).join(', ')||'henüz yok'} · ${FA[k].every>1?FA[k].every+' günde bir':'her gün'} ${ITEMS[FA[k].prod].n.toLowerCase()}</small></div><button class="btn" ${S.gold<FA[k].p||anTotal(b)>=B.cap?'disabled':''} onclick="UI.buyAn('${k}')">${FA[k].p}</button></div>`).join('')+
+ `<div class="btns"><button class="btn alt" ${S.gold<50?'disabled':''} onclick="UI.yem('${b}')">10 yem al (50)</button><button class="btn alt" ${(S.inv.lif||0)<2?'disabled':''} onclick="UI.lifYem('${b}')">2 lif → 1 yem</button></div>`+
+ `<div class="btns"><button class="btn blue" ${kinds.some(k=>(pr[FA[k].prod]||0)>0)?'':'disabled'} onclick="UI.collect('${b}')">Ürünleri topla (${kinds.map(k=>(pr[FA[k].prod]||0)+' '+ITEMS[FA[k].prod].n.toLowerCase()).join(', ')})</button></div>`)}
+UI.buyAn=k=>{const b=FA[k].b;if(S.gold<FA[k].p||anTotal(b)>=FARMB[b].cap)return;S.gold-=FA[k].p;S.an[k]=S.an[k]||[];const nm=ANAMES[Math.floor(Math.random()*ANAMES.length)];S.an[k].push(nm);spawnFarmAnim(k,nm);updHUD();toast(`${nm} adında bir ${FA[k].n.toLowerCase()} aldın!`);animalPanel(b)};
+UI.yem=b=>{if(S.gold<50)return;S.gold-=50;S.yem=(S.yem||0)+10;updHUD();animalPanel(b)};
+UI.lifYem=b=>{if((S.inv.lif||0)<2)return;S.inv.lif-=2;S.yem=(S.yem||0)+1;animalPanel(b)};
+UI.collect=b=>{let t=[];for(const k of Object.keys(FA).filter(k=>FA[k].b==b)){const p=FA[k].prod,n=(S.prod||{})[p]||0;if(n){S.inv[p]=(S.inv[p]||0)+n;S.prod[p]=0;t.push(n+' '+ITEMS[p].n.toLowerCase())}}if(t.length){toast('Topladın: '+t.join(', '));buzz(15);stat_('animal',1)}buildHotbar();animalPanel(b)};
+function feedAnimals(){S.an=S.an||{};S.prod=S.prod||{};let need=0,msg=[];for(const k in FA)need+=(S.an[k]||[]).length*FA[k].yem;if(!need)return'';const ok=(S.yem||0)>=need;const frac=ok?1:(S.yem||0)/need;S.yem=Math.max(0,(S.yem||0)-need);
+ for(const k in FA){const n=(S.an[k]||[]).length;if(!n||dayN()%FA[k].every)continue;const got=Math.floor(n*frac);if(got){S.prod[FA[k].prod]=(S.prod[FA[k].prod]||0)+got;msg.push(got+' '+ITEMS[FA[k].prod].n.toLowerCase())}}
+ return ok?(msg.length?'Hayvanlar doydu, sabah toplanacak: '+msg.join(', ')+'.':'Hayvanlar doydu.'):'Yem yetmedi! Hayvanlar aç kaldı'+(msg.length?', yine de '+msg.join(', ')+' çıktı.':'.')}
+
+const REQPOOL={muhtar:['menemen','borek','corba','yumurta','peynir','bugday','domates','levrek','sazan'],ayse:['sifaliot','mantar','cilek','aycicegi','kestane','pasta','yun','sut'],mehmet:['odun','tas','misirekmegi','corba','kestanekebap','patates'],ali:['cilek','kabuk','mantar','sazan','pasta','havuc']};
 const WILD=['mantar','kestane','sifaliot','yabanbali','buz','kozalak'];
 const wildNow=k=>FORAGE.cam[S.season].includes(k)||FORAGE.sonbahar[S.season].includes(k);
-function okNow(k){if(CROPS[k])return CROPS[k].s==S.season;if(WILD.includes(k))return wildNow(k);if(RECIPES[k])return Object.keys(RECIPES[k].i).every(a=>CROPS[a]?CROPS[a].s==S.season:WILD.includes(a)?wildNow(a):true);return true}
+function okNow(k){if(['yumurta','omlet'].includes(k))return !!(S.an&&S.an.tavuk&&S.an.tavuk.length);if(['sut','peynir','sutlac'].includes(k))return !!(S.an&&S.an.inek&&S.an.inek.length);if(k=='yun')return !!(S.an&&S.an.koyun&&S.an.koyun.length);if(CROPS[k])return CROPS[k].s==S.season;if(WILD.includes(k))return wildNow(k);if(RECIPES[k])return Object.keys(RECIPES[k].i).every(a=>CROPS[a]?CROPS[a].s==S.season:WILD.includes(a)?wildNow(a):true);return true}
 function reqOf(id){S.req=S.req||{};const d=dayN();let q=S.req[id];if(!q||q.day!=d){const L=REQPOOL[id].filter(okNow),k=L.length?L[Math.floor(Math.random()*L.length)]:'odun',n=(CROPS[k]||k=='odun'||k=='tas')?2+Math.floor(Math.random()*3):1+Math.floor(Math.random()*2);q=S.req[id]={day:d,k,n,done:0,r:Math.round(ITEMS[k].p*n*1.8+60)}}return q}
 const REQTXT={muhtar:q=>`Evlat, bugün bana ${q.n} ${LBL(q.k)} lazım. Köy işleri bitmez ki!`,ayse:q=>`Yavrum, ${q.n} ${LBL(q.k)} bulursan getirir misin? Dualarımı alırsın.`,mehmet:q=>`Usta, atölyede iş var. ${q.n} ${LBL(q.k)} getirsen iyi olur.`,ali:q=>`${S.char=='kadin'?'Abla':'Abi'}! ${q.n} ${LBL(q.k)} getirirsen sana bir sır söyleyeceğim!`};
 const REQTHX={muhtar:'Eyvallah evlat, köy sana minnettar!',ayse:'Allah razı olsun yavrum, al bakalım.',mehmet:'Eline sağlık usta, işimi gördün!',ali:'Yaşasın! Sırrı söylüyorum: taş çember gece parlıyor!'};
@@ -822,7 +881,7 @@ async function fbLogout(){if(!FB)return;await FB.au.signOut(FB.auth);fbUser=null
 
 /* ================= DURUM / KAYIT ================= */
 const SK='ipekCiftligi_v2';
-function newState(name,farm,ch){return{v:1,name,farm,char:ch,day:1,season:0,year:1,time:360,gold:500,energy:100,maxE:100,can:20,canMax:20,inv:{},seeds:{bugday:12,havuc:6},selKey:'capa',ship:{},rain:false,tomorrowRain:Math.random()<.25,rel:{},stats:{},story:{ch:0},sound:1,cats:{luna:{pts:0,pet:0},mia:{pts:0,pet:0}},bench:0,pp:0,seen:0,tun:0,up:{},req:{}}}
+function newState(name,farm,ch){return{v:1,name,farm,char:ch,day:1,season:0,year:1,time:360,gold:500,energy:100,maxE:100,can:20,canMax:20,inv:{},seeds:{bugday:12,havuc:6},selKey:'capa',ship:{},rain:false,tomorrowRain:Math.random()<.25,rel:{},stats:{},story:{ch:0},sound:1,cats:{luna:{pts:0,pet:0},mia:{pts:0,pet:0}},bench:0,pp:0,seen:0,tun:0,up:{},req:{},an:{},yem:0,prod:{}}}
 function saveJSON(){return JSON.stringify({S,savedAt:Date.now(),till:Array.from(till),wet:Array.from(wet),crops,objs:objs.map(o=>o?{k:o.k,hp:o.hp,v:o.v,it:o.it}:null)})}
 function save(){const j=saveJSON();try{localStorage.setItem(SK,j)}catch(e){}cloudSave(j)}
 function loadSave(){try{const r=localStorage.getItem(SK);return r?JSON.parse(r):null}catch(e){return null}}
@@ -875,10 +934,10 @@ INTER.push({t:[[5,51],[6,51],[7,51],[5,52],[7,52],[5,53],[6,53],[7,53],[6,52]],l
 INTER.push({t:[[59,24],[60,24],[61,24]],l:'Arı kovanı',f:()=>toast('Ayşe Teyze’nin arıları vızıldıyor.')});
 INTER.push({t:[[69,25],[69,26]],l:'Odun yığını',f:()=>toast('Usta Mehmet’in odunları. Dokunma, kızar!')});
 function interAt(x,z){for(const it of INTER)if((!it.when||it.when())&&it.t.some(([a,b])=>a==x&&b==z))return{l:it.l,f:it.f};return null}
-function npcFacing(){const d=DIRS[pl.dir];let best=null,bd=9;for(const n of[ipek,...cats,...villagers]){if(!n.s.visible)continue;const dx=n.x-pl.x,dz=n.z-pl.z,dist=Math.hypot(dx,dz);if(dist<1.45&&(dx*d[0]+dz*d[1])/Math.max(dist,.01)>.3&&dist<bd){best=n;bd=dist}}return best}
+function npcFacing(){const d=DIRS[pl.dir];let best=null,bd=9;for(const n of[ipek,...cats,...villagers,...farmAnims]){if(!n.s.visible)continue;const dx=n.x-pl.x,dz=n.z-pl.z,dist=Math.hypot(dx,dz);if(dist<1.45&&(dx*d[0]+dz*d[1])/Math.max(dist,.01)>.3&&dist<bd){best=n;bd=dist}}return best}
 function resolveAction(tx,tz){
  if(fishing)return{l:fishing.ph=='bite'?'Çek!':'Oltayı topla',f:reel};
- const n=npcFacing();if(n)return{l:(n.key?'Sev: ':'Konuş: ')+n.name,f:()=>n===ipek?charPanel('ipek','sohbet'):n.key?petCat(n):charPanel(n.id,'sohbet')};
+ const n=npcFacing();if(n)return{l:(n.key||n.farm?'Sev: ':'Konuş: ')+n.name,f:()=>n===ipek?charPanel('ipek','sohbet'):n.farm?petAnim(n):n.key?petCat(n):charPanel(n.id,'sohbet')};
  if(!inb(tx,tz))return null;
  const it=interAt(tx,tz);if(it)return it;
  const i=idx(tx,tz),c=crops[i],o=objs[i],g=ground[i],k=S.selKey;
@@ -992,6 +1051,7 @@ UI.gift=k=>{const id=curChar,R=rel(id);if(R.gift==dayN()||!S.inv[k])return;S.inv
  const d=L.love[k]??L.hate[k]??(ITEMS[k].dish?45:ITEMS[k].crop?35:20);addLove(id,d);
  const RE={ipek:[d>=60?'Bayıldım! Tam sevdiğim gibi! Bununla ne yapacağımı biliyorum…':d>0?'Teşekkür ederim, çok düşüncelisin.':'Bunu… ne yapayım ben şimdi?'],zeynep:[d>=60?'Aaa! Bundan harika bir reçel olur!':d>0?'Sağ ol, kasabada herkese anlatacağım!':'Hmm… bunu satamam bile.'],pasa:[d>=60?'Kııt! Paşa memnun! Paşa memnun!':d>0?'Kııt! Yerim yerim!':'Kııt! Paşa bunu yemez!']};
  const GEN=[d>=60?'Bayıldım! Bunu nereden bildin?':d>0?'Ne incelik! Teşekkür ederim.':'Hmm… bunu pek sevmedim açıkçası.'];const rt=(RE[id]||GEN)[0];R.log.push({r:'n',t:rt,d});toast(PEOPLE[id].name+': '+rt);charPanel(id,'sohbet')};
+function petAnim(n){n.wait=2;floater('♥',n.x,n.k=='inek'?1.4:.8,n.z,'big');buzz(10);toast(n.name+' çok mutlu.')}
 function petCat(n){const c=S.cats[n.key],today=dayN();n.wait=Math.max(n.wait,2.5);n.sit=true;if(c.pet==today){floater('mırrr…',n.x,1,n.z,'bub');return}c.pet=today;c.pts=Math.min(1000,c.pts+30);floater('♥',n.x,.9,n.z,'big');toast(`${n.name} mırlıyor. British Shorthair keyfi.`)}
 
 /* ---- Yapay zeka bağlantısı ---- */
@@ -1074,14 +1134,14 @@ function endDay(passOut){if(transitioning)return;transitioning=true;if(fishing)e
   wet.fill(0);if(S.rain)for(let i=0;i<N;i++)if(till[i])wet[i]=1;
   if(S.season!=3){let n=0;for(let tries=0;tries<60&&n<4;tries++){const x=14+Math.floor(Math.random()*24),z=11+Math.floor(Math.random()*22),i=idx(x,z);if(ground[i]==GR&&!stat[i]&&!objs[i]&&!till[i]&&!crops[i]&&!(x>=16&&x<=24&&z<=16)&&Math.hypot(x-pl.x,z-pl.z)>2){objs[i]={k:'weed'};objMesh(i);n++}}}
   S.energy=passOut?Math.round(S.maxE*.6):S.maxE;S.time=360;spawnForage();
-  let bf='';if(hearts('ipek')>=2&&Math.random()<.4){const k=pick(['corba','borek','menemen']);S.inv[k]=(S.inv[k]||0)+1;bf=`İpek sabah erkenden kalkıp sana ${ITEMS[k].n} hazırlamış, çantana koydu.`}
+  const anMsg=feedAnimals();let bf='';if(hearts('ipek')>=2&&Math.random()<.4){const k=pick(['corba','borek','menemen']);S.inv[k]=(S.inv[k]||0)+1;bf=`İpek sabah erkenden kalkıp sana ${ITEMS[k].n} hazırlamış, çantana koydu.`}
   for(let i=0;i<N;i++)if(crops[i]||cropSpr[i])syncCrop(i);redrawGround();
   pl.x=11;pl.z=10.6;pl.dir='down';camT.set(pl.x,0,pl.z);ipek.x=8;ipek.z=11.5;ipek.tx=8;ipek.tz=11.5;
   save();buildHotbar();updHUD();
   const prev=dayN();
   openPanel(passOut?'Bayıldın…':'Günün sonu',(passOut?`<p>Gece 02:00'de yorgunluktan bayıldın. İpek seni eve taşıdı.${loss?` Doktor parası: <b>${fmt(loss)} altın</b>.`:''}</p>`:'')+
    (lines.length?lines.join('')+`<div class="row"><div class="nm">Toplam</div><b style="font-size:18px">${fmt(tot)} altın</b></div>`:'<p class="mu">Bugün sandığa bir şey koymadın.</p>')+
-   `<p class="mu" style="margin-top:12px">${grew?grew+' ekin büyüdü. ':''}${seasonMsg}</p>${bf?`<div class="story">${esc(bf)}</div>`:''}<p><b>${SEASONS[S.season]} ${S.day}</b> · ${S.rain?'Bugün yağmur yağıyor, tarla kendiliğinden sulanacak.':'Güneşli bir gün.'}</p><div class="btns"><button class="btn" onclick="UI.close()">Yeni güne başla</button></div>`,
+   `<p class="mu" style="margin-top:12px">${grew?grew+' ekin büyüdü. ':''}${seasonMsg}</p>${bf?`<div class="story">${esc(bf)}</div>`:''}${anMsg?`<p class="mu">${esc(anMsg)}</p>`:''}<p><b>${SEASONS[S.season]} ${S.day}</b> · ${S.rain?'Bugün yağmur yağıyor, tarla kendiliğinden sulanacak.':'Güneşli bir gün.'}</p><div class="btns"><button class="btn" onclick="UI.close()">Yeni güne başla</button></div>`,
    ()=>{fade.style.opacity=0;transitioning=false;checkStory();if(storyQ.length)setTimeout(flushStory,700)});
  },650)}
 
@@ -1158,11 +1218,12 @@ function ambient(dt){
   for(const v of villagers)if(v.s.visible&&Math.hypot(v.x-pl.x,v.z-pl.z)<9)c.push(()=>floater(pick(BARKV[v.id]),v.x,v.id=='ali'?1.5:1.95,v.z,'bub',3));
   if(zey.s.visible&&Math.hypot(zey.x-pl.x,zey.z-pl.z)<8)c.push(()=>floater(BARK.zeynep(),zey.x,1.95,zey.z,'bub',3));
   if(c.length)pick(c)()}
- sndT-=dt;if(sndT<=0){sndT=2.5+Math.random()*5;if(S.sound&&actx&&actx.state=='running'){const night=S.time>=1200||S.time<360;if(night)cricket();else if(!S.rain&&S.season!=3)bird()}}}
+ sndT-=dt;if(sndT<=0){sndT=2.5+Math.random()*5;if(S.sound&&actx&&actx.state=='running'){const night=S.time>=1200||S.time<360;if(Math.hypot(pl.x-77,pl.z-59)<12&&(S.time>=1020||S.time<120))barTune(false);else if(night)cricket();else if(!S.rain&&S.season!=3)bird()}}}
 function unlockAudio(){if(actx)return;try{actx=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}
 addEventListener('pointerdown',unlockAudio,{once:true});addEventListener('keydown',unlockAudio,{once:true});
 function tone(f0,f1,t0,d,vol,type='sine'){const o=actx.createOscillator(),g=actx.createGain();o.type=type;o.frequency.setValueAtTime(f0,t0);o.frequency.exponentialRampToValueAtTime(f1,t0+d);g.gain.setValueAtTime(0,t0);g.gain.linearRampToValueAtTime(vol,t0+d*.2);g.gain.exponentialRampToValueAtTime(.0001,t0+d);o.connect(g).connect(actx.destination);o.start(t0);o.stop(t0+d+.02)}
 function bird(){const t=actx.currentTime,b=2200+Math.random()*1500,n=2+Math.floor(Math.random()*4);for(let i=0;i<n;i++)tone(b,b*(1.25+Math.random()*.3),t+i*.13,.09,.025)}
+function barTune(loud){if(!actx)return;const t=actx.currentTime,sc=[294,330,349,392,440,466,523],m=[0,2,4,3,2,1,0,2];m.forEach((k,i)=>tone(sc[k],sc[k]*1.001,t+i*.32,.5,loud?.05:.02,'triangle'))}
 function cricket(){const t=actx.currentTime;for(let i=0;i<6;i++)tone(4300,4200,t+i*.06,.035,.008,'triangle')}
 
 /* ================= DÖNGÜ ================= */
@@ -1188,8 +1249,9 @@ function frame(now){requestAnimationFrame(frame);const dt=Math.min(.05,(now-last
  ipek.sh.visible=ipek.s.visible;ipek.mat.map=ipek.set[ipek.dir][ipek.mv?[1,0,2,0][Math.floor(ipek.at*7)%4]:0];
  for(const c of cats){const f=c.face||'left';c.mat.map=c.mv?catTex[f][Math.floor(c.at*6)%2]:c.sit?(f=='left'?catTex.sitL:catTex.sitR):catTex[f][0]}
  parrot.mat.map=ppTex[Math.floor(T*2.2)%5==0?1:0];
- for(const v of villagers){const on=S.time>=v.hours[0]&&S.time<v.hours[1];v.s.visible=on;if(on&&!paused)npcUpdate(v,dt,v.area,false);v.sh.visible=on;v.mat.map=v.set[v.dir][v.mv?[1,0,2,0][Math.floor(v.at*7)%4]:0]}
+ for(const v of villagers){const dy=S.time>=v.hours[0]&&S.time<v.hours[1],nt=!!v.na&&S.time>=v.nh[0]&&S.time<v.nh[1],on=dy||nt,ar=nt?v.na:v.area;if(nt!==v.atBar){v.atBar=nt;v.x=v.tx=(ar[0]+ar[2])/2;v.z=v.tz=(ar[1]+ar[3])/2}v.s.visible=on;if(on&&!paused)npcUpdate(v,dt,ar,false);v.sh.visible=on;v.mat.map=v.set[v.dir][v.mv?[1,0,2,0][Math.floor(v.at*7)%4]:0]}
  if(!paused)for(const a of animals)animUpdate(a,dt);
+ if(!paused)for(const a of farmAnims)animUpdate(a,dt);
  {const rg=REG(clamp(Math.floor(pl.x),0,W-1),clamp(Math.floor(pl.z),0,H-1));if(rg!=curReg){curReg=rg;$('#loc').textContent=rg=='ciftlik'?S.farm:REGN[rg];if(T>2)locBanner(rg=='ciftlik'?S.farm:REGN[rg]);if(rg=='koy'&&!S.stats.visit_koy){stat_('visit_koy');checkStory()}}}
  if(crystalMat){const nt=S.time>=1200||S.time<360;crystalMat.emissiveIntensity=(nt?1.6:.3)+Math.sin(T*2)*.25;window._crys.rotation.y=T*.6}
  zey.s.visible=zey.sh.visible=zeynepOpen();zey.mat.map=zey.set.down[0];
@@ -1225,6 +1287,7 @@ function startGame(saved){
  if(saved){till.set(saved.till);wet.set(saved.wet);for(let i=0;i<N;i++){crops[i]=saved.crops[i];objs[i]=saved.objs[i]}}
  paintBase();redrawGround();applySeasonColors();
  for(let i=0;i<N;i++)objMesh(i);decoTrees();buildStructures();buildActors();spawnForage();
+ S.an=S.an||{};for(const k in FARMB)if(S.up[k])buildFarmB(k);for(const k in S.an)for(const nm of S.an[k])spawnFarmAnim(k,nm);
  for(let i=0;i<N;i++)if(crops[i])syncCrop(i);
  camT.set(pl.x,0,pl.z);
  $('#farmName').textContent=S.farm;if(isTouch)$('#bagBtn').textContent='Çanta';$('#fsBtn').classList.toggle('hide',!isTouch);$('#plName').textContent=S.name;
@@ -1250,7 +1313,7 @@ if(window.visualViewport){visualViewport.addEventListener('resize',vv);visualVie
 {const fb=$('#fsBtn'),de=document.documentElement;if(de.requestFullscreen||de.webkitRequestFullscreen){fb.classList.add('ok');fb.onclick=e=>{e.stopPropagation();const fe=document.fullscreenElement||document.webkitFullscreenElement;if(fe)(document.exitFullscreen||document.webkitExitFullscreen).call(document);else(de.requestFullscreen||de.webkitRequestFullscreen).call(de).catch?.(()=>{})}}}
 const quickSave=()=>{if(started&&!transitioning)save()};document.addEventListener('visibilitychange',()=>{if(document.hidden)quickSave()});addEventListener('pagehide',quickSave);
 if('serviceWorker' in navigator&&location.protocol=='https:'&&!/claude\.ai|claudeusercontent/.test(location.hostname))navigator.serviceWorker.register('sw.js').catch(()=>{});
-if(/[?&]debug/.test(location.search))window.__G={charPanel,bagPanel,endDay,get S(){return S},give,checkStory,tp:(x,z)=>{pl.x=x;pl.z=z;camT.set(x,0,z)},get pl(){return pl}};
+if(/[?&]debug/.test(location.search))window.__G={buildFarmB,spawnFarmAnim,animalPanel,charPanel,bagPanel,endDay,get S(){return S},give,checkStory,tp:(x,z)=>{pl.x=x;pl.z=z;camT.set(x,0,z)},get pl(){return pl}};
 startScreen();requestAnimationFrame(frame);
 </script>
 </body>
