@@ -20,9 +20,11 @@ Vercel'de **Settings → Environment Variables** bölümüne ekle:
 
 Anahtar asla koda yazılmaz. Yapay zekâya ulaşılamazsa oyun yerel sohbet moduna düşer.
 
-## Bulut kaydı (Firebase)
+## Google ile giriş ve bulut kaydı (Firebase)
+Başlangıç ekranında ya da oyunda **Çanta → Hesap** sekmesinde “Google ile giriş yap”. Giriş yapınca çiftlik buluta kaydedilir; oyun içinde giriş yaparsan buluttaki kayıtla bu cihazdakinden hangisini kullanacağını seçersin.
+
 - Firebase Console → Authentication → **Google** girişini aç.
-- Authentication → Settings → **Authorized domains** listesine Vercel alan adını ekle (ör. `ipek-ciftligi.vercel.app`).
+- Authentication → Settings → **Authorized domains** listesine `ipeginiftligi.online` ve `www.ipeginiftligi.online` alan adlarını ekle.
 - Güvenlik kurallarını yükle:
 
 ```bash
