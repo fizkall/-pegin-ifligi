@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /tesekkurler.html
+
+Sitemap: https://xn--ipeginiftligi-ngb.online/sitemap.xml

@@ -23,6 +23,17 @@ service cloud.firestore {
       allow write: if request.auth != null && request.auth.uid == uid;
     }
 
+    // İletişim formu: herkes yeni mesaj bırakabilir, kimse okuyamaz (Firebase Console'dan okunur)
+    match /mesajlar/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['ad', 'eposta', 'konu', 'mesaj', 'at', 'sayfa'])
+        && request.resource.data.ad is string && request.resource.data.ad.size() >= 2 && request.resource.data.ad.size() <= 60
+        && request.resource.data.eposta is string && request.resource.data.eposta.size() <= 120
+        && request.resource.data.mesaj is string && request.resource.data.mesaj.size() >= 10 && request.resource.data.mesaj.size() <= 2000
+        && request.resource.data.konu is string && request.resource.data.konu.size() <= 40
+        && request.resource.data.at is int;
+      allow read, update, delete: if false;
+    }
+
     // Geri kalan her şey kapalı
     match /{document=**} {
       allow read, write: if false;

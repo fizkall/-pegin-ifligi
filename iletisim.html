@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>İletişim · İpek'in Çiftliği</title><meta name="description" content="İpek'in Çiftliği hakkında soru, öneri ya da hata bildirimi için bize yaz. Genellikle 2 iş günü içinde cevap veririz.">
+<link rel="canonical" href="https://xn--ipeginiftligi-ngb.online/iletisim.html">
+<meta property="og:type" content="website"><meta property="og:site_name" content="İpek'in Çiftliği"><meta property="og:title" content="İletişim · İpek'in Çiftliği"><meta property="og:description" content="İpek'in Çiftliği hakkında soru, öneri ya da hata bildirimi için bize yaz. Genellikle 2 iş günü içinde cevap veririz."><meta property="og:url" content="https://xn--ipeginiftligi-ngb.online/iletisim.html"><meta property="og:image" content="https://xn--ipeginiftligi-ngb.online/og-image.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="İpek'in Çiftliği oyunundan bir sahne: kiremit çatılı ev, tarla ve tohum arabası"><meta property="og:locale" content="tr_TR"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><meta name="theme-color" content="#2f6f8f">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,800&family=Nunito:wght@600;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="/site.css">
+</head><body><div class="top"><a href="/"><img src="/favicon.svg" alt="İpek'in Çiftliği logosu: kiremit çatılı küçük ev">İpek'in Çiftliği</a></div><div class="wrap">
+<div class="card"><h1>İletişim</h1><p>Bir hata mı buldun, bir fikrin mi var, ya da hesabının silinmesini mi istiyorsun? Aşağıdaki formu doldur; genellikle 2 iş günü içinde e-postana cevap veririz.</p>
+<p class="mu" id="mailLine" hidden>Doğrudan e-posta: <a id="mailLink" href="#"></a></p>
+<form id="f" novalidate>
+<label for="ad">Adın</label><input id="ad" name="ad" autocomplete="name" maxlength="60" required aria-describedby="e-ad"><div class="err" id="e-ad" aria-live="polite"></div>
+<label for="eposta">E-posta adresin</label><input id="eposta" name="eposta" type="email" autocomplete="email" maxlength="120" required aria-describedby="e-eposta"><div class="err" id="e-eposta" aria-live="polite"></div>
+<label for="konu">Konu</label><select id="konu" name="konu"><option>Öneri</option><option>Hata bildirimi</option><option>Hesap ve kayıt</option><option>Hesabımı sil</option><option>Diğer</option></select>
+<label for="mesaj">Mesajın</label><textarea id="mesaj" name="mesaj" maxlength="2000" required aria-describedby="e-mesaj"></textarea><div class="err" id="e-mesaj" aria-live="polite"></div>
+<div style="position:absolute;left:-9999px" aria-hidden="true"><label for="web">Web siteniz</label><input id="web" name="web" tabindex="-1" autocomplete="off"></div>
+<p class="mu">Gönderdiğin bilgiler yalnızca sana cevap vermek için kullanılır. Ayrıntılar <a href="/gizlilik.html">gizlilik politikasında</a>.</p>
+<div class="err" id="e-genel" aria-live="polite"></div>
+<div class="sticky"><button class="btn" id="gonder" type="submit">Mesajı gönder</button></div>
+</form></div>
+<script type="module">
+const CONTACT_EMAIL=''; // Gerçek e-posta adresini buraya yaz, sayfada gösterilir
+if(CONTACT_EMAIL){const a=document.getElementById('mailLink');a.textContent=CONTACT_EMAIL;a.href='mailto:'+CONTACT_EMAIL;document.getElementById('mailLine').hidden=false}
+const FBCFG={apiKey:"AIzaSyDV9Rbsantf8ladAIbv8OciLkiAZjOYQ08",authDomain:"ipek-ef07d.firebaseapp.com",projectId:"ipek-ef07d",storageBucket:"ipek-ef07d.firebasestorage.app",messagingSenderId:"431701824825",appId:"1:431701824825:web:e220df34253938ffaec4e8"};
+const $=id=>document.getElementById(id),f=$('f'),btn=$('gonder');
+const set=(id,msg)=>{$('e-'+id).textContent=msg;const el=$(id);if(el)el.setAttribute('aria-invalid',msg?'true':'false')};
+function check(){let ok=true;const ad=$('ad').value.trim(),ep=$('eposta').value.trim(),ms=$('mesaj').value.trim();
+ set('ad',ad.length<2?'Adını yaz (en az 2 harf).':'');if(ad.length<2)ok=false;
+ const em=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ep);set('eposta',!ep?'E-posta adresini yaz, sana buradan cevap vereceğiz.':!em?'Bu e-posta adresi geçerli görünmüyor (ör. ad@ornek.com).':'');if(!em)ok=false;
+ set('mesaj',ms.length<10?'Mesajın en az 10 karakter olsun ki derdini anlayalım.':'');if(ms.length<10)ok=false;return ok}
+for(const id of['ad','eposta','mesaj'])$(id).addEventListener('blur',()=>{if($(id).value)check()});
+f.addEventListener('submit',async e=>{e.preventDefault();$('e-genel').textContent='';if(!check()){const bad=f.querySelector('[aria-invalid=true]');bad&&bad.focus();return}
+ if($('web').value){location.href='/tesekkurler.html';return}
+ btn.disabled=true;btn.textContent='Gönderiliyor…';
+ try{const G='https://www.gstatic.com/firebasejs/10.12.2/';const[a,d]=await Promise.all([import(G+'firebase-app.js'),import(G+'firebase-firestore.js')]);
+  const db=d.getFirestore(a.initializeApp(FBCFG));
+  await d.addDoc(d.collection(db,'mesajlar'),{ad:$('ad').value.trim().slice(0,60),eposta:$('eposta').value.trim().slice(0,120),konu:$('konu').value,mesaj:$('mesaj').value.trim().slice(0,2000),at:Date.now(),sayfa:location.hostname});
+  location.href='/tesekkurler.html'}
+ catch(err){console.warn(err);btn.disabled=false;btn.textContent='Mesajı gönder';
+  $('e-genel').textContent=err&&err.code=='permission-denied'?'Mesaj şu an kaydedilemedi: sunucu izinleri henüz ayarlanmamış. Lütfen biraz sonra tekrar dene.':'Mesaj gönderilemedi. İnternet bağlantını kontrol edip tekrar dene.'}});
+</script>
+<footer><a href="/">Oyna</a><a href="/gizlilik.html">Gizlilik politikası</a><a href="/kosullar.html">Kullanım koşulları</a><a href="/iletisim.html">İletişim</a><span>© 2026 İpek'in Çiftliği</span></footer></div></body></html>
