@@ -1098,11 +1098,11 @@ function portrait(id){if(portCache[id])return portCache[id];const c=mk(64,96),g=
 const TABS={muhtar:[['sohbet','Sohbet'],['istek','İstek'],['hediye','Hediye']],ayse:[['sohbet','Sohbet'],['istek','İstek'],['hediye','Hediye']],mehmet:[['sohbet','Sohbet'],['istek','İstek'],['hediye','Hediye']],ali:[['sohbet','Sohbet'],['istek','İstek'],['hediye','Hediye']],ipek:[['sohbet','Sohbet'],['yemek','Yemek'],['hediye','Hediye'],['anlar','Anılar']],zeynep:[['sohbet','Sohbet'],['dukkan','Dükkân'],['hediye','Hediye']],pasa:[['sohbet','Sohbet'],['hediye','Yem ver']]};
 let curChar=null,curTab=null,aiBusy=false;const ROLE={ipek:'eşin',zeynep:'gezgin tüccar',pasa:'konuşan papağan',muhtar:'Gül Kasabası muhtarı',ayse:'arıcı',mehmet:'marangoz',ali:'okul çocuğu'};
 function chatLogHTML(id){const R=rel(id);if(!R.log.length)return `<div class="bb npc">${esc(moodLine(id))}</div>`;
- return R.log.slice(-14).map(m=>`<div class="bb ${m.r=='p'?'me':'npc'}">${esc(m.t)}${m.d?`<span class="dl ${m.d>0?'up':'dn'}">${m.d>0?'+':''}${m.d} sevgi</span>`:''}</div>`).join('')+(aiBusy===id?`<div class="bb npc typing">${PEOPLE[id].name} yazıyor…</div>`:'')}
+ return R.log.slice(-14).map(m=>`<div class="bb ${m.r=='p'?'me':'npc'}">${esc(m.t)}${m.d?`<span class="dl ${m.d>0?'up':'dn'}">${m.d>0?'+':''}${m.d} sevgi</span>`:''}${m.src=='yerel'?'<span class="dl dn">çevrimdışı cevap</span>':m.src=='ai'?'<span class="dl dn">yapay zekâ</span>':''}</div>`).join('')+(aiBusy===id?`<div class="bb npc typing">${PEOPLE[id].name} yazıyor…</div>`:'')}
 function charPanel(id,tab){curChar=id;curTab=tab||'sohbet';const P=PEOPLE[id],R=rel(id),today=dayN();
  if(id=='ipek'){ipek.wait=Math.max(ipek.wait,4);const dx=pl.x-ipek.x,dz=pl.z-ipek.z;ipek.dir=Math.abs(dx)>Math.abs(dz)?(dx<0?'left':'right'):(dz<0?'up':'down')}
  let body='';
- if(curTab=='sohbet')body=`<div class="chat" id="chatLog">${chatLogHTML(id)}</div><form class="chatIn" onsubmit="UI.send();return false"><input class="in" id="chatTxt" maxlength="180" autocomplete="off" placeholder="${P.name} ile konuş…" ${aiBusy?'disabled':''}><button class="btn" ${aiBusy?'disabled':''}>Gönder</button></form><p class="mu">${AUTO_EP||typeof window.ipekAI=='function'?'Cevaplar yazdığına göre şekillenir.':'Çevrimdışı sohbet modu.'} Sohbetten günde en fazla +40 sevgi kazanılır.</p>`;
+ if(curTab=='sohbet')body=`<div class="chat" id="chatLog">${chatLogHTML(id)}</div><form class="chatIn" onsubmit="UI.send();return false"><input class="in" id="chatTxt" maxlength="180" autocomplete="off" placeholder="${P.name} ile konuş…" ${aiBusy?'disabled':''}><button class="btn" ${aiBusy?'disabled':''}>Gönder</button></form><p class="mu">${AUTO_EP||typeof window.ipekAI=='function'?'Cevaplar yazdığına göre şekillenir.':'Çevrimdışı sohbet modu.'} Sohbetten günde en fazla +40 sevgi kazanılır.</p>${AUTO_EP?`<div class="btns"><button class="btn alt" style="padding:6px 10px;font-size:13px" onclick="UI.aiTest(this)">Yapay zekâ bağlantısını test et</button></div><p class="mu" id="aiTestOut"></p>`:''}`;
  if(curTab=='yemek')body=`<p class="mu">İpek yemek yapmaya bayılır. Malzemeleri sen getir, o pişirsin. Her gün ilk yemek aranızdaki bağı güçlendirir. Yemekleri yiyip enerji toplayabilir ya da satabilirsin.</p>`+Object.entries(RECIPES).map(([k,r])=>{const ok=Object.entries(r.i).every(([a,n])=>invHas(a)>=n);return `<div class="row"><img alt="" src="${iconURL(k)}"><div class="nm">${r.n}<small>${Object.entries(r.i).map(([a,n])=>`<span class="need ${invHas(a)>=n?'':'no'}"><img alt="" src="${iconURL(a=='balik'?'sazan':a)}">${invHas(a)}/${n} ${a=='balik'?'balık':ITEMS[a].n}</span>`).join('')}<br>+${r.e} enerji · ${r.p} altın</small></div><button class="btn" ${ok?'':'disabled'} onclick="UI.cook('${k}')">Pişir</button></div>`}).join('');
  if(curTab=='hediye'){const inv=Object.entries(S.inv).filter(([k,v])=>v>0);body=(R.gift==today?`<p class="mu">Bugün zaten hediye verdin. Yarın yine gel.</p>`:inv.length?inv.map(([k,v])=>itemRow(k,v,`<button class="btn" onclick="UI.gift('${k}')">Ver</button>`)).join(''):'<p class="mu">Çantanda verecek bir şey yok.</p>')}
  if(curTab=='dukkan'){shopBack=()=>charPanel('zeynep','dukkan');body=shopHTML()}
@@ -1116,7 +1116,7 @@ UI.send=async()=>{const id=curChar,inp=$('#chatTxt');if(!id||!inp||aiBusy)return
  const res=await askAI(id,msg);aiBusy=false;
  const today=dayN();if(R.gainDay!=today){R.gainDay=today;R.gain=0}
  let d=res.delta;if(d>0){d=Math.min(d,40-R.gain);R.gain+=Math.max(0,d)}
- R.log.push({r:'n',t:res.reply,d});R.log=R.log.slice(-30);R.chatN++;addLove(id,d);
+ R.log.push({r:'n',t:res.reply,d,src:res.src});R.log=R.log.slice(-30);R.chatN++;addLove(id,d);
  if(d>0){const n=actorOf(id);floater('♥',n.x,1.9,n.z,'big')}
  if(curChar===id&&panelOpen)charPanel(id,'sohbet');else toast(PEOPLE[id].name+': '+res.reply)};
 UI.cook=k=>{const r=RECIPES[k];if(!Object.entries(r.i).every(([a,n])=>invHas(a)>=n))return;for(const[a,n]of Object.entries(r.i))invTake(a,n);S.inv[k]=(S.inv[k]||0)+(S.up&&S.up.mutfak?2:1);stat_('cook');
@@ -1134,7 +1134,7 @@ function petCat(n){const c=S.cats[n.key],today=dayN();n.wait=Math.max(n.wait,2.5
 const AUTO_EP=ONLINE_HOST?'/api/chat':'';let aiFailAt=0;
 const AIK='ipekCiftligiAI';let AIC={endpoint:'',key:''};try{localStorage.removeItem(AIK)}catch(e){}
 function aiContext(id){return{player:S.name,farm:S.farm,season:SEASONS[S.season],day:S.day,time:hmm(S.time),weather:S.rain?'yağmurlu':S.season==3?'ayaz':'güneşli',tomorrow:S.tomorrowRain?'yağmur':'güneş',hearts:hearts(id),chapter:STORY[S.story.ch]?STORY[S.story.ch].t:'Yol açıldı'}}
-const normAI=r=>({reply:String(r.reply||'').slice(0,400)||'…',delta:clamp(Math.round(+r.delta||0),-15,15),emotion:r.emotion||''});
+const normAI=r=>({reply:String(r.reply||'').slice(0,400)||'…',delta:clamp(Math.round(+r.delta||0),-15,15),emotion:r.emotion||'',src:'ai'});
 function parseAI(x){if(x&&typeof x=='object'&&'reply' in x)return x;const s=String(x&&x.text!=null?x.text:x);const m=s.match(/\{[\s\S]*\}/);if(m){try{return JSON.parse(m[0])}catch(e){}}return{reply:s,delta:1}}
 async function askAI(id,msg){const P=PEOPLE[id],R=rel(id),ctx=aiContext(id),system=P.persona(ctx)+AI_RULES;
  const history=R.log.slice(-12,-1).map(m=>({role:m.r=='p'?'user':'assistant',content:m.t}));
@@ -1143,7 +1143,7 @@ async function askAI(id,msg){const P=PEOPLE[id],R=rel(id),ctx=aiContext(id),syst
   if(typeof window.ipekAI=='function')return normAI(parseAI(await window.ipekAI(payload)));
   const ep=AIC.endpoint||AUTO_EP;if(ep&&Date.now()-aiFailAt>60000){const res=await fetch(ep,{method:'POST',headers:Object.assign({'Content-Type':'application/json'},AIC.key?{Authorization:'Bearer '+AIC.key}:{}),body:JSON.stringify(payload)});if(!res.ok){let m='HTTP '+res.status;try{m=(await res.json()).error||m}catch(e){}throw new Error(m)}return normAI(parseAI(await res.json()))}
  }catch(e){console.warn('AI',e);aiFailAt=Date.now()-45000;toast('Yapay zekâ cevap vermedi: '+String(e&&e.message||e).slice(0,140))}
- await new Promise(r=>setTimeout(r,500+Math.random()*700));return localAI(id,msg,R)}
+ await new Promise(r=>setTimeout(r,500+Math.random()*700));const lr=localAI(id,msg,R);lr.src='yerel';return lr}
 /* Yerel (çevrimdışı) sohbet: anahtar kelimelerle duygu tahmini */
 function arm(b,txt){if(b.dataset.arm)return true;b.dataset.arm=1;const o=b.textContent;b.textContent=txt;setTimeout(()=>{delete b.dataset.arm;b.textContent=o},3500);return false}
 const pick=a=>a[Math.floor(Math.random()*a.length)];
@@ -1164,6 +1164,7 @@ function localAI(id,raw,R){const m=raw.toLocaleLowerCase('tr'),has=w=>w.some(x=>
   ali:{greet:[(S.char=='kadin'?'Abla':'Abi')+'! Yakala beni!'],how:['Sıkıldım! Ders, ders, ders!','Bugün denizde ahtapot gördüm, valla!'],food:['Pasta! Pasta var mı?','Çorba sevmem ama söyleme anneme.'],cats:['Senin kediler çok tatlı! Luna mı Mia mı daha hızlı?'],town:['Muhtar dedem yine herkese yol meselesini anlatıyor.'],sorry:['Tamam tamam, küs değilim.'],love:['Iyy! Öpüşmek mi? Iyy!'],_:['Biliyor musun, ormandaki taş çember gece parlıyormuş!','Deniz kabuğu topluyorum, sende var mı?','Ben büyüyünce kaptan olacağım!']},
   pasa:{seed:['Kııt! Çekirdek! Çekirdek!'],food:['Paşa aç! Paşa aç!'],greet:['Kııt! '+nm+' paşa! Hoş geldin ağam!'],love:['Paşa da seni seviyor! Kııt!'],weather:[S.tomorrowRain?'Yarın yağmur! Yağmur!':'Yarın güneş! Sula! Sula!'],_:['Kııt! "'+(raw.split(/\s+/).filter(w=>w.length>2).pop()||'ağam')+'"! "'+(raw.split(/\s+/).filter(w=>w.length>2).pop()||'ağam')+'"!','Çay koy, çay!','İpek! Gel buraya!','Paşa hazretleri dinliyor. Kııt!']}};
  const set=RP[id]||RP.ipek,arr=(top&&set[top])||set._;return{reply:pick(arr),delta:clamp(d,-15,10)}}
+UI.aiTest=async b=>{const o=$('#aiTestOut');if(o)o.textContent='Test ediliyor…';b.disabled=true;let t;try{const r=await fetch(AUTO_EP+'?test=1',{cache:'no-store'});const j=await r.json().catch(()=>null);t=!j?'Sunucudan JSON gelmedi (HTTP '+r.status+'). api/chat.js yayına çıkmamış olabilir.':j.ok?'Bağlantı çalışıyor ✓ Model: '+(j.model||'?')+(j.cevap?' · cevap geldi':''):'Sorun: '+(j.sorun||j.error||'bilinmiyor')+(j.denenen?' · '+j.denenen.join(' | '):'')}catch(e){t='Sunucuya ulaşılamadı: '+e.message}aiFailAt=0;b.disabled=false;const o2=$('#aiTestOut');if(o2)o2.textContent=t;else toast(t)};
 UI.aiSave=()=>{AIC.endpoint=$('#aiUrl').value.trim();AIC.key=$('#aiKey').value.trim();try{localStorage.setItem(AIK,JSON.stringify(AIC))}catch(e){}toast(AIC.endpoint?'Yapay zeka bağlantısı kaydedildi':'Yerel sohbet moduna dönüldü');(phoneApp?phone('ayar'):bagPanel('canta'))};
 
 /* ---- Hikâye ---- */
