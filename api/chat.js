@@ -40,7 +40,7 @@ module.exports = async (req, res) => {
   const origin = req.headers.origin || '';
   let oh = ''; try { oh = origin ? new URL(origin).hostname : ''; } catch (e) {}
   const host = String(req.headers['x-forwarded-host'] || req.headers.host || '').split(':')[0];
-  if (oh && oh !== host && !/(^|\.)ipeginiftligi\.online$|\.vercel\.app$|^localhost$/.test(oh)) return res.status(403).json({ error: 'Bu siteden istek kabul edilmiyor: ' + oh });
+  if (oh && oh !== host && !/(^|\.)(ipeginiftligi|xn--ipeginiftligi-ngb)\.online$|\.vercel\.app$|^localhost$/.test(oh)) return res.status(403).json({ error: 'Bu siteden istek kabul edilmiyor: ' + oh });
 
   const ip = String(req.headers['x-forwarded-for'] || 'x').split(',')[0].trim(), now = Date.now();
   const h = (hits.get(ip) || []).filter(t => now - t < 60000);

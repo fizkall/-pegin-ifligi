@@ -1,5 +1,7 @@
 # İpek'in Çiftliği
 
+Adres: **https://ipeginçiftligi.online**
+
 İpek'le birlikte dede çiftliğini yeniden canlandırdığın, sakin bir 2.5D çiftlik oyunu. Telefonda ve bilgisayarda oynanır, ana ekrana uygulama gibi eklenebilir.
 
 ## Dünya
@@ -24,7 +26,7 @@ Anahtar asla koda yazılmaz. Yapay zekâya ulaşılamazsa oyun yerel sohbet modu
 Başlangıç ekranında ya da oyunda **Çanta → Hesap** sekmesinde “Google ile giriş yap”. Giriş yapınca çiftlik buluta kaydedilir; oyun içinde giriş yaparsan buluttaki kayıtla bu cihazdakinden hangisini kullanacağını seçersin.
 
 - Firebase Console → Authentication → **Google** girişini aç.
-- Authentication → Settings → **Authorized domains** listesine `ipeginiftligi.online` ve `www.ipeginiftligi.online` alan adlarını ekle.
+- Authentication → Settings → **Authorized domains** listesinde `xn--ipeginiftligi-ngb.online` (yani ipeginçiftligi.online) olmalı. Bu zaten ekli.
 - Güvenlik kurallarını yükle:
 
 ```bash
