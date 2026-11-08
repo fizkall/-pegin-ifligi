@@ -14,7 +14,7 @@ service cloud.firestore {
         && request.resource.data.farm is string && request.resource.data.farm.size() <= 24;
     }
 
-    // Eski oyun (index_7) çalışmaya devam etsin diye
+    // Eski oyun (index_7) çalışmaya devam etsin diye; yeni oyun da kurallar yüklenmemişse buraya (ipek25d alanına) yedek kaydeder
     match /farms/{uid} {
       allow read, write: if request.auth != null && request.auth.uid == uid;
     }
