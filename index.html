@@ -172,7 +172,7 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .gstep{background:#fffaf0;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0}
 .gstep b{display:block}.gstep .pr{float:right;font:900 13px Nunito;color:var(--terra2)}.gstep.ok{opacity:.6}
 .gstep dl{margin:6px 0 0;display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:13px}.gstep dt{font-weight:900;color:var(--mute)}.gstep dd{margin:0;font-weight:700}
-#fade{position:fixed;inset:0;background:#120d08;opacity:0;pointer-events:none;transition:opacity .6s;z-index:35}
+#fade{position:fixed;inset:0;background:#120d08;opacity:0;pointer-events:none;transition:opacity .6s;z-index:18}
 /* touch */
 #joy{position:fixed;left:22px;bottom:calc(var(--s) + 70px);width:124px;height:124px;border-radius:50%;background:rgba(247,240,227,.28);border:2px solid rgba(247,240,227,.75);z-index:7;display:none;touch-action:none}
 #joy i{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:var(--linen);box-shadow:var(--sh)}
@@ -1077,7 +1077,7 @@ function updHUD(){$('#gold').textContent=fmt(S.gold);$('#quest').innerHTML=quest
 // Panel
 const panel=$('#panel');let panelOpen=false,onPanelClose=null;
 function openPanel(title,html,onClose){$('#pT').textContent=title;$('#pB').innerHTML=html;panel.classList.add('open');panelOpen=true;onPanelClose=onClose||null}
-function closePanel(){panel.classList.remove('open');panelOpen=false;const f=onPanelClose;onPanelClose=null;f&&f();if(storyQ.length&&!transitioning)setTimeout(flushStory,120)}
+function closePanel(){panel.classList.remove('open');panelOpen=false;const f=onPanelClose;onPanelClose=null;f&&f();if(transitioning&&!panelOpen){fade.style.opacity=0;transitioning=false}if(storyQ.length&&!transitioning)setTimeout(flushStory,120)}
 $('#pX').onclick=closePanel;panel.addEventListener('pointerdown',e=>{if(e.target===panel)closePanel()});
 
 /* ================= OYNANIŞ ================= */
@@ -1331,8 +1331,9 @@ function endDay(passOut){if(transitioning)return;transitioning=true;if(fishing)e
   const prev=dayN();
   openPanel(passOut?'Bayıldın…':'Günün sonu',(passOut?`<p>Gece 02:00'de yorgunluktan bayıldın. İpek seni eve taşıdı.${loss?` Doktor parası: <b>${fmt(loss)} altın</b>.`:''}</p>`:'')+
    (lines.length?lines.join('')+`<div class="row"><div class="nm">Toplam</div><b style="font-size:18px">${fmt(tot)} altın</b></div>`:'<p class="mu">Bugün sandığa bir şey koymadın.</p>')+
-   `<p class="mu" style="margin-top:12px">${grew?grew+' ekin büyüdü. ':''}${seasonMsg}</p>${bf?`<div class="story">${esc(bf)}</div>`:''}${anMsg?`<p class="mu">${esc(anMsg)}</p>`:''}<p><b>${SEASONS[S.season]} ${S.day}</b> · ${S.rain?'Bugün yağmur yağıyor, tarla kendiliğinden sulanacak.':'Güneşli bir gün.'}</p><div class="btns"><button class="btn" onclick="UI.close()">Yeni güne başla</button></div>`,
+   `<p class="mu" style="margin-top:12px">${grew?grew+' ekin büyüdü. ':''}${seasonMsg}</p>${bf?`<div class="story">${esc(bf)}</div>`:''}${anMsg?`<p class="mu">${esc(anMsg)}</p>`:''}<p><b>${SEASONS[S.season]} ${S.day}</b> · ${S.rain?'Bugün yağmur yağıyor, tarla kendiliğinden sulanacak.':'Güneşli bir gün.'}</p><div class="btns"><button class="btn" onclick="UI.close()">Uyan ☀</button></div><p class="mu" id="wakeCd" style="text-align:center;margin:8px 0 0"></p>`,
    ()=>{fade.style.opacity=0;transitioning=false;checkStory();heartEvents();if(storyQ.length)setTimeout(flushStory,700)});
+  let cd=10;const tick=()=>{const el=$('#wakeCd');if(!transitioning||!el)return;if(cd<=0){closePanel();return}el.textContent=cd+' saniye sonra kendiliğinden uyanacaksın';cd--;setTimeout(tick,1000)};tick();
  },650)}
 
 /* ================= GİRDİ ================= */

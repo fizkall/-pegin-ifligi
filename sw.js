@@ -1,5 +1,5 @@
 // İpek'in Çiftliği: çevrimdışı oynanabilsin diye dosyaları önbelleğe alır
-const C='ipek-ciftligi-v17';
+const C='ipek-ciftligi-v18';
 const A=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js'];
 // Dosyalar tek tek önbelleğe alınır; biri inmezse kurulum yine de tamamlanır
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>Promise.all(A.map(u=>c.add(u).catch(()=>null)))).then(()=>self.skipWaiting()))});
