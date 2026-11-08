@@ -213,6 +213,7 @@ html,body{overscroll-behavior:none}
 </div>
 <div id="fade"></div>
 
+<script>window.GROQ_KEY="__GROQ_KEY__";</script>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 <script type="module">
 import * as THREE from 'three';
@@ -1102,7 +1103,7 @@ function chatLogHTML(id){const R=rel(id);if(!R.log.length)return `<div class="bb
 function charPanel(id,tab){curChar=id;curTab=tab||'sohbet';const P=PEOPLE[id],R=rel(id),today=dayN();
  if(id=='ipek'){ipek.wait=Math.max(ipek.wait,4);const dx=pl.x-ipek.x,dz=pl.z-ipek.z;ipek.dir=Math.abs(dx)>Math.abs(dz)?(dx<0?'left':'right'):(dz<0?'up':'down')}
  let body='';
- if(curTab=='sohbet')body=`<div class="chat" id="chatLog">${chatLogHTML(id)}</div><form class="chatIn" onsubmit="UI.send();return false"><input class="in" id="chatTxt" maxlength="180" autocomplete="off" placeholder="${P.name} ile konuş…" ${aiBusy?'disabled':''}><button class="btn" ${aiBusy?'disabled':''}>Gönder</button></form><p class="mu">${AUTO_EP||typeof window.ipekAI=='function'?'Cevaplar yazdığına göre şekillenir.':'Çevrimdışı sohbet modu.'} Sohbetten günde en fazla +40 sevgi kazanılır.</p>${AUTO_EP?`<div class="btns"><button class="btn alt" style="padding:6px 10px;font-size:13px" onclick="UI.aiTest(this)">Yapay zekâ bağlantısını test et</button></div><p class="mu" id="aiTestOut"></p>`:''}`;
+ if(curTab=='sohbet')body=`<div class="chat" id="chatLog">${chatLogHTML(id)}</div><form class="chatIn" onsubmit="UI.send();return false"><input class="in" id="chatTxt" maxlength="180" autocomplete="off" placeholder="${P.name} ile konuş…" ${aiBusy?'disabled':''}><button class="btn" ${aiBusy?'disabled':''}>Gönder</button></form><p class="mu">${groqKey()||AUTO_EP||typeof window.ipekAI=='function'?'Cevaplar yazdığına göre şekillenir.':'Çevrimdışı sohbet modu.'} Sohbetten günde en fazla +40 sevgi kazanılır.</p>${AUTO_EP||groqKey()?`<div class="btns"><button class="btn alt" style="padding:6px 10px;font-size:13px" onclick="UI.aiTest(this)">Yapay zekâ bağlantısını test et</button></div><p class="mu" id="aiTestOut"></p>`:''}`;
  if(curTab=='yemek')body=`<p class="mu">İpek yemek yapmaya bayılır. Malzemeleri sen getir, o pişirsin. Her gün ilk yemek aranızdaki bağı güçlendirir. Yemekleri yiyip enerji toplayabilir ya da satabilirsin.</p>`+Object.entries(RECIPES).map(([k,r])=>{const ok=Object.entries(r.i).every(([a,n])=>invHas(a)>=n);return `<div class="row"><img alt="" src="${iconURL(k)}"><div class="nm">${r.n}<small>${Object.entries(r.i).map(([a,n])=>`<span class="need ${invHas(a)>=n?'':'no'}"><img alt="" src="${iconURL(a=='balik'?'sazan':a)}">${invHas(a)}/${n} ${a=='balik'?'balık':ITEMS[a].n}</span>`).join('')}<br>+${r.e} enerji · ${r.p} altın</small></div><button class="btn" ${ok?'':'disabled'} onclick="UI.cook('${k}')">Pişir</button></div>`}).join('');
  if(curTab=='hediye'){const inv=Object.entries(S.inv).filter(([k,v])=>v>0);body=(R.gift==today?`<p class="mu">Bugün zaten hediye verdin. Yarın yine gel.</p>`:inv.length?inv.map(([k,v])=>itemRow(k,v,`<button class="btn" onclick="UI.gift('${k}')">Ver</button>`)).join(''):'<p class="mu">Çantanda verecek bir şey yok.</p>')}
  if(curTab=='dukkan'){shopBack=()=>charPanel('zeynep','dukkan');body=shopHTML()}
@@ -1136,9 +1137,21 @@ const AIK='ipekCiftligiAI';let AIC={endpoint:'',key:''};try{localStorage.removeI
 function aiContext(id){return{player:S.name,farm:S.farm,season:SEASONS[S.season],day:S.day,time:hmm(S.time),weather:S.rain?'yağmurlu':S.season==3?'ayaz':'güneşli',tomorrow:S.tomorrowRain?'yağmur':'güneş',hearts:hearts(id),chapter:STORY[S.story.ch]?STORY[S.story.ch].t:'Yol açıldı'}}
 const normAI=r=>({reply:String(r.reply||'').slice(0,400)||'…',delta:clamp(Math.round(+r.delta||0),-15,15),emotion:r.emotion||'',src:'ai'});
 function parseAI(x){if(x&&typeof x=='object'&&'reply' in x)return x;const s=String(x&&x.text!=null?x.text:x);const m=s.match(/\{[\s\S]*\}/);if(m){try{return JSON.parse(m[0])}catch(e){}}return{reply:s,delta:1}}
+const GROQ_MODELS=['llama-3.3-70b-versatile','openai/gpt-oss-120b','meta-llama/llama-4-scout-17b-16e-instruct','llama-3.1-8b-instant'];
+const groqKey=()=>{const k=window.GROQ_KEY||'';return /^gsk_/.test(k)?k:''};
+async function groqDirect(messages){const key=groqKey();if(!key)throw new Error('anahtar yok');let last='';
+ for(const model of GROQ_MODELS){for(const json of[true,false]){const body={model,temperature:.8,max_tokens:300,messages};if(json)body.response_format={type:'json_object'};
+  const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+key},body:JSON.stringify(body)});
+  const j=await r.json().catch(()=>({}));
+  if(r.ok){const t=j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content;if(t)return{text:t,model}}
+  last=(j.error&&(j.error.code||j.error.message))||('HTTP '+r.status);
+  if(r.status==401)throw new Error('Groq anahtarı geçersiz ya da silinmiş (401)');if(r.status==429)throw new Error('Groq kullanım sınırı doldu (429)');
+  if(json&&r.status==400&&!/model/i.test(last))continue;break}}
+ throw new Error('Groq: '+last)}
 async function askAI(id,msg){const P=PEOPLE[id],R=rel(id),ctx=aiContext(id),system=P.persona(ctx)+AI_RULES;
  const history=R.log.slice(-12,-1).map(m=>({role:m.r=='p'?'user':'assistant',content:m.t}));
  const payload={character:id,name:P.name,system,history,message:msg,context:ctx};
+ if(groqKey()&&Date.now()-aiFailAt>60000){try{const g=await groqDirect([{role:'system',content:system},...history,{role:'user',content:msg}]);const o=normAI(parseAI(g.text));o.model=g.model;return o}catch(e){console.warn('Groq doğrudan',e);aiFailAt=Date.now()-45000;toast('Yapay zekâ: '+String(e.message).slice(0,120))}}
  try{
   if(typeof window.ipekAI=='function')return normAI(parseAI(await window.ipekAI(payload)));
   const ep=AIC.endpoint||AUTO_EP;if(ep&&Date.now()-aiFailAt>60000){const res=await fetch(ep,{method:'POST',headers:Object.assign({'Content-Type':'application/json'},AIC.key?{Authorization:'Bearer '+AIC.key}:{}),body:JSON.stringify(payload)});if(!res.ok){let m='HTTP '+res.status;try{m=(await res.json()).error||m}catch(e){}throw new Error(m)}return normAI(parseAI(await res.json()))}
@@ -1164,7 +1177,7 @@ function localAI(id,raw,R){const m=raw.toLocaleLowerCase('tr'),has=w=>w.some(x=>
   ali:{greet:[(S.char=='kadin'?'Abla':'Abi')+'! Yakala beni!'],how:['Sıkıldım! Ders, ders, ders!','Bugün denizde ahtapot gördüm, valla!'],food:['Pasta! Pasta var mı?','Çorba sevmem ama söyleme anneme.'],cats:['Senin kediler çok tatlı! Luna mı Mia mı daha hızlı?'],town:['Muhtar dedem yine herkese yol meselesini anlatıyor.'],sorry:['Tamam tamam, küs değilim.'],love:['Iyy! Öpüşmek mi? Iyy!'],_:['Biliyor musun, ormandaki taş çember gece parlıyormuş!','Deniz kabuğu topluyorum, sende var mı?','Ben büyüyünce kaptan olacağım!']},
   pasa:{seed:['Kııt! Çekirdek! Çekirdek!'],food:['Paşa aç! Paşa aç!'],greet:['Kııt! '+nm+' paşa! Hoş geldin ağam!'],love:['Paşa da seni seviyor! Kııt!'],weather:[S.tomorrowRain?'Yarın yağmur! Yağmur!':'Yarın güneş! Sula! Sula!'],_:['Kııt! "'+(raw.split(/\s+/).filter(w=>w.length>2).pop()||'ağam')+'"! "'+(raw.split(/\s+/).filter(w=>w.length>2).pop()||'ağam')+'"!','Çay koy, çay!','İpek! Gel buraya!','Paşa hazretleri dinliyor. Kııt!']}};
  const set=RP[id]||RP.ipek,arr=(top&&set[top])||set._;return{reply:pick(arr),delta:clamp(d,-15,10)}}
-UI.aiTest=async b=>{const o=$('#aiTestOut');if(o)o.textContent='Test ediliyor…';b.disabled=true;let t;try{const r=await fetch(AUTO_EP+'?test=1',{cache:'no-store'});const j=await r.json().catch(()=>null);t=!j?'Sunucudan JSON gelmedi (HTTP '+r.status+'). api/chat.js yayına çıkmamış olabilir.':j.ok?'Bağlantı çalışıyor ✓ Model: '+(j.model||'?')+(j.cevap?' · cevap geldi':''):'Sorun: '+(j.sorun||j.error||'bilinmiyor')+(j.denenen?' · '+j.denenen.join(' | '):'')}catch(e){t='Sunucuya ulaşılamadı: '+e.message}aiFailAt=0;b.disabled=false;const o2=$('#aiTestOut');if(o2)o2.textContent=t;else toast(t)};
+UI.aiTest=async b=>{const o=$('#aiTestOut');if(o)o.textContent='Test ediliyor…';b.disabled=true;let t;if(groqKey()){try{const g=await groqDirect([{role:'system',content:'Sadece JSON yaz: {"reply":"merhaba","delta":0}'},{role:'user',content:'selam'}]);t='Groq bağlantısı çalışıyor ✓ (tarayıcıdan) Model: '+g.model}catch(e){t='Tarayıcıdan Groq: '+e.message}aiFailAt=0;b.disabled=false;const o3=$('#aiTestOut');if(o3)o3.textContent=t;else toast(t);return}try{const r=await fetch(AUTO_EP+'?test=1',{cache:'no-store'});const j=await r.json().catch(()=>null);t=!j?'Sunucudan JSON gelmedi (HTTP '+r.status+'). api/chat.js yayına çıkmamış olabilir.':j.ok?'Bağlantı çalışıyor ✓ Model: '+(j.model||'?')+(j.cevap?' · cevap geldi':''):'Sorun: '+(j.sorun||j.error||'bilinmiyor')+(j.denenen?' · '+j.denenen.join(' | '):'')}catch(e){t='Sunucuya ulaşılamadı: '+e.message}aiFailAt=0;b.disabled=false;const o2=$('#aiTestOut');if(o2)o2.textContent=t;else toast(t)};
 UI.aiSave=()=>{AIC.endpoint=$('#aiUrl').value.trim();AIC.key=$('#aiKey').value.trim();try{localStorage.setItem(AIK,JSON.stringify(AIC))}catch(e){}toast(AIC.endpoint?'Yapay zeka bağlantısı kaydedildi':'Yerel sohbet moduna dönüldü');(phoneApp?phone('ayar'):bagPanel('canta'))};
 
 /* ---- Hikâye ---- */

@@ -9,7 +9,7 @@
 - **Sahil:** İskele, deniz balıkçılığı, kırık tekne, akşamları açılan **Martı Bar** (köylüler geceleri burada)
 
 ## Yapay zekâ ile sohbet (Groq)
-Karakterler yazdığına göre cevap verir ve sevgi puanları buna göre değişir. İstekler `api/chat.js` üzerinden Groq'a gider.
+Karakterler yazdığına göre cevap verir ve sevgi puanları buna göre değişir. Vercel yayını sırasında `build.js`, `GROQ_API_KEY` değerini `index.html`'e gömer ve oyun Groq'a tarayıcıdan bağlanır. `api/chat.js` yedek yoldur. Anahtar GitHub'a hiç yazılmaz; yazılsaydı GitHub'ın taraması onu iptal ettirirdi.
 
 Vercel'de **Settings → Environment Variables** bölümüne ekle:
 
