@@ -2,7 +2,8 @@
 // Groq API anahtarı SADECE Vercel ortam değişkeninde durur (GROQ_API_KEY). Tarayıcıya hiç gitmez.
 // Kişilik metinleri burada tutulur; böylece kimse bu uç noktayı başka işler için kullanamaz.
 
-const MODEL = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
+// Sırayla denenecek modeller: biri kapatılmışsa ya da hata verirse diğerine geçilir
+const MODELS = [process.env.GROQ_MODEL, 'llama-3.3-70b-versatile', 'openai/gpt-oss-120b', 'meta-llama/llama-4-scout-17b-16e-instruct', 'llama-3.1-8b-instant'].filter((m, i, a) => m && a.indexOf(m) === i);
 const hits = new Map(); // basit hız sınırı (IP başına dakikada 20 mesaj)
 
 const P = {
@@ -24,13 +25,22 @@ KURALLAR: Daima karakterde kal, Türkçe konuş, 1-3 kısa cümleyle doğal yan�
 const str = (v, n) => String(v ?? '').slice(0, n);
 
 module.exports = async (req, res) => {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Sadece POST' });
   const key = process.env.GROQ_API_KEY;
+  // Sağlık kontrolü: tarayıcıda /api/chat?test=1 açınca sorunun ne olduğunu gösterir
+  if (req.method === 'GET') {
+    if (!key) return res.status(200).json({ ok: false, sorun: 'GROQ_API_KEY Vercel ortam değişkenlerinde yok. Ekledikten sonra yeniden yayınla (Redeploy).' });
+    if (!req.query || !req.query.test) return res.status(200).json({ ok: true, anahtar: 'var', modeller: MODELS });
+    const t = await groq(key, [{ role: 'system', content: 'Sadece JSON yaz: {"reply":"merhaba","delta":0}' }, { role: 'user', content: 'selam' }]);
+    return res.status(200).json(t.ok ? { ok: true, model: t.model, cevap: t.text } : { ok: false, sorun: t.error, denenen: t.tried });
+  }
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Sadece POST' });
   if (!key) return res.status(500).json({ error: 'GROQ_API_KEY tanımlı değil' });
 
   // Sadece kendi sitemizden gelen istekler
   const origin = req.headers.origin || '';
-  try { if (origin && new URL(origin).host !== req.headers.host) return res.status(403).json({ error: 'İzin yok' }); } catch (e) { return res.status(403).json({ error: 'İzin yok' }); }
+  let oh = ''; try { oh = origin ? new URL(origin).hostname : ''; } catch (e) {}
+  const host = String(req.headers['x-forwarded-host'] || req.headers.host || '').split(':')[0];
+  if (oh && oh !== host && !/(^|\.)ipeginiftligi\.online$|\.vercel\.app$|^localhost$/.test(oh)) return res.status(403).json({ error: 'Bu siteden istek kabul edilmiyor: ' + oh });
 
   const ip = String(req.headers['x-forwarded-for'] || 'x').split(',')[0].trim(), now = Date.now();
   const h = (hits.get(ip) || []).filter(t => now - t < 60000);
@@ -50,23 +60,38 @@ module.exports = async (req, res) => {
     .map(m => ({ role: m && m.role === 'assistant' ? 'assistant' : 'user', content: str(m && m.content, 400) }))
     .filter(m => m.content);
 
-  try {
-    const r = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + key },
-      body: JSON.stringify({ model: MODEL, temperature: 0.8, max_tokens: 300, response_format: { type: 'json_object' },
-        messages: [{ role: 'system', content: system }, ...history, { role: 'user', content: message }] })
-    });
-    const j = await r.json();
-    if (!r.ok) return res.status(502).json({ error: (j.error && j.error.message) || 'Groq hatası' });
-    const raw = (j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || '';
-    let out; try { out = JSON.parse(raw); } catch (e) { out = { reply: raw, delta: 1 }; }
-    return res.status(200).json({
-      reply: str(out.reply, 400) || '…',
-      delta: Math.max(-15, Math.min(15, Math.round(Number(out.delta) || 0))),
-      emotion: str(out.emotion, 12) || 'sakin'
-    });
-  } catch (e) {
-    return res.status(500).json({ error: 'Sunucu hatası' });
-  }
+  const t = await groq(key, [{ role: 'system', content: system }, ...history, { role: 'user', content: message }]);
+  if (!t.ok) return res.status(502).json({ error: t.error });
+  let out; try { out = JSON.parse(t.text); } catch (e) { const m = String(t.text).match(/\{[\s\S]*\}/); try { out = m ? JSON.parse(m[0]) : null; } catch (e2) {} if (!out) out = { reply: t.text, delta: 1 }; }
+  return res.status(200).json({
+    reply: str(out.reply, 400) || '…',
+    delta: Math.max(-15, Math.min(15, Math.round(Number(out.delta) || 0))),
+    emotion: str(out.emotion, 12) || 'sakin',
+    model: t.model
+  });
 };
+
+// Groq'u sırayla modellerle dener; JSON biçimi desteklenmezse biçimsiz tekrar dener
+async function groq(key, messages) {
+  const tried = []; let last = 'bilinmeyen hata';
+  for (const model of MODELS) {
+    for (const json of [true, false]) {
+      try {
+        const body = { model, temperature: 0.8, max_tokens: 300, messages };
+        if (json) body.response_format = { type: 'json_object' };
+        const r = await fetch('https://api.groq.com/openai/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + key }, body: JSON.stringify(body) });
+        const j = await r.json().catch(() => ({}));
+        if (r.ok) { const text = (j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content) || ''; if (text) return { ok: true, model, text }; last = 'boş cevap'; }
+        else {
+          last = (j.error && (j.error.code || j.error.message)) || ('HTTP ' + r.status);
+          tried.push(model + ': ' + last);
+          if (r.status === 401) return { ok: false, error: 'Groq anahtarı geçersiz ya da silinmiş (401). Groq panelinden yeni anahtar alıp Vercel’e ekle.', tried };
+          if (r.status === 429) return { ok: false, error: 'Groq kullanım sınırı doldu (429). Biraz sonra tekrar dene.', tried };
+          if (json && r.status === 400 && !/model/i.test(last)) continue; // JSON biçimi desteklenmiyorsa biçimsiz dene
+          break; // model yok/kapalı: sıradaki model
+        }
+      } catch (e) { last = String(e && e.message || e); tried.push(model + ': ' + last); break; }
+    }
+  }
+  return { ok: false, error: 'Groq’a ulaşılamadı: ' + last, tried };
+}

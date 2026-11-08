@@ -28,7 +28,7 @@ html,body{margin:0;height:100%;overflow:hidden;background:#1f2a1d;font-family:'N
 #tl .f{font:800 18px Fraunces,serif;line-height:1.1}
 #tl .p{font-size:13px;color:var(--mute);font-weight:800}
 #tl .g{display:flex;align-items:center;gap:6px;margin-top:6px;font-weight:900;font-size:16px}
-#bagBtn,#fsBtn{margin-top:8px;width:100%;border:0;border-radius:9px;background:var(--linen2);font:800 13px Nunito;padding:7px;cursor:pointer;color:var(--ink)}
+#bagBtn,#fsBtn,#mapBtn{margin-top:8px;width:100%;border:0;border-radius:9px;background:var(--linen2);font:800 13px Nunito;padding:7px;cursor:pointer;color:var(--ink)}
 #clock{position:fixed;top:12px;right:12px;padding:16px 14px 10px;min-width:150px;text-align:right;z-index:5}
 #clock .d{font-weight:800;font-size:13px;color:var(--mute)}
 #clock .t{font:800 30px Fraunces,serif;line-height:1.05}
@@ -110,6 +110,45 @@ input,textarea{-webkit-user-select:text;user-select:text}
 .need{display:inline-flex;align-items:center;gap:2px;margin-right:8px;font-size:12px;font-weight:900}
 .need img{width:22px;height:22px}.need.no{opacity:.45}
 #locB{position:fixed;left:50%;top:22%;transform:translate(-50%,-8px);font:800 30px Fraunces,serif;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.55);opacity:0;transition:opacity .5s,transform .5s;pointer-events:none;z-index:9;white-space:nowrap}#locB.on{opacity:1;transform:translate(-50%,0)}
+.sec{margin:14px 0 6px;font:800 12px Nunito;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}.sec:first-child{margin-top:0}
+.tg{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);font-weight:800}
+.tg small{display:block;font-weight:700;color:var(--mute);font-size:12px}
+.sw{width:48px;height:28px;border-radius:14px;border:0;background:#d8ccb4;position:relative;cursor:pointer;flex:none;transition:background .2s}
+.sw i{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0004;transition:left .2s}
+.sw.on{background:var(--olive)}.sw.on i{left:23px}
+.gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#2e2a24;border:2px solid var(--line);border-radius:10px;padding:10px;font:800 15px Nunito;cursor:pointer}
+.gbtn:hover{border-color:var(--aegean)}
+.aerr{color:#b3261e;font-weight:800;font-size:13px;margin:6px 0}
+.or{display:flex;align-items:center;gap:8px;color:var(--mute);font-size:12px;font-weight:800;margin:10px 0}.or::before,.or::after{content:'';flex:1;border-top:1px dashed var(--line)}
+#mini{position:fixed;right:calc(14px + env(safe-area-inset-right));top:calc(150px + env(safe-area-inset-top));width:118px;height:118px;border-radius:50%;border:4px solid var(--linen);box-shadow:var(--sh);z-index:5;cursor:pointer;background:#6f9e40}
+@media (min-height:521px){body.touch #energy{top:282px}}
+#panel .card.wide{width:min(940px,calc(100vw - 20px))}
+.mapwrap{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#2c6676}
+.mapwrap canvas{display:block;width:100%;height:auto;touch-action:none}
+.lg{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:8px;font-size:12px;font-weight:800;color:var(--mute)}.lg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px;border:1.5px solid #fff;box-shadow:0 0 0 1px #0003}
+@media (max-height:520px) and (orientation:landscape){#mini{display:none}}
+#phoneBtn{position:fixed;left:calc(12px + env(safe-area-inset-left));top:50%;transform:translateY(-50%);width:54px;height:54px;border-radius:16px;border:3px solid var(--linen);background:var(--aegean);box-shadow:var(--sh);z-index:6;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#phoneBtn b{position:absolute;top:-4px;right:-4px;width:14px;height:14px;border-radius:50%;background:#e0393e;border:2px solid #fff}
+#panel .card.phone{width:min(370px,calc(100vw - 24px));background:#1d1b19;border:0;border-radius:40px;padding:10px;box-shadow:0 18px 50px rgba(0,0,0,.55)}
+#panel .card.phone::before{display:none}#panel .card.phone .ph{display:none}#panel .card.phone .pb{padding:0;border-radius:31px;background:linear-gradient(170deg,#fbf4e6,#efe4cf);max-height:min(82vh,700px)}
+.pbar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px 6px;font:900 13px Nunito;color:var(--ink);position:sticky;top:0;background:inherit;z-index:3}
+.pbar .nt{width:90px;height:22px;border-radius:12px;background:#1d1b19}
+.ptop{display:flex;align-items:center;gap:8px;padding:4px 14px 10px;position:sticky;top:38px;background:#fbf4e6;z-index:2}
+.ptop button{border:0;background:var(--linen2);border-radius:50%;width:34px;height:34px;font:900 16px Nunito;cursor:pointer;color:var(--ink)}
+.ptop h3{margin:0;font:800 20px Fraunces,serif;flex:1}
+.pin{padding:0 16px 20px}
+.home{padding:6px 18px 24px}
+.wall{border-radius:22px;padding:18px;color:#fff;background:linear-gradient(140deg,#2f6f8f,#6b7a35 70%,#c4572e);margin-bottom:18px}
+.wall b{display:block;font:800 30px Fraunces,serif}.wall span{font-weight:800;font-size:13px;opacity:.9}
+.apps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 10px}
+.app{background:none;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;font:800 12px Nunito;color:var(--ink)}
+.app i{width:62px;height:62px;border-radius:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.18)}
+.app:focus-visible i{outline:3px solid var(--aegean);outline-offset:2px}
+.fr{display:flex;align-items:center;gap:10px;width:100%;background:#fffaf0;border:1px solid var(--line);border-radius:14px;padding:8px 10px;margin-bottom:8px;cursor:pointer;text-align:left;font:inherit;color:inherit}
+.fr img{width:44px;height:58px;border-radius:10px;background:linear-gradient(#fbe3c4,#f3d2a6);flex:none;object-fit:contain}
+.fr .nm{flex:1}.fr .nm small{display:block;color:var(--mute);font-weight:700;font-size:12px}
+.pts{font:900 13px Nunito;color:#b8466a;white-space:nowrap}
+.mbar{height:7px;border-radius:4px;background:#efe2cc;overflow:hidden;margin-top:4px}.mbar i{display:block;height:100%;background:#d9607f}
 #fade{position:fixed;inset:0;background:#120d08;opacity:0;pointer-events:none;transition:opacity .6s;z-index:35}
 /* touch */
 #joy{position:fixed;left:22px;bottom:calc(var(--s) + 70px);width:124px;height:124px;border-radius:50%;background:rgba(247,240,227,.28);border:2px solid rgba(247,240,227,.75);z-index:7;display:none;touch-action:none}
@@ -152,9 +191,11 @@ html,body{overscroll-behavior:none}
 <canvas id="gl"></canvas>
 <div id="vig"></div>
 <div id="fx"></div>
-<div id="tl" class="card kilim hide"><div class="f" id="farmName"></div><div class="p" id="plName"></div><div class="g"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="#e8b93a" stroke="#9a6b1a" stroke-width="2"/><circle cx="10" cy="10" r="4.5" fill="none" stroke="#9a6b1a" stroke-width="1.6"/></svg><span id="gold">0</span></div><div class="tlb"><button id="bagBtn">Çanta (I)</button><button id="fsBtn" class="bagb">Tam ekran</button></div><div class="q" id="quest"></div></div>
+<div id="tl" class="card kilim hide"><div class="f" id="farmName"></div><div class="p" id="plName"></div><div class="g"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.5" fill="#e8b93a" stroke="#9a6b1a" stroke-width="2"/><circle cx="10" cy="10" r="4.5" fill="none" stroke="#9a6b1a" stroke-width="1.6"/></svg><span id="gold">0</span></div><div class="tlb"><button id="bagBtn">Çanta (I)</button><button id="mapBtn">Harita (M)</button><button id="fsBtn" class="bagb">Tam ekran</button></div><div class="q" id="quest"></div></div>
 <div id="clock" class="card kilim hide"><div class="d" id="date"></div><div class="t" id="time"></div><div class="w" id="wx"></div><div class="w" id="loc" style="color:var(--terra2)"></div></div>
 <div id="locB"></div>
+<button id="phoneBtn" class="hide" aria-label="Telefon (P)"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3" fill="#2e2a24"/><rect x="7.5" y="4.5" width="9" height="13" rx="1" fill="#9fd6ea"/><circle cx="12" cy="19.6" r="1" fill="#f7f0e3"/></svg><b id="phoneDot" class="hide"></b></button>
+<canvas id="mini" class="hide" width="240" height="240" aria-label="Mini harita"></canvas>
 <div id="energy" class="card hide"><b>E</b><i id="eFill"></i></div>
 <div id="hotbar" class="card kilim hide"></div>
 <div id="prompt" class="hide"></div>
@@ -554,7 +595,7 @@ function drawTile(x,z){
  g.fillStyle=w?'#64432a':'#a77850';for(let k=0;k<4;k++){ell(g,6+hsh(x*3+k,z)*(U-12),6+hsh(z*5+k,x)*(U-12),2,1.6);g.fill()}
  if(w){g.fillStyle='rgba(140,190,220,.14)';g.fillRect(0,0,U,U)}
  g.restore()}
-function redrawTile(x,z){drawTile(x,z);drawTile(x-1,z);drawTile(x+1,z);drawTile(x,z-1);drawTile(x,z+1)}
+function redrawTile(x,z){mapDirty=true;drawTile(x,z);drawTile(x-1,z);drawTile(x+1,z);drawTile(x,z-1);drawTile(x,z+1)}
 function redrawGround(){for(let cz=0;cz<CZ;cz++)for(let cx=0;cx<CX;cx++){const ch=chunks[cz*CX+cx];ch.g.drawImage(baseCv,cx*CH*TS,cz*CH*TS,CH*TS,CH*TS,0,0,CH*TS,CH*TS);ch.dirty=true}for(let i=0;i<N;i++)if(till[i])drawTile(i%W,Math.floor(i/W))}
 
 const outerMat=new THREE.MeshStandardMaterial({color:'#6f9e40',roughness:1});
@@ -619,7 +660,7 @@ function objMesh(i){const o=objs[i];if(!o)return;const x=i%W+.5,z=Math.floor(i/W
  else if(o.k=='rock'){const c=new THREE.Color().setHSL(.09,.06,.52+j*.12);o.ids.push([P.rock,P.rock.add(M(x+(j-.5)*.2,.16,z+(j2-.5)*.2,.95+j*.4,.7+j2*.35,.95+j2*.4,j*6),c)])}
  else if(o.k=='forage'){const s=new Bill(forageMat(o.it));s.center.set(.5,.1);s.scale.set(.55,.55,1);s.position.set(x,.02,z+.1);scene.add(s);o.spr=s}
  else if(o.k=='weed'){for(let k=0;k<4;k++){const a=k*1.7+j*6,r=.12+hsh(i,k+9)*.16,s=.7+hsh(i,k+20)*.6;o.ids.push([P.weed,P.weed.add(M(x+Math.cos(a)*r,0,z+Math.sin(a)*r,s,s,s),null,k%3)])}}}
-function removeObj(i){const o=objs[i];if(!o)return;if(o.spr)scene.remove(o.spr);for(const[p,id]of o.ids||[])p.rm(id);objs[i]=null}
+function removeObj(i){const o=objs[i];if(!o)return;mapDirty=true;if(o.spr)scene.remove(o.spr);for(const[p,id]of o.ids||[])p.rm(id);objs[i]=null}
 // Dekoratif çevre ağaçları (harita dışı + uçurum üstü)
 function decoTrees(){const ids=[];for(let x=-6;x<W+6;x+=1.3){const a=hsh(x,1);pineAt(x+a*.6,2.2,.4+a*1.6,1+a*.5,ids,x*13+1);if(a>.4)oakAt(x+.6,2.2,-1.2-a,1.1,ids,x*7)}
  for(let z=2;z<BEACH-1;z+=1.25)for(const x of[-1.2,-2.6,-4]){const a=hsh(z,x);pineAt(x+a*.5,0,z+a,1+a*.5,ids,z*31+x)}
@@ -775,8 +816,9 @@ function buildingAct(id){const t=S.time;
  if(id=='zeynepev')return toast('Zeynep gündüzleri çiftliklerde dolaşır. Pencerede reçel kavanozları dizili.')}
 UI.drink=(p,e,n)=>{if(S.gold<p)return;S.gold-=p;S.energy=Math.min(S.maxE,S.energy+e);updHUD();toast(n+' içtin. +'+e+' enerji');closePanel()};
 const UPS=[{k:'kumes',n:'Kümes',d:'8 tavuğa yer, her sabah yumurta',g:800,i:{odun:60,tas:20}},{k:'ahir',n:'Ahır',d:'İnek ve koyunlara yer: süt ve yün',g:1500,i:{odun:100,tas:50}},{k:'kova',n:'Büyük kova',d:'Kova 40 su alır',g:400,i:{odun:25}},{k:'mutfak',n:'Mutfak tezgâhı',d:'İpek’in her yemeği 2 porsiyon çıkar',g:600,i:{odun:40,tas:20}},{k:'sandik',n:'Sağlam sandık',d:'Sevkiyattan %10 fazla kazanç',g:800,i:{odun:50,tas:30}}];
-function marangozPanel(){openPanel('Marangozhane',`<p class="mu">Usta Mehmet: “Ne lazımsa yaparız usta, yeter ki malzemesi olsun!”</p>`+UPS.map(u=>{const has=S.up[u.k],ok=!has&&S.gold>=u.g&&Object.entries(u.i).every(([a,n])=>(S.inv[a]||0)>=n);return `<div class="row"><div class="nm">${u.n}<small>${u.d} · ${u.g} altın, ${Object.entries(u.i).map(([a,n])=>n+' '+ITEMS[a].n.toLowerCase()).join(', ')}</small></div><button class="btn" ${ok?'':'disabled'} onclick="UI.up('${u.k}')">${has?'Yapıldı':'Yaptır'}</button></div>`}).join(''))}
-UI.up=k=>{const u=UPS.find(x=>x.k==k);if(S.up[k]||S.gold<u.g)return;for(const[a,n]of Object.entries(u.i))if((S.inv[a]||0)<n)return;S.gold-=u.g;for(const[a,n]of Object.entries(u.i))S.inv[a]-=n;S.up[k]=1;if(k=='kova'){S.canMax=40;S.can=40;buildHotbar()}if(FARMB[k]){buildFarmB(k);toast(FARMB[k].n+' çiftliğinde hazır! Hayvanları kapısından alabilirsin.')}updHUD();toast(u.n+' hazır!');marangozPanel()};
+function marangozHTML(){return `<p class="mu">Usta Mehmet: “Ne lazımsa yaparız usta, yeter ki malzemesi olsun!”</p>`+UPS.map(u=>{const has=S.up[u.k],ok=!has&&S.gold>=u.g&&Object.entries(u.i).every(([a,n])=>(S.inv[a]||0)>=n);return `<div class="row"><div class="nm">${u.n}<small>${u.d} · ${u.g} altın, ${Object.entries(u.i).map(([a,n])=>n+' '+ITEMS[a].n.toLowerCase()).join(', ')}</small></div><button class="btn" ${ok?'':'disabled'} onclick="UI.up('${u.k}')">${has?'Yapıldı':'Yaptır'}</button></div>`}).join('')}
+function marangozPanel(){openPanel('Marangozhane',marangozHTML())}
+UI.up=k=>{const u=UPS.find(x=>x.k==k);if(S.up[k]||S.gold<u.g)return;for(const[a,n]of Object.entries(u.i))if((S.inv[a]||0)<n)return;S.gold-=u.g;for(const[a,n]of Object.entries(u.i))S.inv[a]-=n;S.up[k]=1;if(k=='kova'){S.canMax=40;S.can=40;buildHotbar()}if(FARMB[k]){buildFarmB(k);toast(FARMB[k].n+' çiftliğinde hazır! Hayvanları kapısından alabilirsin.')}updHUD();toast(u.n+' hazır!');phoneApp?phone('yapi'):marangozPanel()};
 function boardPanel(){openPanel('Köy panosu',`<p class="mu">Muhtarlığın önündeki ilan panosu. Bugünün istekleri:</p>`+['muhtar','ayse','mehmet','ali'].map(id=>{const q=reqOf(id);return `<div class="row"><img alt="" src="${iconURL(q.k)}"><div class="nm">${PEOPLE[id].name}<small>${q.n} ${esc(LBL(q.k))} · ${fmt(q.r)} altın</small></div><span class="mu">${q.done?'Tamam':'Bekliyor'}</span></div>`}).join('')+`<p class="mu">İstenenleri kişinin kendisine götür: konuşurken “İstek” sekmesinden teslim edebilirsin.</p>`)}
 function boatPanel(){openPanel('Kırık tekne',`<p>Gövdesinde silik bir yazı var: <b>“Ada”</b>. Onarılırsa denizin ötesine gidilebilir.</p><p class="mu">Onarım için 40 odun, 20 taş ve 250 altın gerekecek. Ada bir sonraki sürümde açılacak.</p>`)}
 /* ---- Kafe / Bar ---- */
@@ -840,7 +882,7 @@ const ppTex=[0,1].map(f=>{const c=mk(48,56);drawParrot(c.getContext('2d'),f);ret
 const cropSpr=new Array(N).fill(null),cropMatCache={};
 function cropStage(c){const C=CROPS[c.k];return c.ready?3:c.d==0?0:c.d<C.g/2?1:2}
 function cropMat(k,st){const key=k+st;if(cropMatCache[key])return cropMatCache[key];const c=mk(64,80);drawCrop(c.getContext('2d'),k,st);return cropMatCache[key]=sprMat(tex(c))}
-function syncCrop(i){const c=crops[i];let s=cropSpr[i];if(!c){if(s){scene.remove(s);cropSpr[i]=null}return}const m=cropMat(c.k,cropStage(c));if(!s){s=new Bill(m);s.center.set(.5,.05);s.position.set(i%W+.5,.01,Math.floor(i/W)+.62);s.scale.set(.95,1.19,1);scene.add(s);cropSpr[i]=s}s.material=m}
+function syncCrop(i){mapDirty=true;const c=crops[i];let s=cropSpr[i];if(!c){if(s){scene.remove(s);cropSpr[i]=null}return}const m=cropMat(c.k,cropStage(c));if(!s){s=new Bill(m);s.center.set(.5,.05);s.position.set(i%W+.5,.01,Math.floor(i/W)+.62);s.scale.set(.95,1.19,1);scene.add(s);cropSpr[i]=s}s.material=m}
 
 let pl,ipek,zey,cats=[],parrot,hl,toolFx,bobber;
 function buildActors(){
@@ -873,27 +915,43 @@ const fireflies=new THREE.Points(ffGeo,ffMat);fireflies.frustumCulled=false;scen
 const FBCFG={apiKey:"AIzaSyDV9Rbsantf8ladAIbv8OciLkiAZjOYQ08",authDomain:"ipek-ef07d.firebaseapp.com",projectId:"ipek-ef07d",storageBucket:"ipek-ef07d.firebasestorage.app",messagingSenderId:"431701824825",appId:"1:431701824825:web:e220df34253938ffaec4e8"};
 const ONLINE_HOST=(location.protocol==='https:'||location.hostname==='localhost')&&!/claude/.test(location.hostname);
 let FB=null,fbUser=null;
-async function fbInit(){if(!ONLINE_HOST||FB)return;try{const G='https://www.gstatic.com/firebasejs/10.12.2/';const[a,au,d]=await Promise.all([import(G+'firebase-app.js'),import(G+'firebase-auth.js'),import(G+'firebase-firestore.js')]);const app=a.initializeApp(FBCFG);FB={au,d,auth:au.getAuth(app),db:d.getFirestore(app)};au.getRedirectResult(FB.auth).catch(e=>setTimeout(()=>toast(authMsg(e)),800));await new Promise(r=>{const un=au.onAuthStateChanged(FB.auth,u=>{fbUser=u;un();r()})})}catch(e){console.warn('Firebase',e);FB=null}}
+async function fbInit(){if(!ONLINE_HOST||FB)return;try{const G='https://www.gstatic.com/firebasejs/10.12.2/';const[a,au,d]=await Promise.all([import(G+'firebase-app.js'),import(G+'firebase-auth.js'),import(G+'firebase-firestore.js')]);const app=a.initializeApp(FBCFG);FB={au,d,auth:au.getAuth(app),db:d.getFirestore(app)};au.getRedirectResult(FB.auth).catch(e=>{authErr=authMsg(e);setTimeout(()=>showAuthErr(e),900)});await new Promise(r=>{const un=au.onAuthStateChanged(FB.auth,u=>{fbUser=u;un();r()})})}catch(e){console.warn('Firebase',e);FB=null}}
 async function cloudLoad(){if(!FB||!fbUser)return null;try{const sn=await FB.d.getDoc(FB.d.doc(FB.db,'ciftlikler',fbUser.uid));if(!sn.exists())return null;return JSON.parse(sn.data().save)}catch(e){console.warn(e);return null}}
 function cloudSave(json){if(!FB||!fbUser||!S)return;FB.d.setDoc(FB.d.doc(FB.db,'ciftlikler',fbUser.uid),{save:json,updatedAt:Date.now(),v:2,name:String(S.name).slice(0,20),farm:String(S.farm).slice(0,24)}).catch(e=>console.warn('bulut',e))}
-const authMsg=e=>{const c=(e&&e.code)||'';return c=='auth/unauthorized-domain'?'Bu alan adı Firebase’de izinli değil. Firebase Console → Authentication → Settings → Authorized domains listesine ekle.':c=='auth/operation-not-allowed'?'Firebase’de Google girişi kapalı. Authentication → Sign-in method → Google’ı aç.':c=='auth/popup-closed-by-user'||c=='auth/cancelled-popup-request'?'Giriş penceresi kapatıldı.':c=='auth/network-request-failed'?'İnternet bağlantısı yok gibi görünüyor.':'Giriş yapılamadı: '+(c||(e&&e.message)||'bilinmeyen hata')};
-async function fbLogin(){if(!FB){await fbInit();if(!FB)return toast('Google girişi şu an kullanılamıyor (Firebase yüklenemedi).')}
+const authMsg=e=>{const c=(e&&e.code)||'';return c=='auth/invalid-credential'||c=='auth/wrong-password'||c=='auth/user-not-found'?'E-posta veya şifre hatalı.':c=='auth/email-already-in-use'?'Bu e-posta zaten kayıtlı, “Giriş yap”ı dene.':c=='auth/invalid-email'?'Geçersiz e-posta.':c=='auth/weak-password'?'Şifre en az 6 karakter olmalı.':c=='auth/too-many-requests'?'Çok fazla deneme yapıldı, biraz sonra tekrar dene.':c=='auth/popup-blocked'?'Tarayıcı açılır pencereyi engelledi, yönlendirmeyle deneniyor…':c=='auth/unauthorized-domain'?'Bu site Firebase’de izinli değil (auth/unauthorized-domain). Firebase Console → Authentication → Settings → Authorized domains listesine ipeginiftligi.online ekle.':c=='auth/operation-not-allowed'?'Bu giriş yöntemi Firebase’de kapalı (auth/operation-not-allowed). Authentication → Sign-in method bölümünden aç.':c=='auth/popup-closed-by-user'||c=='auth/cancelled-popup-request'?'Giriş penceresi kapatıldı.':c=='auth/network-request-failed'?'İnternet bağlantısı yok gibi görünüyor.':'Giriş yapılamadı: '+(c||(e&&e.message)||'bilinmeyen hata')};
+async function fbLogin(){if(!FB){await fbInit();if(!FB)return showAuthErr('Giriş sistemi yüklenemedi. İnternet bağlantını kontrol et.');refreshAccount();return}
  const pr=new FB.au.GoogleAuthProvider();pr.setCustomParameters({prompt:'select_account'});
- try{await FB.au.signInWithPopup(FB.auth,pr)}catch(e){if(/popup-blocked|operation-not-supported/.test(e.code||''))return FB.au.signInWithRedirect(FB.auth,pr);toast(authMsg(e));return}
- fbUser=FB.auth.currentUser;if(started)afterGameLogin();else startScreen()}
-async function fbLogout(){if(!FB)return;if(started)save();await FB.au.signOut(FB.auth);fbUser=null;if(started){toast('Çıkış yapıldı. Oyun bu cihaza kaydedilmeye devam ediyor.');accountHUD();if(panelOpen&&$('#pT').textContent=='Çanta')bagPanel('ayar')}else startScreen()}
+ try{await FB.au.signInWithPopup(FB.auth,pr)}catch(e){if(/popup-blocked|operation-not-supported/.test(e.code||'')){showAuthErr(e);return FB.au.signInWithRedirect(FB.auth,pr).catch(showAuthErr)}showAuthErr(e);return}
+ afterLogin()}
+async function fbLogout(){if(!FB)return;if(started)save();await FB.au.signOut(FB.auth);fbUser=null;if(started){toast('Çıkış yapıldı. Oyun bu cihaza kaydedilmeye devam ediyor.');accountHUD();refreshAccount()}else startScreen()}
 /* Oyun içindeyken giriş yapılırsa: buluttaki kayıtla bu cihazdakini karşılaştır */
 async function afterGameLogin(){accountHUD();const c=await cloudLoad();
- if(!c){save();toast('Google ile giriş yapıldı. Çiftliğin artık buluta kaydediliyor.');if(panelOpen)bagPanel('ayar');return}
+ if(!c){save();toast('Giriş yapıldı. Çiftliğin artık buluta kaydediliyor.');refreshAccount();return}
  const d=new Date(c.savedAt||0);
  openPanel('Bulutta bir çiftlik var',`<p>Bu Google hesabında kayıtlı bir çiftlik bulundu.</p><div class="say"><b>${esc(c.S.farm)}</b><br><span class="mu">${esc(c.S.name)} · ${SEASONS[c.S.season]} ${c.S.day}, Yıl ${c.S.year} · ${fmt(c.S.gold)} altın · ${d.toLocaleString('tr-TR')}</span></div><p class="mu">Hangisiyle devam etmek istersin? Seçmediğin kayıt silinir.</p><div class="btns"><button class="btn" onclick="UI.useCloud()">Buluttakini yükle</button><button class="btn alt" onclick="UI.useLocal(this)">Bu cihazdakini buluta yaz</button></div>`);
  UI.useCloud=()=>{try{localStorage.setItem(SK,JSON.stringify(c))}catch(e){}location.reload()};
  UI.useLocal=b=>{if(!arm(b,'Buluttaki silinecek. Emin misin?'))return;save();closePanel();toast('Bu cihazdaki çiftlik buluta yazıldı.')}}
 function accountHUD(){const el=$('#plName');if(!el||!S)return;el.textContent=S.name+(fbUser?' · bulutta':FB?' · bu cihazda':'')}
-function accountHTML(){if(!ONLINE_HOST)return `<p class="mu">Google ile giriş ve bulut kaydı, oyun kendi sitesinde (ipeginiftligi.online) açıldığında çalışır.</p>`;
- if(!FB)return `<p class="mu">Firebase yüklenemedi. İnternet bağlantını kontrol et.</p><div class="btns"><button class="btn blue" onclick="UI.login()">Tekrar dene</button></div>`;
- if(fbUser)return `<div class="row">${fbUser.photoURL?`<img alt="" src="${esc(fbUser.photoURL)}" referrerpolicy="no-referrer" style="border-radius:50%">`:''}<div class="nm">${esc(fbUser.displayName||'Google hesabı')}<small>${esc(fbUser.email||'')} · çiftliğin buluta kaydediliyor</small></div></div><div class="btns"><button class="btn" onclick="UI.cloudNow()">Şimdi buluta kaydet</button><button class="btn alt" onclick="UI.logout()">Çıkış yap</button></div>`;
- return `<p class="mu">Giriş yaparsan çiftliğin buluta kaydedilir; telefonda ve bilgisayarda aynı çiftlikte oynarsın.</p><div class="btns"><button class="btn blue" onclick="UI.login()">${GOOGLE_SVG} Google ile giriş yap</button></div>`}
+const inApp=()=>/FBAN|FBAV|Instagram|Line\/|TikTok|Snapchat|; wv\)|WhatsApp/i.test(navigator.userAgent);
+let authErr='';
+function accountHTML(){
+ if(!ONLINE_HOST)return `<p class="mu">Giriş ve bulut kaydı, oyun kendi sitesinde (ipeginiftligi.online) açıldığında çalışır.</p>`;
+ if(!FB)return `<p class="mu">Giriş sistemi yüklenemedi. İnternet bağlantını kontrol et.</p><button class="gbtn" onclick="UI.login()">Tekrar dene</button>`;
+ if(fbUser)return `<div class="row">${fbUser.photoURL?`<img alt="" src="${esc(fbUser.photoURL)}" referrerpolicy="no-referrer" style="border-radius:50%">`:''}<div class="nm">${esc(fbUser.displayName||fbUser.email||'Hesabın')}<small>${esc(fbUser.email||'')} · çiftliğin buluta kaydediliyor</small></div></div><div class="btns">${started?`<button class="btn" onclick="UI.cloudNow()">Şimdi kaydet</button>`:''}<button class="btn alt" onclick="UI.logout()">Çıkış yap</button></div>`;
+ return `${inApp()?`<p class="aerr">Bu uygulamanın içindeki tarayıcı Google girişine izin vermiyor. Menüden “Tarayıcıda aç” de.</p>`:''}
+ <button class="gbtn" onclick="UI.login()">${GOOGLE_SVG} Google ile giriş yap</button>
+ <div class="or">veya e-posta ile</div>
+ <input class="in" id="aEm" type="email" autocomplete="email" placeholder="E-posta"><input class="in" id="aPw" type="password" autocomplete="current-password" placeholder="Şifre (en az 6 karakter)">
+ <div class="btns" style="margin-top:4px"><button class="btn blue" onclick="UI.emIn()">Giriş yap</button><button class="btn alt" onclick="UI.emUp()">Kayıt ol</button></div>
+ <p class="aerr" id="aErr">${esc(authErr)}</p><button class="btn alt" style="width:100%;padding:6px;font-size:13px" onclick="UI.emReset()">Şifremi unuttum</button>
+ <p class="mu" style="margin-top:8px">Giriş yapmazsan çiftliğin sadece bu cihaza kaydedilir.</p>`}
+function refreshAccount(){if(started&&phoneApp=='ayar'&&panelOpen)phone('ayar');else if(!started)startScreen()}
+function showAuthErr(e){authErr=typeof e=='string'?e:authMsg(e);console.warn('auth',e);const el=$('#aErr');if(el)el.textContent=authErr;else toast(authErr)}
+async function afterLogin(){authErr='';fbUser=FB.auth.currentUser;if(started)afterGameLogin();else startScreen()}
+const fv=id=>{const el=$('#'+id);return el?el.value.trim():''};
+UI.emIn=async()=>{if(!FB)return;const m=fv('aEm'),pw=fv('aPw');if(!m||!pw)return showAuthErr('E-posta ve şifreyi yaz.');try{await FB.au.signInWithEmailAndPassword(FB.auth,m,pw);afterLogin()}catch(e){showAuthErr(e)}};
+UI.emUp=async()=>{if(!FB)return;const m=fv('aEm'),pw=fv('aPw');if(!m||pw.length<6)return showAuthErr('Geçerli bir e-posta ve en az 6 karakterli şifre yaz.');try{await FB.au.createUserWithEmailAndPassword(FB.auth,m,pw);afterLogin()}catch(e){showAuthErr(e)}};
+UI.emReset=async()=>{if(!FB)return;const m=fv('aEm');if(!m)return showAuthErr('Önce e-postanı yaz.');try{await FB.au.sendPasswordResetEmail(FB.auth,m);showAuthErr('Şifre sıfırlama bağlantısı e-postana gönderildi.')}catch(e){showAuthErr(e)}};
 const GOOGLE_SVG='<svg width="16" height="16" viewBox="0 0 48 48" aria-hidden="true" style="vertical-align:-3px;margin-right:4px;background:#fff;border-radius:50%;padding:1px"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.6 5.4 2.6 13.2l7.8 6C12.3 13.4 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.4 5.7c4.3-4 6.9-9.9 6.9-17.1z"/><path fill="#FBBC05" d="M10.4 28.8c-.5-1.4-.8-3-.8-4.8s.3-3.3.8-4.8l-7.8-6C.9 16.5 0 20.1 0 24s.9 7.5 2.6 10.8l7.8-6z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.3 0-11.7-3.9-13.6-9.6l-7.8 6C6.6 42.6 14.6 48 24 48z"/></svg>';
 UI.login=()=>fbLogin();UI.logout=()=>fbLogout();UI.cloudNow=()=>{save();toast('Buluta kaydedildi.')};
 
@@ -1044,7 +1102,7 @@ function chatLogHTML(id){const R=rel(id);if(!R.log.length)return `<div class="bb
 function charPanel(id,tab){curChar=id;curTab=tab||'sohbet';const P=PEOPLE[id],R=rel(id),today=dayN();
  if(id=='ipek'){ipek.wait=Math.max(ipek.wait,4);const dx=pl.x-ipek.x,dz=pl.z-ipek.z;ipek.dir=Math.abs(dx)>Math.abs(dz)?(dx<0?'left':'right'):(dz<0?'up':'down')}
  let body='';
- if(curTab=='sohbet')body=`<div class="chat" id="chatLog">${chatLogHTML(id)}</div><form class="chatIn" onsubmit="UI.send();return false"><input class="in" id="chatTxt" maxlength="180" autocomplete="off" placeholder="${P.name} ile konuş…" ${aiBusy?'disabled':''}><button class="btn" ${aiBusy?'disabled':''}>Gönder</button></form><p class="mu">${AIC.endpoint||AUTO_EP||typeof window.ipekAI=='function'?'Yapay zeka bağlı: cevaplar yazdığına göre şekillenir.':'Yerel sohbet modu. Yapay zekayı Siteyi Vercel’de yayınlayınca kendiliğinden Groq’a bağlanır.'} Sohbetten günde en fazla +40 sevgi kazanılır.</p>`;
+ if(curTab=='sohbet')body=`<div class="chat" id="chatLog">${chatLogHTML(id)}</div><form class="chatIn" onsubmit="UI.send();return false"><input class="in" id="chatTxt" maxlength="180" autocomplete="off" placeholder="${P.name} ile konuş…" ${aiBusy?'disabled':''}><button class="btn" ${aiBusy?'disabled':''}>Gönder</button></form><p class="mu">${AUTO_EP||typeof window.ipekAI=='function'?'Cevaplar yazdığına göre şekillenir.':'Çevrimdışı sohbet modu.'} Sohbetten günde en fazla +40 sevgi kazanılır.</p>`;
  if(curTab=='yemek')body=`<p class="mu">İpek yemek yapmaya bayılır. Malzemeleri sen getir, o pişirsin. Her gün ilk yemek aranızdaki bağı güçlendirir. Yemekleri yiyip enerji toplayabilir ya da satabilirsin.</p>`+Object.entries(RECIPES).map(([k,r])=>{const ok=Object.entries(r.i).every(([a,n])=>invHas(a)>=n);return `<div class="row"><img alt="" src="${iconURL(k)}"><div class="nm">${r.n}<small>${Object.entries(r.i).map(([a,n])=>`<span class="need ${invHas(a)>=n?'':'no'}"><img alt="" src="${iconURL(a=='balik'?'sazan':a)}">${invHas(a)}/${n} ${a=='balik'?'balık':ITEMS[a].n}</span>`).join('')}<br>+${r.e} enerji · ${r.p} altın</small></div><button class="btn" ${ok?'':'disabled'} onclick="UI.cook('${k}')">Pişir</button></div>`}).join('');
  if(curTab=='hediye'){const inv=Object.entries(S.inv).filter(([k,v])=>v>0);body=(R.gift==today?`<p class="mu">Bugün zaten hediye verdin. Yarın yine gel.</p>`:inv.length?inv.map(([k,v])=>itemRow(k,v,`<button class="btn" onclick="UI.gift('${k}')">Ver</button>`)).join(''):'<p class="mu">Çantanda verecek bir şey yok.</p>')}
  if(curTab=='dukkan'){shopBack=()=>charPanel('zeynep','dukkan');body=shopHTML()}
@@ -1074,7 +1132,7 @@ function petCat(n){const c=S.cats[n.key],today=dayN();n.wait=Math.max(n.wait,2.5
 
 /* ---- Yapay zeka bağlantısı ---- */
 const AUTO_EP=ONLINE_HOST?'/api/chat':'';let aiFailAt=0;
-const AIK='ipekCiftligiAI';let AIC={endpoint:'',key:''};try{Object.assign(AIC,JSON.parse(localStorage.getItem(AIK)||'{}'))}catch(e){}
+const AIK='ipekCiftligiAI';let AIC={endpoint:'',key:''};try{localStorage.removeItem(AIK)}catch(e){}
 function aiContext(id){return{player:S.name,farm:S.farm,season:SEASONS[S.season],day:S.day,time:hmm(S.time),weather:S.rain?'yağmurlu':S.season==3?'ayaz':'güneşli',tomorrow:S.tomorrowRain?'yağmur':'güneş',hearts:hearts(id),chapter:STORY[S.story.ch]?STORY[S.story.ch].t:'Yol açıldı'}}
 const normAI=r=>({reply:String(r.reply||'').slice(0,400)||'…',delta:clamp(Math.round(+r.delta||0),-15,15),emotion:r.emotion||''});
 function parseAI(x){if(x&&typeof x=='object'&&'reply' in x)return x;const s=String(x&&x.text!=null?x.text:x);const m=s.match(/\{[\s\S]*\}/);if(m){try{return JSON.parse(m[0])}catch(e){}}return{reply:s,delta:1}}
@@ -1083,8 +1141,8 @@ async function askAI(id,msg){const P=PEOPLE[id],R=rel(id),ctx=aiContext(id),syst
  const payload={character:id,name:P.name,system,history,message:msg,context:ctx};
  try{
   if(typeof window.ipekAI=='function')return normAI(parseAI(await window.ipekAI(payload)));
-  const ep=AIC.endpoint||AUTO_EP;if(ep&&Date.now()-aiFailAt>60000){const res=await fetch(ep,{method:'POST',headers:Object.assign({'Content-Type':'application/json'},AIC.key?{Authorization:'Bearer '+AIC.key}:{}),body:JSON.stringify(payload)});if(!res.ok)throw new Error('HTTP '+res.status);return normAI(parseAI(await res.json()))}
- }catch(e){console.warn('AI',e);aiFailAt=Date.now();toast('Yapay zekaya ulaşılamadı, yerel sohbete geçildi')}
+  const ep=AIC.endpoint||AUTO_EP;if(ep&&Date.now()-aiFailAt>60000){const res=await fetch(ep,{method:'POST',headers:Object.assign({'Content-Type':'application/json'},AIC.key?{Authorization:'Bearer '+AIC.key}:{}),body:JSON.stringify(payload)});if(!res.ok){let m='HTTP '+res.status;try{m=(await res.json()).error||m}catch(e){}throw new Error(m)}return normAI(parseAI(await res.json()))}
+ }catch(e){console.warn('AI',e);aiFailAt=Date.now()-45000;toast('Yapay zekâ cevap vermedi: '+String(e&&e.message||e).slice(0,140))}
  await new Promise(r=>setTimeout(r,500+Math.random()*700));return localAI(id,msg,R)}
 /* Yerel (çevrimdışı) sohbet: anahtar kelimelerle duygu tahmini */
 function arm(b,txt){if(b.dataset.arm)return true;b.dataset.arm=1;const o=b.textContent;b.textContent=txt;setTimeout(()=>{delete b.dataset.arm;b.textContent=o},3500);return false}
@@ -1106,7 +1164,7 @@ function localAI(id,raw,R){const m=raw.toLocaleLowerCase('tr'),has=w=>w.some(x=>
   ali:{greet:[(S.char=='kadin'?'Abla':'Abi')+'! Yakala beni!'],how:['Sıkıldım! Ders, ders, ders!','Bugün denizde ahtapot gördüm, valla!'],food:['Pasta! Pasta var mı?','Çorba sevmem ama söyleme anneme.'],cats:['Senin kediler çok tatlı! Luna mı Mia mı daha hızlı?'],town:['Muhtar dedem yine herkese yol meselesini anlatıyor.'],sorry:['Tamam tamam, küs değilim.'],love:['Iyy! Öpüşmek mi? Iyy!'],_:['Biliyor musun, ormandaki taş çember gece parlıyormuş!','Deniz kabuğu topluyorum, sende var mı?','Ben büyüyünce kaptan olacağım!']},
   pasa:{seed:['Kııt! Çekirdek! Çekirdek!'],food:['Paşa aç! Paşa aç!'],greet:['Kııt! '+nm+' paşa! Hoş geldin ağam!'],love:['Paşa da seni seviyor! Kııt!'],weather:[S.tomorrowRain?'Yarın yağmur! Yağmur!':'Yarın güneş! Sula! Sula!'],_:['Kııt! "'+(raw.split(/\s+/).filter(w=>w.length>2).pop()||'ağam')+'"! "'+(raw.split(/\s+/).filter(w=>w.length>2).pop()||'ağam')+'"!','Çay koy, çay!','İpek! Gel buraya!','Paşa hazretleri dinliyor. Kııt!']}};
  const set=RP[id]||RP.ipek,arr=(top&&set[top])||set._;return{reply:pick(arr),delta:clamp(d,-15,10)}}
-UI.aiSave=()=>{AIC.endpoint=$('#aiUrl').value.trim();AIC.key=$('#aiKey').value.trim();try{localStorage.setItem(AIK,JSON.stringify(AIC))}catch(e){}toast(AIC.endpoint?'Yapay zeka bağlantısı kaydedildi':'Yerel sohbet moduna dönüldü');bagPanel('ayar')};
+UI.aiSave=()=>{AIC.endpoint=$('#aiUrl').value.trim();AIC.key=$('#aiKey').value.trim();try{localStorage.setItem(AIK,JSON.stringify(AIC))}catch(e){}toast(AIC.endpoint?'Yapay zeka bağlantısı kaydedildi':'Yerel sohbet moduna dönüldü');(phoneApp?phone('ayar'):bagPanel('canta'))};
 
 /* ---- Hikâye ---- */
 const storyQ=[];
@@ -1120,21 +1178,24 @@ function questHTML(){const C=STORY[S.story.ch];if(!C)return '<b>Hikâye</b>Gül 
 
 /* ---- Çanta ---- */
 function bagPanel(tab='canta'){const inv=Object.entries(S.inv).filter(([k,v])=>v>0),sd=Object.entries(S.seeds).filter(([k,v])=>v>0);
- const T=`<div class="tabs" style="margin-top:0">${[['canta','Çanta'],['defter','Hikâye'],['ayar',fbUser?'Hesap ✓':'Hesap & Ayarlar']].map(([k,l])=>`<button class="${k==tab?'on':''}" onclick="UI.bag('${k}')">${l}</button>`).join('')}</div>`;let b='';
+ const T=`<div class="tabs" style="margin-top:0">${[['canta','Çanta'],['defter','Hikâye']].map(([k,l])=>`<button class="${k==tab?'on':''}" onclick="UI.bag('${k}')">${l}</button>`).join('')}</div>`;let b='';
  if(tab=='canta')b=`<div class="grid">${inv.length?inv.map(([k,v])=>`<div class="cell"><img alt="" src="${iconURL(k)}">${esc(LBL(k))}<br>×${v}${ITEMS[k].dish?`<br><button class="btn" style="padding:4px 10px;margin-top:4px" onclick="UI.eat('${k}')">Ye +${ITEMS[k].e}</button>`:''}</div>`).join(''):'<p class="mu">Çanta boş.</p>'}</div>`+
   (sd.length?`<p class="mu" style="margin-top:12px"><b>Tohumlar</b></p><div class="grid">${sd.map(([k,v])=>`<div class="cell"><img alt="" src="${iconURL('s:'+k)}">${CROPS[k].n}<br>×${v}</div>`).join('')}</div>`:'')+
-  `<p class="mu" style="margin-top:14px"><b>Kontroller</b><br>${isTouch?'Sol çubukla yürü · Kullan düğmesi aletini kullanır, konuşur · Yere dokun: yanındaki kareye işlem yapar, uzağa dokununca oraya yürür':'WASD / oklar: yürü · Boşluk / E: kullan, konuş · 1–0: alet seç · Fare tekeri: alet değiştir · Tıkla: yanındaki kareye işlem yap, uzağa tıklayınca oraya yürü · + / −: yakınlaştır'}</p><p class="mu">Oyun uyuduğunda kaydedilir.</p>`;
- if(tab=='defter')b=STORY.map((C,i)=>`<div class="lock ${i<S.story.ch?'ok':''}"><i>${i<S.story.ch?'✓':i+1}</i><span><b>${esc(C.t)}</b>${i==S.story.ch?' · '+C.g.map(([k,n,l])=>`${Math.min(progOf(k),n)}/${n} ${esc(l)}`).join(' · '):''}</span></div>`).join('')+(S.story.ch>0?`<div class="story">${esc(STORY[S.story.ch-1].end)}</div>`:'');
- if(tab=='ayar')b=`
-  <p style="margin-top:0"><b>Hesap</b></p>${accountHTML()}<p style="margin-top:16px"><b>Grafik</b></p><div class="btns"><button class="btn ${QH?'':'alt'}" onclick="UI.q()">${QH?'Yüksek (gölgeli)':'Düşük (pil dostu)'}</button>${isTouch?`<button class="btn ${S.vib===0?'alt':''}" onclick="UI.vib()">${S.vib===0?'Titreşim kapalı':'Titreşim açık'}</button>`:''}</div><p style="margin-top:16px"><b>Ses</b></p><div class="btns"><button class="btn ${S.sound?'':'alt'}" onclick="UI.snd()">${S.sound?'Doğa sesleri açık':'Doğa sesleri kapalı'}</button></div>
-  <details style="margin-top:16px"><summary class="mu" style="cursor:pointer"><b>Gelişmiş: yapay zekâ adresi</b></summary><p class="mu">Kendi sitesinde oyun Groq’a kendiliğinden bağlanır. Başka bir sunucu kullanmak istersen buraya yaz.</p><p class="mu">Karakterler yazdıklarını bir yapay zekaya gönderip cevap ve sevgi puanı (delta) alır. Uç nokta şu JSON’u POST ile alır: <code>{character, name, system, history, message, context}</code>. Şunu döndürmelidir: <code>{"reply":"…","delta":-15…15}</code>. API anahtarını tarayıcıya koymak yerine kendi sunucunu (ör. Firebase Function) kullanman daha güvenli.</p>
-  <input class="in" id="aiUrl" placeholder="https://…/ipek-ai" value="${esc(AIC.endpoint)}"><input class="in" id="aiKey" type="password" placeholder="Sunucu anahtarı (isteğe bağlı)" value="${esc(AIC.key)}"><div class="btns"><button class="btn" onclick="UI.aiSave()">Kaydet</button></div></details><div class="btns" style="margin-top:18px"><button class="btn alt" onclick="UI.reset(this)">Yeni oyun başlat</button></div>`;
+  `<p class="mu" style="margin-top:14px"><b>Kontroller</b><br>${isTouch?'Sol çubukla yürü · Kullan düğmesi aletini kullanır, konuşur · Yere dokun: yanındaki kareye işlem yapar, uzağa dokununca oraya yürür':'WASD / oklar: yürü · Boşluk / E: kullan, konuş · 1–0: alet seç · Fare tekeri: alet değiştir · Tıkla: yanındaki kareye işlem yap, uzağa tıklayınca oraya yürü · + / −: yakınlaştır'}</p><p class="mu">Oyun uyuduğunda kaydedilir. Hesap ve ayarlar telefonda (P).</p>`;
+ if(tab=='defter')b=storyHTML();
+ if(tab=='ayar')b=settingsHTML();
  openPanel('Çanta',T+b)}
 UI.bag=t=>bagPanel(t);
+function storyHTML(){return STORY.map((C,i)=>`<div class="lock ${i<S.story.ch?'ok':''}"><i>${i<S.story.ch?'✓':i+1}</i><span><b>${esc(C.t)}</b>${i==S.story.ch?' · '+C.g.map(([k,n,l])=>`${Math.min(progOf(k),n)}/${n} ${esc(l)}`).join(' · '):''}</span></div>`).join('')+(S.story.ch>0?`<div class="story">${esc(STORY[S.story.ch-1].end)}</div>`:'')}
+function settingsHTML(){return `<p class="sec">Hesap</p>${accountHTML()}<p class="sec">Ayarlar</p>
+  <div class="tg"><span>Doğa sesleri</span><button class="sw ${S.sound?'on':''}" onclick="UI.snd()" aria-pressed="${!!S.sound}"><i></i></button></div>
+  <div class="tg"><span>Gölgeler ve yüksek grafik<small>Kapatırsan pil daha az biter</small></span><button class="sw ${QH?'on':''}" onclick="UI.q()" aria-pressed="${!!QH}"><i></i></button></div>
+  ${isTouch?`<div class="tg"><span>Titreşim</span><button class="sw ${S.vib!==0?'on':''}" onclick="UI.vib()" aria-pressed="${S.vib!==0}"><i></i></button></div>`:''}
+  <div class="btns" style="margin-top:18px"><button class="btn alt" onclick="UI.reset(this)">Yeni oyun başlat</button></div>`}
 UI.eat=k=>{if(!S.inv[k])return;S.inv[k]--;S.energy=Math.min(S.maxE,S.energy+ITEMS[k].e);updHUD();toast(LBL(k)+' yedin. Ellerine sağlık İpek! +'+ITEMS[k].e+' enerji');bagPanel()};
-UI.q=()=>{QH=QH?0:1;try{localStorage.setItem('ipekQ',QH)}catch(e){}renderer.setPixelRatio(QH?Math.min(devicePixelRatio,isTouch?1.5:2):1);renderer.shadowMap.enabled=!!QH;scene.traverse(o=>{if(o.material)(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.needsUpdate=true)});resize();bagPanel('ayar')};
-UI.vib=()=>{S.vib=S.vib===0?1:0;bagPanel('ayar')};
-UI.snd=()=>{S.sound=S.sound?0:1;bagPanel('ayar')};
+UI.q=()=>{QH=QH?0:1;try{localStorage.setItem('ipekQ',QH)}catch(e){}renderer.setPixelRatio(QH?Math.min(devicePixelRatio,isTouch?1.5:2):1);renderer.shadowMap.enabled=!!QH;scene.traverse(o=>{if(o.material)(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.needsUpdate=true)});resize();(phoneApp?phone('ayar'):bagPanel('canta'))};
+UI.vib=()=>{S.vib=S.vib===0?1:0;(phoneApp?phone('ayar'):bagPanel('canta'))};
+UI.snd=()=>{S.sound=S.sound?0:1;(phoneApp?phone('ayar'):bagPanel('canta'))};
 UI.reset=b=>{if(!arm(b,'Kayıt silinecek. Emin misin? Tekrar bas'))return;try{localStorage.removeItem(SK)}catch(e){}location.reload()};
 function sleepPanel(){openPanel('Taş Ev',`<p>${S.time<1080?'Daha erken… ':''}Uyuyup günü bitirmek ister misin?</p><p class="mu">Uyuyunca sandıktakiler satılır, ekinler büyür ve oyun kaydedilir.</p><div class="btns"><button class="btn" onclick="UI.sleep()">Uyu</button><button class="btn alt" onclick="UI.close()">Vazgeç</button></div>`)}
 UI.sleep=()=>{closePanel();endDay(false)};UI.close=()=>closePanel();
@@ -1147,7 +1208,7 @@ function endDay(passOut){if(transitioning)return;transitioning=true;if(fishing)e
   let loss=0;if(passOut){loss=Math.min(Math.floor(S.gold*.1),500);S.gold-=loss}
   let grew=0;for(let i=0;i<N;i++){const c=crops[i];if(c&&!c.ready&&(wet[i]||S.rain)){c.d++;grew++;if(c.d>=CROPS[c.k].g)c.ready=true}}
   S.rain=S.tomorrowRain;S.day++;let died=0,seasonMsg='';
-  if(S.day>28){S.day=1;S.season=(S.season+1)%4;if(S.season==0)S.year++;for(let i=0;i<N;i++){const c=crops[i];if(c&&CROPS[c.k].s!=S.season){crops[i]=null;died++}}seasonMsg=`${SEASONS[S.season]} geldi!`+(died?` Mevsimi geçen ${died} ekin soldu.`:'');paintBase();P.can.recolor();P.pine.recolor();P.weed.recolor();applySeasonColors()}
+  if(S.day>28){S.day=1;S.season=(S.season+1)%4;if(S.season==0)S.year++;for(let i=0;i<N;i++){const c=crops[i];if(c&&CROPS[c.k].s!=S.season){crops[i]=null;died++}}seasonMsg=`${SEASONS[S.season]} geldi!`+(died?` Mevsimi geçen ${died} ekin soldu.`:'');paintBase();mapDirty=true;P.can.recolor();P.pine.recolor();P.weed.recolor();applySeasonColors()}
   S.tomorrowRain=Math.random()<[.25,.15,.22,0][S.season];
   wet.fill(0);if(S.rain)for(let i=0;i<N;i++)if(till[i])wet[i]=1;
   if(S.season!=3){let n=0;for(let tries=0;tries<60&&n<4;tries++){const x=14+Math.floor(Math.random()*24),z=11+Math.floor(Math.random()*22),i=idx(x,z);if(ground[i]==GR&&!stat[i]&&!objs[i]&&!till[i]&&!crops[i]&&!(x>=16&&x<=24&&z<=16)&&Math.hypot(x-pl.x,z-pl.z)>2){objs[i]={k:'weed'};objMesh(i);n++}}}
@@ -1166,12 +1227,12 @@ function endDay(passOut){if(transitioning)return;transitioning=true;if(fishing)e
 /* ================= GİRDİ ================= */
 const keys={};
 addEventListener('keydown',e=>{if(!started)return;const k=e.key.toLowerCase();
- if(panelOpen){if(k=='escape'||(k=='i'&&$('#pT').textContent=='Çanta'))closePanel();return}
+ if(panelOpen){if(k=='escape'||(k=='i'&&$('#pT').textContent=='Çanta')||(k=='m'&&$('#pT').textContent=='Harita')||(k=='p'&&phoneApp))closePanel();return}
  if(['arrowup','arrowdown','arrowleft','arrowright',' '].includes(k))e.preventDefault();
  keys[k]=true;if(e.repeat)return;
  if(k==' '||k=='e'||k=='enter')doAction();
  const ki=KEYS.indexOf(e.key);if(ki>=0){const L=hotList();if(L[ki])select(L[ki])}
- if(k=='i')bagPanel();if(k=='+'||k=='=')zoomBy(.85);if(k=='-'&&!e.shiftKey&&KEYS.indexOf('-')>=hotList().length)zoomBy(1.18)});
+ if(k=='i')bagPanel();if(k=='p')phone();if(k=='m')mapPanel();if(k=='+'||k=='=')zoomBy(.85);if(k=='-'&&!e.shiftKey&&KEYS.indexOf('-')>=hotList().length)zoomBy(1.18)});
 addEventListener('keyup',e=>{keys[e.key.toLowerCase()]=false});
 addEventListener('blur',()=>{for(const k in keys)keys[k]=false});
 function zoomBy(f){zoom=clamp(zoom*f,.6,1.6);resize()}
@@ -1219,6 +1280,73 @@ function applyLight(){const t=S.time;let a=K[0],b=K[K.length-1];for(let i=0;i<K.
  for(const m of tintMats)m.color.copy(tint);
  ffMat.opacity=S.season==3?0:nf*.95}
 function applySeasonColors(){const p=PAL[S.season];outerMat.color.set(p.g);plateauMat.color.set(p.top);cliffTopMat.color.set(p.top)}
+
+/* ================= HARİTA ================= */
+const MK=6,mapCv=mk(W*MK,H*MK),mctx=mapCv.getContext('2d');let mapDirty=true,mapT=0;
+function mapBuildings(){const L=[{x:8,z:6,w:6,d:4,roof:'#c45a32',n:'Evin'},{x:17,z:7,w:3,d:2,roof:'#c4572e',n:'Tohum arabası'},...BUILD];for(const k in FARMB)if(S.up&&S.up[k])L.push(FARMB[k]);return L}
+function renderMapStatic(){const g=mctx;g.imageSmoothingEnabled=true;g.drawImage(baseCv,0,0,W*MK,H*MK);
+ for(let i=0;i<N;i++){const x=i%W,z=Math.floor(i/W),t=ground[i],px=x*MK,pz=z*MK;
+  if(t==WATER){g.fillStyle=z>=SEA?'#3f8fa8':'#5aaec4';g.fillRect(px,pz,MK,MK)}else if(t==CLIFF){g.fillStyle='#8f7d63';g.fillRect(px,pz,MK,MK)}else if(t==BRIDGE){g.fillStyle='#a7774a';g.fillRect(px,pz,MK,MK)}
+  if(till[i]){g.fillStyle=wet[i]?'#4e331f':'#8c5d37';g.fillRect(px+.5,pz+.5,MK-1,MK-1)}
+  if(crops[i]){g.fillStyle=crops[i].ready?'#f2b33a':'#7bc35a';g.beginPath();g.arc(px+MK/2,pz+MK/2,MK*.28,0,7);g.fill()}
+  const o=objs[i];if(o){if(o.k=='tree'){g.fillStyle=o.v==2?(S.season==3?'#cfd8dc':'#c8662a'):o.v==1?'#2a5f3e':(S.season==2?'#c88a2a':S.season==3?'#d8e2e6':'#3f7f30');g.beginPath();g.arc(px+MK/2,pz+MK/2,MK*.62,0,7);g.fill()}else if(o.k=='rock'){g.fillStyle='#9a958a';g.fillRect(px+1.5,pz+1.5,MK-3,MK-3)}else if(o.k=='forage'){g.fillStyle='#ffe066';g.beginPath();g.arc(px+MK/2,pz+MK/2,MK*.3,0,7);g.fill()}}}
+ for(const b of mapBuildings()){g.fillStyle=b.roof;g.fillRect(b.x*MK,b.z*MK,b.w*MK,b.d*MK);g.strokeStyle='rgba(40,20,10,.6)';g.lineWidth=1;g.strokeRect(b.x*MK+.5,b.z*MK+.5,b.w*MK-1,b.d*MK-1)}
+ if(!S.tun){g.fillStyle='#6b6458';g.fillRect(10*MK,35*MK,2*MK,MK)}
+ mapDirty=false}
+const mapDots=()=>{const L=[[pl.x,pl.z,'#c4572e',1]];if(ipek.s.visible)L.push([ipek.x,ipek.z,'#d9607f']);if(zey.s.visible)L.push([zey.x,zey.z,'#6b7a35']);for(const v of villagers)if(v.s.visible)L.push([v.x,v.z,'#2f6f8f']);return L};
+function drawMini(){const c=$('#mini');if(!c||c.classList.contains('hide'))return;if(mapDirty)renderMapStatic();const g=c.getContext('2d'),R=30,s=c.width/R;
+ g.fillStyle='#4f8a36';g.fillRect(0,0,c.width,c.height);g.imageSmoothingEnabled=true;g.drawImage(mapCv,(pl.x-R/2)*MK,(pl.z-R/2)*MK,R*MK,R*MK,0,0,c.width,c.height);
+ for(const[x,z,col,me]of mapDots()){const px=(x-pl.x+R/2)*s,pz=(z-pl.z+R/2)*s;if(px<0||pz<0||px>c.width||pz>c.height)continue;g.fillStyle=col;g.strokeStyle='#fff';g.lineWidth=me?4:3;g.beginPath();g.arc(px,pz,me?11:8,0,7);g.fill();g.stroke()}
+ const d=DIRS[pl.dir],cx=c.width/2,cy=c.height/2;g.fillStyle='#fff';g.beginPath();g.moveTo(cx+d[0]*22,cy+d[1]*22);g.lineTo(cx+d[0]*13-d[1]*6,cy+d[1]*13+d[0]*6);g.lineTo(cx+d[0]*13+d[1]*6,cy+d[1]*13-d[0]*6);g.closePath();g.fill()}
+function mapPanel(){if(mapDirty)renderMapStatic();
+ openPanel('Harita',`<div class="mapwrap"><canvas id="wmap" width="${W*MK*2}" height="${H*MK*2}"></canvas></div><div class="lg"><span><i style="background:#c4572e"></i>Sen</span><span><i style="background:#d9607f"></i>İpek</span><span><i style="background:#2f6f8f"></i>Köylüler</span><span><i style="background:#6b7a35"></i>Zeynep</span><span><i style="background:#ffe066"></i>Toplanabilir</span><span><i style="background:#f2b33a"></i>Hasada hazır</span></div>`,()=>{$('#panel .card').classList.remove('wide');clearInterval(mapPanel.t)});
+ $('#panel .card').classList.add('wide');startMapDraw()}
+function startMapDraw(){if(mapDirty)renderMapStatic();const draw=()=>{const c=$('#wmap');if(!c){clearInterval(mapPanel.t);return}const g=c.getContext('2d'),k=2;g.drawImage(mapCv,0,0,c.width,c.height);
+  g.textAlign='center';g.textBaseline='middle';const lab=(t,x,z,sz,col='#fff')=>{g.font=`800 ${sz}px Fraunces, serif`;g.lineWidth=5;g.strokeStyle='rgba(30,20,10,.65)';g.strokeText(t,x*MK*k,z*MK*k);g.fillStyle=col;g.fillText(t,x*MK*k,z*MK*k)};
+  lab(S.farm,24,23,30);lab('Gül Kasabası',71,6.2,30);lab('Çam Ormanı',20,43,28);lab('Sonbahar Korusu',75,41,28);lab('Sahil',47,60.5,26);lab('Ege Denizi',48,67,26,'#d6ecf0');
+  g.font='800 15px Nunito, sans-serif';for(const b of mapBuildings()){const tx=(b.x+b.w/2)*MK*k,tz=(b.z+b.d+.9)*MK*k;g.lineWidth=4;g.strokeStyle='rgba(30,20,10,.7)';g.strokeText(b.n,tx,tz);g.fillStyle='#fff7e8';g.fillText(b.n,tx,tz)}
+  lab(S.tun?'Tünel':'Tünel (kapalı)',11,37.6,15,'#ffe7b0');lab('Taş çember',6.5,55,14,'#e9c8ff');lab('İskele',61,68.6,14);
+  const pulse=1+Math.sin(performance.now()/250)*.25;for(const[x,z,col,me]of mapDots()){g.fillStyle=col;g.strokeStyle='#fff';g.lineWidth=me?5:3.5;g.beginPath();g.arc(x*MK*k,z*MK*k,me?13*pulse:9,0,7);g.fill();g.stroke()}};
+ draw();clearInterval(mapPanel.t);mapPanel.t=setInterval(draw,120)}
+$('#mapBtn').onclick=e=>{e.stopPropagation();mapPanel()};$('#mini').onclick=e=>{e.stopPropagation();mapPanel()};
+
+/* ================= TELEFON ================= */
+let phoneApp=null;
+const APPS=[['arkadas','Arkadaşlar','#d9607f','<circle cx="9" cy="9" r="4" fill="#fff"/><circle cx="17" cy="10" r="3.2" fill="#ffe0ea"/><path d="M2 21c0-4 3-7 7-7s7 3 7 7z" fill="#fff"/><path d="M14 21c.2-3 1.5-5.5 3.5-5.5S22 18 22 21z" fill="#ffe0ea"/>'],
+ ['yapi','Yapı yaptır','#8a5a2b','<rect x="3" y="13" width="18" height="8" rx="1" fill="#f3e3c3"/><path d="M2 13 12 5l10 8z" fill="#c4572e"/><rect x="10" y="15" width="4" height="6" fill="#8a5a2b"/>'],
+ ['malzeme','Malzeme al','#6b7a35','<rect x="3" y="8" width="18" height="13" rx="2" fill="#d8b27a"/><path d="M3 12h18M12 8v13" stroke="#8a5a2b" stroke-width="2"/><path d="M6 8l3-5h6l3 5" fill="#c39a5e"/>'],
+ ['harita','Haritalar','#2f6f8f','<path d="M3 5l6-2 6 2 6-2v16l-6 2-6-2-6 2z" fill="#d6ecf0"/><path d="M9 3v16M15 5v16" stroke="#9cc9d4" stroke-width="1.5"/><path d="M12 7a3 3 0 0 1 3 3c0 2.5-3 6-3 6s-3-3.5-3-6a3 3 0 0 1 3-3z" fill="#c4572e"/><circle cx="12" cy="10" r="1.2" fill="#fff"/>'],
+ ['hava','Hava','#e8a83a','<circle cx="10" cy="10" r="4.5" fill="#fff6c8"/><path d="M8 20a4 4 0 0 1 .5-8 5 5 0 0 1 9.5 1.5A3.3 3.3 0 0 1 18 20z" fill="#fff"/>'],
+ ['hikaye','Hikâye','#a8431f','<path d="M4 4h7a3 3 0 0 1 3 3v14a2 2 0 0 0-2-2H4z" fill="#fff"/><path d="M20 4h-5a2 2 0 0 0-1 .3V21a2 2 0 0 1 2-2h4z" fill="#f3e3c3"/>'],
+ ['ayar','Ayarlar','#5a6b7a','<circle cx="12" cy="12" r="3.2" fill="#5a6b7a" stroke="#fff" stroke-width="3"/><g stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></g>']];
+const FRIENDS=['ipek','zeynep','muhtar','ayse','mehmet','ali','pasa'];
+const catPort={};function catPortrait(k){if(catPort[k])return catPort[k];const c=mk(64,96),g=c.getContext('2d');g.translate(0,30);drawCat(g,0,1);return catPort[k]=c.toDataURL()}
+function phone(app){phoneApp=app||'home';const t=hmm(S.time);let b='';
+ const top=(ttl,back='home')=>`<div class="ptop"><button onclick="UI.ph('${back}')" aria-label="Geri">‹</button><h3>${ttl}</h3></div>`;
+ if(phoneApp=='home'){const h=Math.floor(S.time/60)%24,sel=h<12?'Günaydın':h<18?'İyi günler':'İyi akşamlar';
+  b=`<div class="home"><div class="wall"><b>${t}</b><span>${sel}, ${esc(S.name)} · ${SEASONS[S.season]} ${S.day}</span></div><div class="apps">${APPS.map(([k,n,c,ic])=>`<button class="app" onclick="UI.ph('${k}')"><i style="background:${c}"><svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true">${ic}</svg></i>${n}</button>`).join('')}</div></div>`}
+ else if(phoneApp=='arkadas'){b=top('Arkadaşlar')+`<div class="pin"><p class="mu" style="margin-top:0">Sevgi puanları 0–1000 arası; her 100 puan bir kalp.</p>`+FRIENDS.map(id=>{const R=rel(id),d=dayN();return `<button class="fr" onclick="UI.ph('kisi:${id}')"><img alt="" src="${portrait(id)}"><div class="nm">${PEOPLE[id].name}<small>${ROLE[id]}${R.talk==d||R.gift==d?' · bugün görüştünüz':''}</small><div class="mbar"><i style="width:${R.pts/10}%"></i></div></div><span class="pts">${Math.floor(R.pts)}<br><small>${hearts(id)} kalp</small></span></button>`}).join('')+
+  ['luna','mia'].map(k=>{const c=S.cats[k];return `<div class="fr" style="cursor:default"><img alt="" src="${catPortrait(k)}"><div class="nm">${k=='luna'?'Luna':'Mia'}<small>kedin · British Shorthair</small><div class="mbar"><i style="width:${c.pts/10}%"></i></div></div><span class="pts">${c.pts}</span></div>`}).join('')+
+  (Object.values(S.an||{}).flat().length?`<p class="sec">Hayvanların</p><p class="mu">${Object.entries(S.an).filter(([k,v])=>v.length).map(([k,v])=>FA[k].n+': '+v.map(esc).join(', ')).join('<br>')}</p>`:'')+`</div>`}
+ else if(phoneApp.startsWith('kisi:')){const id=phoneApp.slice(5),R=rel(id),d=dayN(),L=LIKES[id]||{love:{},hate:{}};const q=['muhtar','ayse','mehmet','ali'].includes(id)?reqOf(id):null;
+  b=top(PEOPLE[id].name,'arkadas')+`<div class="pin"><div class="port"><img alt="" src="${portrait(id)}" style="width:64px;height:96px;background:linear-gradient(#fbe3c4,#f3d2a6);border-radius:12px"><div><div class="hearts">${heartsHTML(R.pts)}</div><div class="mu">${Math.floor(R.pts)} / 1000 puan · ${ROLE[id]}</div></div></div>
+  <div class="tg"><span>Bugün sohbet</span><b>${R.talk==d||R.gain>0&&R.gainDay==d?'Evet':'Hayır'}</b></div><div class="tg"><span>Bugün hediye</span><b>${R.gift==d?'Verildi':'Verilmedi'}</b></div><div class="tg"><span>Toplam sohbet</span><b>${R.chatN||0}</b></div>
+  ${q?`<div class="tg"><span>Bugünkü isteği<small>${q.n} ${esc(LBL(q.k))} · ${fmt(q.r)} altın</small></span><b>${q.done?'Tamam':'Bekliyor'}</b></div>`:''}
+  <p class="sec">Sevdikleri</p><div class="grid">${Object.keys(L.love).map(k=>`<div class="cell"><img alt="" src="${iconURL(k)}">${esc(LBL(k))}</div>`).join('')}</div>
+  <div class="btns"><button class="btn" onclick="UI.msg('${id}')">Mesaj yaz</button></div><p class="mu">Telefondan yazdığın mesajlar da sevgi puanını etkiler.</p></div>`}
+ else if(phoneApp=='yapi')b=top('Yapı yaptır')+`<div class="pin">${marangozHTML()}<p class="mu">Sipariş Usta Mehmet’e telefonla iletilir, yapı hemen hazırlanır.</p></div>`;
+ else if(phoneApp=='malzeme'){shopBack=()=>phone('malzeme');const M=[['odun',10,50],['tas',10,60],['lif',10,30]];
+  b=top('Malzeme al')+`<div class="pin"><p class="mu" style="margin-top:0">Kesende <b>${fmt(S.gold)} altın</b>. Siparişler hemen çantana gelir.</p>`+M.map(([k,n,p])=>itemRow(k,S.inv[k]||0,`<button class="btn" ${S.gold<p?'disabled':''} onclick="UI.buyMat('${k}',${n},${p})">${n} al · ${p}</button>`)).join('')+
+  (S.up&&(S.up.kumes||S.up.ahir)?`<div class="row"><div class="nm">Hayvan yemi<small>Stokta ${S.yem||0}</small></div><button class="btn" ${S.gold<50?'disabled':''} onclick="UI.buyMat('yem',10,50)">10 al · 50</button></div>`:'')+`<p class="sec">Tohumlar</p>`+shopHTML(S.season,1)+`</div>`}
+ else if(phoneApp=='harita'){b=top('Haritalar')+`<div class="pin"><div class="mapwrap"><canvas id="wmap" width="${W*MK*2}" height="${H*MK*2}"></canvas></div><div class="lg"><span><i style="background:#c4572e"></i>Sen</span><span><i style="background:#d9607f"></i>İpek</span><span><i style="background:#2f6f8f"></i>Köylüler</span><span><i style="background:#ffe066"></i>Toplanabilir</span></div><p class="mu">Şu an: <b>${esc(curReg=='ciftlik'?S.farm:REGN[curReg]||'')}</b></p><div class="btns"><button class="btn blue" onclick="UI.bigMap()">Büyük haritayı aç</button></div></div>`}
+ else if(phoneApp=='hava'){const ic=r=>r?RAIN_SVG:S.season==3?MOON_SVG:SUN_SVG;b=top('Hava')+`<div class="pin"><div class="tg"><span>Bugün · ${SEASONS[S.season]} ${S.day}</span><b>${S.rain?'Yağmurlu':S.season==3?'Ayaz':'Güneşli'}</b></div><div class="tg"><span>Yarın</span><b>${S.tomorrowRain?'Yağmur':S.season==3?'Ayaz':'Güneşli'}</b></div><p class="mu">${S.tomorrowRain?'Yarın tarlayı sulamana gerek yok.':'Yarın tarlayı sulamayı unutma.'} Şakir Paşa da bunu biliyor.</p></div>`}
+ else if(phoneApp=='hikaye')b=top('Hikâye')+`<div class="pin">${storyHTML()}</div>`;
+ else if(phoneApp=='ayar')b=top('Ayarlar')+`<div class="pin">${settingsHTML()}</div>`;
+ openPanel('Telefon',`<div class="pbar"><span>${t}</span><span class="nt"></span><span>İpekCell ▮▮▮</span></div>`+b,()=>{$('#panel .card').classList.remove('phone');phoneApp=null;clearInterval(mapPanel.t)});
+ $('#panel .card').classList.add('phone');if(phoneApp=='harita')startMapDraw();$('#pB').scrollTop=0}
+UI.ph=a=>phone(a);UI.msg=id=>{closePanel();charPanel(id,'sohbet')};UI.bigMap=()=>{closePanel();mapPanel()};
+UI.buyMat=(k,n,p)=>{if(S.gold<p)return;S.gold-=p;if(k=='yem')S.yem=(S.yem||0)+n;else S.inv[k]=(S.inv[k]||0)+n;updHUD();buildHotbar();toast(n+' '+(k=='yem'?'yem':LBL(k).toLowerCase())+' geldi.');phone('malzeme')};
+$('#phoneBtn').onclick=e=>{e.stopPropagation();phone()};
 
 /* ================= ORTAM: kendi kendine konuşmalar + doğa sesleri ================= */
 let barkT=8,sndT=3,actx=null;
@@ -1295,7 +1423,8 @@ function frame(now){requestAnimationFrame(frame);const dt=Math.min(.05,(now-last
  for(const ch of chunks)if(ch.dirty){ch.t.needsUpdate=true;ch.dirty=false}
  // uçan yazılar
  for(let i=floaters.length-1;i>=0;i--){const f=floaters[i];f.t+=dt;const v=f.p.clone();v.y+=f.t*.8;v.project(cam);f.el.style.left=((v.x+1)/2*innerWidth)+'px';f.el.style.top=((1-v.y)/2*innerHeight)+'px';f.el.style.opacity=clamp(1.6-f.t/f.dur*1.6,0,1);if(f.t>f.dur){f.el.remove();floaters.splice(i,1)}}
- hudT-=dt;if(hudT<=0){hudT=.25;updHUD()}
+ hudT-=dt;if(hudT<=0){hudT=.25;updHUD();drawMini()}
+ mapT-=dt;if(mapT<=0){mapT=3;if(mapDirty)renderMapStatic()}
  renderer.render(scene,cam)}
 
 /* ================= BAŞLAT ================= */
@@ -1308,8 +1437,8 @@ function startGame(saved){
  S.an=S.an||{};for(const k in FARMB)if(S.up[k])buildFarmB(k);for(const k in S.an)for(const nm of S.an[k])spawnFarmAnim(k,nm);
  for(let i=0;i<N;i++)if(crops[i])syncCrop(i);
  camT.set(pl.x,0,pl.z);
- $('#farmName').textContent=S.farm;if(isTouch)$('#bagBtn').textContent='Çanta';$('#fsBtn').classList.toggle('hide',!isTouch);$('#plName').textContent=S.name;accountHUD();
- for(const id of['#tl','#clock','#energy','#hotbar'])$(id).classList.remove('hide');
+ $('#farmName').textContent=S.farm;if(isTouch){$('#bagBtn').textContent='Çanta';$('#mapBtn').textContent='Harita'}$('#fsBtn').classList.toggle('hide',!isTouch);$('#plName').textContent=S.name;accountHUD();
+ for(const id of['#tl','#clock','#energy','#hotbar','#mini','#phoneBtn'])$(id).classList.remove('hide');mapDirty=true;
  $('#start').style.display='none';started=true;buildHotbar();updHUD();
  if(!saved){openPanel('Önsöz: Dedenin mektubu',`<div class="story">“Sevgili ${esc(S.name)}, bu toprak bana ömrümün en güzel yıllarını verdi. Şimdi yorgun ve bakımsız, biliyorum. Ama bir tohum, bir kova su ve biraz sabırla yeniden uyanır. İpek’e iyi bak. O mutfağa girdiğinde ev bayram yerine döner.” Deden.</div>
   <p class="mu">Seninle birlikte <b>İpek</b>, kediler <b>Luna</b> ile <b>Mia</b> ve kapının önünde papağan <b>Şakir Paşa</b> var. Gündüzleri <b>Zeynep</b>'in tohum arabası da dükkânın önünde. Köprüden doğuya gidersen <b>Gül Kasabası</b>, güneydeki tüneli açarsan <b>ormanlar</b> ve <b>deniz</b> seni bekliyor. Onlarla konuşabilirsin: ne yazarsan ona göre tepki verirler.</p>
@@ -1318,8 +1447,8 @@ function startGame(saved){
 async function startScreen(){let ch='kadin';const body=$('#startBody');body.innerHTML='<p class="mu">Yükleniyor…</p>';
  await Promise.race([fbInit(),new Promise(r=>setTimeout(r,5000))]);
  let sv=loadSave();if(fbUser){const c=await cloudLoad();if(c&&(!sv||(c.savedAt||0)>(sv.savedAt||0)))sv=c}
- const auth=()=>FB?(fbUser?`<p class="mu" style="margin-top:10px">Bulut kaydı açık: <b>${esc(fbUser.email||'hesabın')}</b> · <button class="btn alt" id="lo" style="padding:4px 10px">Çıkış</button></p>`:`<button class="btn blue" id="glogin" style="width:100%;margin-top:8px">${GOOGLE_SVG} Google ile giriş yap</button><p class="mu" style="margin-top:6px">Giriş yapmazsan oyun bu cihaza kaydedilir.</p>`):'';
- const wire=()=>{const a=$('#glogin'),b=$('#lo');if(a)a.onclick=fbLogin;if(b)b.onclick=fbLogout};
+ const auth=()=>ONLINE_HOST?`<div style="margin-top:14px"><p class="sec">${fbUser?'Hesap':'Hesabınla oyna'}</p>${accountHTML()}</div>`:'';
+ const wire=()=>{};
  const form=()=>{body.innerHTML=`<input class="in" id="iName" maxlength="14" placeholder="Adın" value="${esc(sv?sv.S.name:(fbUser&&fbUser.displayName?fbUser.displayName.split(' ')[0].slice(0,14):''))}"><input class="in" id="iFarm" maxlength="18" placeholder="Çiftliğinin adı" value="${esc(sv?sv.S.farm:"İpek'in Çiftliği")}"><div class="seg"><button data-c="kadin" class="on">Kadın çiftçi</button><button data-c="erkek">Erkek çiftçi</button></div><button class="btn" id="go" style="width:100%">Yeni oyuna başla</button>`+(sv?`<button class="btn alt" id="back" style="width:100%;margin-top:8px">Geri</button>`:'')+auth();wire();
   body.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{ch=b.dataset.c;body.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b))});
   $('#go').onclick=e=>{if(sv&&!arm(e.currentTarget,'Eski kayıt silinecek. Emin misin? Tekrar bas'))return;const n=$('#iName').value.trim()||'Çiftçi',f=$('#iFarm').value.trim()||"İpek'in Çiftliği";S=newState(n,f,ch);try{localStorage.removeItem(SK)}catch(e){}startGame(null)};
@@ -1331,7 +1460,7 @@ if(window.visualViewport){visualViewport.addEventListener('resize',vv);visualVie
 {const fb=$('#fsBtn'),de=document.documentElement;if(de.requestFullscreen||de.webkitRequestFullscreen){fb.classList.add('ok');fb.onclick=e=>{e.stopPropagation();const fe=document.fullscreenElement||document.webkitFullscreenElement;if(fe)(document.exitFullscreen||document.webkitExitFullscreen).call(document);else(de.requestFullscreen||de.webkitRequestFullscreen).call(de).catch?.(()=>{})}}}
 const quickSave=()=>{if(started&&!transitioning)save()};document.addEventListener('visibilitychange',()=>{if(document.hidden)quickSave()});addEventListener('pagehide',quickSave);
 if('serviceWorker' in navigator&&location.protocol=='https:'&&!/claude\.ai|claudeusercontent/.test(location.hostname))navigator.serviceWorker.register('sw.js').catch(()=>{});
-if(/[?&]debug/.test(location.search))window.__G={buildFarmB,spawnFarmAnim,animalPanel,charPanel,bagPanel,endDay,get S(){return S},give,checkStory,tp:(x,z)=>{pl.x=x;pl.z=z;camT.set(x,0,z)},get pl(){return pl}};
+if(/[?&]debug/.test(location.search))window.__G={phone,mapPanel,buildFarmB,spawnFarmAnim,animalPanel,charPanel,bagPanel,endDay,get S(){return S},give,checkStory,tp:(x,z)=>{pl.x=x;pl.z=z;camT.set(x,0,z)},get pl(){return pl}};
 startScreen();requestAnimationFrame(frame);
 </script>
 </body>
