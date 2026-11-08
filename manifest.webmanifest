@@ -1,16 +1,24 @@
 {
+  "id": "/",
   "name": "İpek'in Çiftliği",
   "short_name": "İpek'in Çiftliği",
   "description": "İpek'le birlikte dede çiftliğini yeniden canlandırdığın sakin bir 2.5D çiftlik oyunu.",
   "lang": "tr",
-  "start_url": "./",
-  "scope": "./",
-  "display": "fullscreen",
+  "dir": "ltr",
+  "start_url": "/?kaynak=uygulama",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["fullscreen", "standalone"],
   "orientation": "any",
   "background_color": "#1f2a1d",
   "theme_color": "#2f6f8f",
+  "categories": ["games", "entertainment"],
   "icons": [
-    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
-    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+    {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "screenshots": [
+    {"src": "/og-image.png", "sizes": "1200x630", "type": "image/png", "form_factor": "wide", "label": "İpek'in Çiftliği: çiftlik, ev ve tohum arabası"}
   ]
 }

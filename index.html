@@ -236,6 +236,7 @@ html,body{overscroll-behavior:none}
   <div class="mu">2.5D prototip · Ege köyü</div>
   <h1>İpek'in Çiftliği</h1>
   <p class="mu">Bakımsız kalmış dede çiftliğini İpek'le birlikte yeniden canlandır.</p>
+  <button class="btn blue hide" id="installBtn" style="width:100%;margin-bottom:10px"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="vertical-align:-3px;margin-right:6px"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Uygulamayı yükle</button>
   <div id="startBody"></div>
   <nav class="sfoot" aria-label="Site bağlantıları"><a href="gizlilik.html">Gizlilik</a><a href="kosullar.html">Koşullar</a><a href="iletisim.html">İletişim</a></nav>
  </div>
@@ -1288,7 +1289,7 @@ function bagPanel(tab='canta'){const inv=Object.entries(S.inv).filter(([k,v])=>v
  openPanel('Çanta',T+b)}
 UI.bag=t=>bagPanel(t);
 function storyHTML(){return STORY.map((C,i)=>`<div class="lock ${i<S.story.ch?'ok':''}"><i>${i<S.story.ch?'✓':i+1}</i><span><b>${esc(C.t)}</b>${i==S.story.ch?' · '+C.g.map(([k,n,l])=>`${Math.min(progOf(k),n)}/${n} ${esc(l)}`).join(' · '):''}</span></div>`).join('')+(S.story.ch>0?`<div class="story">${esc(STORY[S.story.ch-1].end)}</div>`:'')}
-function settingsHTML(){return `<p class="sec">Hesap</p>${accountHTML()}<p class="sec">Ayarlar</p>
+function settingsHTML(){return `<p class="sec">Hesap</p>${accountHTML()}${installAvailable()?`<div class="btns" style="margin:8px 0"><button class="btn blue" onclick="UI.install()">Uygulamayı yükle</button></div>`:''}<p class="sec">Ayarlar</p>
   <div class="tg"><span>Anonim ziyaret ölçümü<small>Çerezsiz, Vercel Web Analytics</small></span><button class="sw ${ckGet()==='evet'?'on':''}" onclick="UI.ck()" aria-pressed="${ckGet()==='evet'}"><i></i></button></div>
   <div class="tg"><span>Doğa sesleri</span><button class="sw ${S.sound?'on':''}" onclick="UI.snd()" aria-pressed="${!!S.sound}"><i></i></button></div>
   <div class="tg"><span>Gölgeler ve yüksek grafik<small>Kapatırsan pil daha az biter</small></span><button class="sw ${QH?'on':''}" onclick="UI.q()" aria-pressed="${!!QH}"><i></i></button></div>
@@ -1655,6 +1656,23 @@ if(window.visualViewport){visualViewport.addEventListener('resize',vv);visualVie
 const quickSave=()=>{if(started&&!transitioning)save()};document.addEventListener('visibilitychange',()=>{if(document.hidden)quickSave()});addEventListener('pagehide',quickSave);
 if('serviceWorker' in navigator&&location.protocol=='https:'&&!/claude\.ai|claudeusercontent/.test(location.hostname))navigator.serviceWorker.register('sw.js').catch(()=>{});
 if(/[?&]debug/.test(location.search))window.__G={drawPerson,LOOKS,portrait,get ipek(){return ipek},phone,mapPanel,buildFarmB,spawnFarmAnim,animalPanel,charPanel,bagPanel,endDay,get S(){return S},give,checkStory,tp:(x,z)=>{pl.x=x;pl.z=z;camT.set(x,0,z)},get pl(){return pl}};
+/* Uygulamayı yükle (PWA): Android/Chrome tek dokunuş, iPhone için adım adım */
+let installEvt=null;
+const isStandalone=()=>matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches||navigator.standalone===true;
+const isIOS=()=>/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+const inAppBrowser=()=>/FBAN|FBAV|Instagram|Line\/|TikTok|Snapchat|; wv\)|WhatsApp/i.test(navigator.userAgent);
+function installAvailable(){return ONLINE_HOST&&!isStandalone()&&(installEvt||isIOS()||inAppBrowser()||isTouch)}
+function refreshInstall(){const b=$('#installBtn');if(b)b.classList.toggle('hide',!installAvailable())}
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e;refreshInstall()});
+addEventListener('appinstalled',()=>{installEvt=null;refreshInstall();toast('İpek’in Çiftliği ana ekranına eklendi!')});
+async function doInstall(){
+ if(installEvt){installEvt.prompt();const r=await installEvt.userChoice.catch(()=>null);installEvt=null;refreshInstall();if(r&&r.outcome==='accepted')toast('Yükleniyor… ana ekranına bak.');return}
+ const step=(n,t)=>`<div class="gstep"><b>${n}. ${t}</b></div>`;
+ if(inAppBrowser())return openPanel('Uygulamayı yükle',`<p>Şu an bir uygulamanın içindeki tarayıcıdasın (Instagram, WhatsApp gibi). Buradan yüklenemiyor.</p>${step(1,'Sağ üstteki ⋯ menüsüne dokun')}${step(2,isIOS()?'“Safari’de aç” de':'“Tarayıcıda aç” ya da “Chrome’da aç” de')}${step(3,'Açılan sayfada “Uygulamayı yükle” düğmesine bas')}`);
+ if(isIOS())return openPanel('iPhone’a yükle',`<p>iPhone’da uygulamalar Safari’den ana ekrana eklenir:</p>${step(1,'Safari’nin alt çubuğundaki Paylaş simgesine dokun (yukarı ok çıkan kare)')}${step(2,'Aşağı kaydır, “Ana Ekrana Ekle”yi seç')}${step(3,'Sağ üstteki “Ekle”ye dokun')}<p class="mu">Sonra ana ekrandaki İpek’in Çiftliği simgesinden tam ekran oynarsın. Chrome kullanıyorsan önce sayfayı Safari’de aç.</p>`);
+ openPanel('Uygulamayı yükle',`<p>Tarayıcın şu an tek dokunuşla yüklemeyi açmadı. Elle yüklemek çok kolay:</p>${step(1,'Chrome’da sağ üstteki ⋮ menüsüne dokun')}${step(2,'“Uygulamayı yükle” ya da “Ana ekrana ekle”yi seç')}${step(3,'“Yükle”ye bas')}<p class="mu">Seçenek görünmüyorsa sayfayı yenileyip birkaç saniye bekle.</p>`)}
+$('#installBtn').onclick=doInstall;UI.install=doInstall;refreshInstall();
+
 /* Çerez bildirimi + izinle analitik (Vercel Web Analytics, çerezsiz) */
 const CK='ipekCerez';const ckGet=()=>{try{return localStorage.getItem(CK)}catch(e){return null}},ckSet=v=>{try{localStorage.setItem(CK,v)}catch(e){}};
 function loadAnalytics(){if(!ONLINE_HOST||window.__va)return;window.__va=1;window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};const sc=document.createElement('script');sc.defer=true;sc.src='/_vercel/insights/script.js';document.head.appendChild(sc)}
