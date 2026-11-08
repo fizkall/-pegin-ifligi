@@ -333,7 +333,6 @@ const STORY=[
  {t:'İlk hasat',d:'Emeğinin karşılığı',g:[['harvest',8,'ürün topla']],end:'İlk sepeti mutfak masasına koyduğunda İpek gözlerini kocaman açtı. “Bunlarla neler pişirilmez ki!” diye güldü ve hemen eski tarif defterini aradı.',r:{gold:150}},
  {t:"İpek'in mutfağı",d:'Birlikte pişirin',g:[['cook',1,'yemek pişir']],end:'Ev tereyağı ve taze ekmek kokuyordu. İpek, annesinden kalma tarif defterini önüne koydu. “Bundan sonra bu defteri birlikte dolduralım,” dedi. Sayfanın köşesine adını yazdı.',r:{love:60}},
  {t:'Gül Kasabası',d:'Köprüden doğuya git, Muhtar Hasan’la tanış',g:[['visit_koy',1,'kasabaya git'],['chat_muhtar',1,'Muhtar’la konuş']],end:'Muhtar Hasan bıyığını sıvazladı: “Demek dedenin torunu sensin! O adam bu köyün en cömert çiftçisiydi. Hoş geldin evlat, kapımız sana hep açık.”',r:{gold:150}},
- {t:'Komşuluk',d:'Köylülerin isteklerini yerine getir',g:[['req',2,'istek tamamla']],end:'Ayşe Teyze sepetine bir kavanoz bal koydu: “Komşu komşunun külüne muhtaçtır yavrum. Sen de artık bizdensin.”',r:{gold:200,item:['yabanbali',1]}},
  {t:'Bahar akşamı',d:'Aranızdaki bağ',g:[['hearts_ipek',3,'kalp (İpek)']],end:'O akşam verandada oturdunuz. Uzakta dere şırıldıyor, ateşböcekleri yanıp sönüyordu. İpek başını omzuna yasladı: “Hz. Yusuf’u sonra izleriz… şimdi biraz böyle kalalım.”',r:{}},
  {t:'Tünelin ardı',d:'Çiftliğin güneyindeki tüneli aç',g:[['tun',1,'tüneli aç']],end:'Son taş yuvarlanınca tünelden serin bir rüzgâr esti. Çam kokusu… İpek arkandan seslendi: “Mantar bulursan getir, sote yaparım!”',r:{gold:100}},
  {t:'Ormanın sesi',d:'Ormandan ve kıyıdan topla',g:[['forage',10,'şey topla']],end:'Çam Ormanı’nın derinliklerinde eski taşlardan bir çember buldun. Ortasındaki kristal, sen yaklaştıkça hafifçe ısındı. Bu ormanın bir sırrı var…',r:{gold:200}},
@@ -996,7 +995,7 @@ UI.login=()=>fbLogin();UI.logout=()=>fbLogout();UI.cloudNow=async()=>{const j=sa
 
 /* ================= DURUM / KAYIT ================= */
 const SK='ipekCiftligi_v2';
-function newState(name,farm,ch){return{v:1,name,farm,char:ch,day:1,season:0,year:1,time:360,gold:500,energy:100,maxE:100,can:20,canMax:20,inv:{},seeds:{bugday:12,havuc:6},selKey:'capa',ship:{},rain:false,tomorrowRain:Math.random()<.25,rel:{},stats:{},story:{ch:0},sound:1,cats:{luna:{pts:0,pet:0},mia:{pts:0,pet:0}},bench:0,pp:0,seen:0,tun:0,up:{},req:{},an:{},yem:0,prod:{},guideOn:1,guideReq:null}}
+function newState(name,farm,ch){return{v:1,name,farm,char:ch,day:1,season:0,year:1,time:360,gold:500,energy:100,maxE:100,can:20,canMax:20,inv:{},seeds:{bugday:12,havuc:6},selKey:'capa',ship:{},rain:false,tomorrowRain:Math.random()<.25,rel:{},stats:{},story:{ch:0},sound:1,cats:{luna:{pts:0,pet:0},mia:{pts:0,pet:0}},bench:0,pp:0,seen:0,tun:0,up:{},req:{},an:{},yem:0,prod:{},guideOn:1,guideReq:null,storyV:2}}
 function saveJSON(){return JSON.stringify({S,savedAt:Date.now(),till:Array.from(till),wet:Array.from(wet),crops,objs:objs.map(o=>o?{k:o.k,hp:o.hp,v:o.v,it:o.it}:null)})}
 function save(){const j=saveJSON();try{localStorage.setItem(SK,j)}catch(e){}cloudSave(j)}
 function loadSave(){try{const r=localStorage.getItem(SK);return r?JSON.parse(r):null}catch(e){return null}}
@@ -1544,7 +1543,7 @@ function frame(now){requestAnimationFrame(frame);const dt=Math.min(.05,(now-last
 
 /* ================= BAŞLAT ================= */
 function startGame(saved){
- if(saved){S=saved.S;S.rel=S.rel||{};S.stats=S.stats||{};S.story=S.story||{ch:0};S.up=S.up||{};S.req=S.req||{};if(S.sound==null)S.sound=1}
+ if(saved){S=saved.S;if(!S.storyV){S.storyV=2;if(S.story&&S.story.ch>5)S.story.ch--}S.rel=S.rel||{};S.stats=S.stats||{};S.story=S.story||{ch:0};S.up=S.up||{};S.req=S.req||{};if(S.sound==null)S.sound=1}
  genMap();
  if(saved){till.set(saved.till);wet.set(saved.wet);for(let i=0;i<N;i++){crops[i]=saved.crops[i];objs[i]=saved.objs[i]}}
  paintBase();redrawGround();applySeasonColors();
