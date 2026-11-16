@@ -17,12 +17,18 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
 <style>
 :root{--linen:#f7f0e3;--linen2:#eee2cc;--ink:#2e2a24;--mute:#7a6d5c;--terra:#c4572e;--terra2:#a8431f;--olive:#6b7a35;--aegean:#2f6f8f;--gold:#d9a531;--line:#dccdb1;--sh:0 6px 22px rgba(30,20,10,.28);--s:min(52px,calc((100vw - 64px)/12))}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;overflow:hidden;background:#1f2a1d;font-family:'Nunito',system-ui,sans-serif;color:var(--ink);-webkit-user-select:none;user-select:none;touch-action:none;-webkit-tap-highlight-color:transparent}
 #gl{position:fixed;inset:0;width:100%;height:100%;display:block}
+html.pixel #gl{image-rendering:pixelated;image-rendering:crisp-edges}
+html.pixel body,html.pixel button,html.pixel input,html.pixel select,html.pixel textarea,html.pixel .btn,html.pixel .ph h2,html.pixel #clock .t,html.pixel #tl .f,html.pixel h1,html.pixel .story,html.pixel .fl,html.pixel #locB,html.pixel #prompt,html.pixel #toast,html.pixel .sec,html.pixel .wall b,html.pixel .ptop h3,html.pixel #boot b,html.pixel #boot span{font-family:'Pixelify Sans','Courier New',monospace!important;font-style:normal!important}
+html.pixel .card,html.pixel .btn,html.pixel .slot,html.pixel .in,html.pixel .row img,html.pixel .cell,html.pixel .gstep,html.pixel .tabs button,html.pixel .seg button,html.pixel .say,html.pixel .bb,html.pixel .chat,html.pixel .fr,html.pixel .gbtn,html.pixel #toast,html.pixel #prompt,html.pixel .fl.bub,html.pixel .mapwrap,html.pixel .app i,html.pixel .wall,html.pixel #phoneBtn,html.pixel .ph button{border-radius:4px!important}
+html.pixel .card{box-shadow:4px 4px 0 rgba(30,20,10,.35)!important;border:2px solid #3b2418!important}
+html.pixel .btn{box-shadow:0 3px 0 rgba(0,0,0,.28)}html.pixel .btn:active{transform:translateY(2px);box-shadow:none}
+html.pixel .slot img,html.pixel .row img,html.pixel .cell img,html.pixel .fr img,html.pixel .port img,html.pixel .need img,html.pixel #mini{image-rendering:pixelated}
 #vig{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,transparent 58%,rgba(24,16,6,.34) 100%)}
 .card{background:var(--linen);border-radius:14px;box-shadow:var(--sh);border:1px solid var(--line)}
 .kilim{position:relative;overflow:hidden}
@@ -600,15 +606,19 @@ function drawTool(g,k){
 function drawSeed(g,k){g.lineJoin='round';g.strokeStyle=OL;g.lineWidth=2.6;g.beginPath();g.moveTo(16,22);g.quadraticCurveTo(8,56,32,56);g.quadraticCurveTo(56,56,48,22);g.closePath();fs(g,'#d8b27a');rr(g,18,14,28,10,4);fs(g,'#c39a5e');g.fillStyle='#c4572e';g.fillRect(20,22,24,3);fruit(g,k,32,40,.5)}
 
 const iconCache={};
-function iconURL(k){if(iconCache[k])return iconCache[k];const c=mk(64,64),g=c.getContext('2d');if(TOOLS[k])drawTool(g,k);else if(k.startsWith('s:'))drawSeed(g,k.slice(2));else fruit(g,k,32,34,1.15);return iconCache[k]=c.toDataURL()}
+function iconURL(k){if(iconCache[k])return iconCache[k];const c=mk(64,64),g=c.getContext('2d');if(TOOLS[k])drawTool(g,k);else if(k.startsWith('s:'))drawSeed(g,k.slice(2));else fruit(g,k,32,34,1.15);return iconCache[k]=pix(c,.375).toDataURL()}
 const altOf=k=>TOOLS[k]?TOOLS[k].n:k.startsWith('s:')?CROPS[k.slice(2)].n+' tohumu':(ITEMS[k]?ITEMS[k].n:k);
 const slotName=k=>TOOLS[k]?TOOLS[k].n:k.startsWith('s:')?CROPS[k.slice(2)].n+' tohumu':ITEMS[k].n;
 
 /* ================= THREE SAHNE ================= */
-const renderer=new THREE.WebGLRenderer({canvas:$('#gl'),antialias:true});
+/* PİKSEL ART: sahne düşük çözünürlükte çizilip keskin piksellerle büyütülür */
+let PIXEL=1;try{PIXEL=localStorage.getItem('ipekPixel')==='0'?0:1}catch(e){}
+if(PIXEL)document.documentElement.classList.add('pixel');
+const pxSize=()=>clamp(Math.round(innerHeight/270*2)/2,2,4);
+const renderer=new THREE.WebGLRenderer({canvas:$('#gl'),antialias:!PIXEL});
 let QH=1;try{QH=localStorage.getItem('ipekQ')==='0'?0:1}catch(e){}
-renderer.setPixelRatio(QH?Math.min(devicePixelRatio,isTouch?1.5:2):1);
-renderer.shadowMap.enabled=!!QH;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+if(!PIXEL)renderer.setPixelRatio(QH?Math.min(devicePixelRatio,isTouch?1.5:2):1);
+renderer.shadowMap.enabled=!!QH;renderer.shadowMap.type=PIXEL?THREE.BasicShadowMap:THREE.PCFSoftShadowMap;
 renderer.outputColorSpace=THREE.SRGBColorSpace;
 const scene=new THREE.Scene();scene.background=new THREE.Color('#bfe2ee');
 const cam=new THREE.OrthographicCamera(-1,1,1,-1,.1,300);
@@ -618,9 +628,13 @@ const BILL_K=1/Math.sin(CAM_A),billGeo=new THREE.PlaneGeometry(1,BILL_K).transla
 class Bill extends THREE.Mesh{constructor(m){super(billGeo,m);this.center=new THREE.Vector2()}}
 let zoom=1,viewH=10,aspect=1;
 const camT=new THREE.Vector3(11,0,12);
-function resize(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);aspect=w/h;viewH=clamp(Math.max(11.5,8.5/aspect)*zoom,6,24);cam.left=-viewH*aspect/2;cam.right=viewH*aspect/2;cam.top=viewH/2;cam.bottom=-viewH/2;cam.updateProjectionMatrix()}
+function resize(){const w=innerWidth,h=innerHeight;if(PIXEL)renderer.setPixelRatio(1/pxSize());renderer.setSize(w,h,false);aspect=w/h;viewH=clamp(Math.max(11.5,8.5/aspect)*zoom,6,24);cam.left=-viewH*aspect/2;cam.right=viewH*aspect/2;cam.top=viewH/2;cam.bottom=-viewH/2;cam.updateProjectionMatrix()}
 addEventListener('resize',resize);resize();
-const tex=c=>{const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());return t};
+const tex=c=>{const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;if(c.__pix){t.magFilter=t.minFilter=THREE.NearestFilter;t.generateMipmaps=false}else{t.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());if(PIXEL)t.magFilter=THREE.NearestFilter}return t};
+/* Bir çizimi küçük piksel sprite'a çevirir: küçült, kenarları keskinleştir, renkleri sınırla */
+function pix(c,k){if(!PIXEL)return c;const w=Math.max(1,Math.round(c.width*k)),h=Math.max(1,Math.round(c.height*k)),o=mk(w,h),g=o.getContext('2d');g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.drawImage(c,0,0,w,h);
+ const im=g.getImageData(0,0,w,h),d=im.data;for(let i=0;i<d.length;i+=4){if(d[i+3]<100){d[i+3]=0;continue}d[i+3]=255;for(let j=0;j<3;j++)d[i+j]=Math.min(255,Math.round(d[i+j]/17)*17)}g.putImageData(im,0,0);o.__pix=1;return o}
+const ptex=(c,k)=>tex(pix(c,k));
 
 // Işıklar
 const LM=Math.PI*.82;
@@ -856,7 +870,7 @@ const roofTexCache={};
 /* ================= KÖYLÜLER / HAYVANLAR ================= */
 const VILL=[{id:'muhtar',area:[51,15,60,17.4],hours:[480,1200],na:[72.5,59.4,79.5,60.8],nh:[1200,1440]},{id:'ayse',area:[52,29.2,62,31.6],hours:[420,1140]},{id:'mehmet',area:[62,29.2,70,31.6],hours:[480,1140],na:[72.5,59.4,79.5,60.8],nh:[1170,1440]},{id:'ali',area:[64,14.5,79,25],hours:[720,1170],sp:2,kid:1},{id:'selin',area:[85.5,29.2,93,31.6],hours:[540,1260]},{id:'elif',area:[62.5,21,66.5,25.5],hours:[480,1140],na:[72.5,59.4,79.5,60.8],nh:[1140,1320]},{id:'deniz',area:[57,59.4,66,60.8],hours:[480,1080],na:[72.5,59.4,79.5,60.8],nh:[1080,1380]}];
 let villagers=[],animals=[];const ANT={};
-function animTex(k){if(ANT[k])return ANT[k];const fr=[0,1].map(f=>{const c=mk(64,64);drawAnimal(c.getContext('2d'),k,f);return c});return ANT[k]={left:fr.map(tex),right:fr.map(c=>tex(flipC(c)))}}
+function animTex(k){if(ANT[k])return ANT[k];const fr=[0,1].map(f=>{const c=mk(64,64);drawAnimal(c.getContext('2d'),k,f);return c});return ANT[k]={left:fr.map(c=>ptex(c,.375)),right:fr.map(c=>ptex(flipC(c),.375))}}
 function buildActors2(){
  villagers=VILL.map(v=>Object.assign(makeChar(LOOKS[v.id],v.kid?.8:1,v.kid?1.2:1.5),{id:v.id,name:PEOPLE[v.id].name,x:(v.area[0]+v.area[2])/2,z:(v.area[1]+v.area[3])/2,tx:(v.area[0]+v.area[2])/2,tz:(v.area[1]+v.area[3])/2,dir:'down',mv:false,wait:Math.random()*3,sp:v.sp||1.2,at:0,area:v.area,hours:v.hours,na:v.na,nh:v.nh,atBar:false}));
  const cA=z=>[3,39,rx(z)-4,57],sA=[rx(48)+4,39,92,57],SPEC=[['tavsan',cA(48),4,.55,.55,1.6],['geyik',cA(48),2,1.25,1.25,1.3],['tilki',sA,2,.8,.8,1.5],['tavsan',sA,2,.55,.55,1.6]];
@@ -870,7 +884,7 @@ const actorOf=id=>id=='ipek'?ipek:id=='zeynep'?zey:id=='pasa'?{x:6.5,z:9.5}:vill
 
 /* ================= TOPLANABİLİR ÜRÜNLER ================= */
 const forageMats={};
-function forageMat(it){if(forageMats[it])return forageMats[it];const c=mk(64,64);fruit(c.getContext('2d'),it,32,36,1.05);return forageMats[it]=sprMat(tex(c))}
+function forageMat(it){if(forageMats[it])return forageMats[it];const c=mk(64,64);fruit(c.getContext('2d'),it,32,36,1.05);return forageMats[it]=sprMat(ptex(c,.33))}
 function spawnForage(){for(const reg of['cam','sonbahar','sahil']){const cap=reg=='sahil'?6:14;let n=0;for(let i=0;i<N;i++)if(objs[i]&&objs[i].k=='forage'&&REG(i%W,Math.floor(i/W))==reg)n++;const L=FORAGE[reg][S.season];
  for(let t=0;t<300&&n<cap;t++){const x=Math.floor(Math.random()*W),z=reg=='sahil'?BEACH+Math.floor(Math.random()*3):37+Math.floor(Math.random()*(BEACH-37)),i=idx(x,z);if(REG(x,z)!=reg)continue;const gt=ground[i];
   if(!(gt==GR||(reg=='sahil'&&gt==SAND))||objs[i]||stat[i]||crops[i]||till[i])continue;objs[i]={k:'forage',it:L[Math.floor(Math.random()*L.length)]};objMesh(i);n++}}}
@@ -958,18 +972,18 @@ function ipekFrames(flip){const img=IPEK_IMG,IW=img.naturalWidth,IH=img.naturalH
   g.save();g.translate(64,oy+CUT*sc);g.rotate(tilt);g.drawImage(img,0,0,IW,CUT,-w/2,-CUT*sc,w,CUT*sc);g.restore();
   return flip?flipC(c):c};
  const idle=draw(0,0,0,0),walk=[0,1,2,3,4,5].map(k=>{const t=k/6*Math.PI*2,sn=Math.sin(t);return draw(Math.max(0,sn),Math.max(0,-sn),Math.abs(sn)*2.6,sn*.018)});
- return{idle:tex(idle),walk:walk.map(tex)}}
+ return{idle:ptex(idle,.25),walk:walk.map(c=>ptex(c,.25))}}
 function charSet(o){if(o.img&&IPEK_IMG.complete&&IPEK_IMG.naturalWidth){const A=ipekFrames(false),B=ipekFrames(true),I3=[A.idle,A.idle,A.idle],F3=[B.idle,B.idle,B.idle];return{down:I3,up:I3,left:F3,right:I3,walk:{down:A.walk,up:A.walk,left:B.walk,right:A.walk}}}
- const r={};for(const d of['down','up','side'])r[d]=[0,1,2].map(f=>{const c=mk(128,192);drawPerson(c.getContext('2d'),o,d,f);return c});r.right=r.side.map(flipC);r.left=r.side;for(const k of['down','up','left','right'])r[k]=r[k].map(tex);delete r.side;return r}
+ const r={};for(const d of['down','up','side'])r[d]=[0,1,2].map(f=>{const c=mk(128,192);drawPerson(c.getContext('2d'),o,d,f);return c});r.right=r.side.map(flipC);r.left=r.side;for(const k of['down','up','left','right'])r[k]=r[k].map(c=>ptex(c,.25));delete r.side;return r}
 const LOOKS={kadin:{f:1,skin:'#f1c9a0',hair:'#6b3a1e',long:1,wavy:1,top:'#c4572e',scoop:1,legs:'#3d5a80',hat:1},erkek:{skin:'#f0c39a',hair:'#4a2f1a',top:'#2f6f8f',legs:'#5d4a34',hat:1,strap:1},zeynep:{f:1,skin:'#efc49c',hair:'#a8431f',long:1,hairLen:104,top:'#6b7a35',scoop:1,legs:'#3d5a80',pin:'#ffd23f'},selin:{f:1,skin:'#f3d2b4',hair:'#ece6d6',long:1,wavy:1,hairLen:108,top:'#e9b8c8',blouse:1,collar:'#fff7f2',button:'#c9a46a',skirt:'#2e3a5a',belt:'#c9a46a',shoes:'#2a1e1a',pin:'#ffffff'},elif:{f:1,skin:'#e6b48a',hair:'#1f1410',long:1,curly:1,hairLen:100,top:'#f2c84a',blouse:1,collar:'#fffaf0',skirt:'#6b7a35',shoes:'#5a3a22',pin:'#e0393e'},deniz:{skin:'#d9a57a',hair:'#2a1b14',top:'#2f6f8f',legs:'#e8dcc0',stubble:1},muhtar:{skin:'#e9b98e',hair:'#d8d4cc',top:'#5a6b7a',legs:'#3b3a36',cap:'#4a4a48',must:'#e6e2da'},ayse:{f:1,skin:'#efc49c',hair:'#8a8a86',top:'#7a4a8a',legs:'#5a4632',dress:1,scarf:'#f3f0e6',apron:'#e8d6b0'},mehmet:{skin:'#d9a57a',hair:'#3a2a1e',top:'#8a5a2b',legs:'#4a3a2a',must:'#3a2a1e',apron:'#c9a46a'},ali:{skin:'#f1c9a0',hair:'#2a1b14',top:'#e8b93a',legs:'#2f6f8f'},ipek:{img:1,skin:'#f0c49e',hair:'#2a1810',top:'#1d1f26',legs:'#2f4a6b',long:1,wavy:1,neck:1,daisy:1}};
 function makeChar(look,sx=1,sy=1.5){const set=charSet(look),mat=sprMat(set.down[0]),s=new Bill(mat);s.center.set(.5,.04);s.scale.set(sx,sy,1);scene.add(s);return{s,set,mat,sh:blob()}}
-const catTex=(()=>{const w=[0,1].map(f=>{const c=mk(64,48);drawCat(c.getContext('2d'),f,0);return c}),si=mk(64,48);drawCat(si.getContext('2d'),0,1);return{left:w.map(tex),right:w.map(c=>tex(flipC(c))),sitL:tex(si),sitR:tex(flipC(si))}})();
-const ppTex=[0,1].map(f=>{const c=mk(48,56);drawParrot(c.getContext('2d'),f);return tex(c)});
+const catTex=(()=>{const w=[0,1].map(f=>{const c=mk(64,48);drawCat(c.getContext('2d'),f,0);return c}),si=mk(64,48);drawCat(si.getContext('2d'),0,1);return{left:w.map(c=>ptex(c,.375)),right:w.map(c=>ptex(flipC(c),.375)),sitL:ptex(si,.375),sitR:ptex(flipC(si),.375)}})();
+const ppTex=[0,1].map(f=>{const c=mk(48,56);drawParrot(c.getContext('2d'),f);return ptex(c,.4)});
 
 /* ================= DÜNYA NESNELERİ OLUŞTUR ================= */
 const cropSpr=new Array(N).fill(null),cropMatCache={};
 function cropStage(c){const C=CROPS[c.k];return c.ready?3:c.d==0?0:c.d<C.g/2?1:2}
-function cropMat(k,st){const key=k+st;if(cropMatCache[key])return cropMatCache[key];const c=mk(64,80);drawCrop(c.getContext('2d'),k,st);return cropMatCache[key]=sprMat(tex(c))}
+function cropMat(k,st){const key=k+st;if(cropMatCache[key])return cropMatCache[key];const c=mk(64,80);drawCrop(c.getContext('2d'),k,st);return cropMatCache[key]=sprMat(ptex(c,.375))}
 function syncCrop(i){mapDirty=true;const c=crops[i];let s=cropSpr[i];if(!c){if(s){scene.remove(s);cropSpr[i]=null}return}const m=cropMat(c.k,cropStage(c));if(!s){s=new Bill(m);s.center.set(.5,.05);s.position.set(i%W+.5,.01,Math.floor(i/W)+.62);s.scale.set(.95,1.19,1);scene.add(s);cropSpr[i]=s}s.material=m}
 
 let pl,ipek,zey,cats=[],parrot,hl,toolFx,bobber;
@@ -1179,6 +1193,8 @@ function shopHTML(sea=S.season,nx){const L=Object.entries(CROPS).filter(([k,c])=
 UI.buy=(k,n)=>{const c=CROPS[k].seed*n;if(S.gold<c)return;S.gold-=c;S.seeds[k]=(S.seeds[k]||0)+n;buildHotbar();updHUD();(shopBack||(()=>charPanel('zeynep','dukkan')))()};
 function heartsHTML(p){let s='';for(let i=0;i<10;i++){const f=clamp(p/100-i,0,1);s+=`<svg width="20" height="18" viewBox="0 0 20 18" aria-hidden="true"><defs><clipPath id="hc${i}"><rect width="${20*f}" height="18"/></clipPath></defs><path d="M10 17S1 11 1 5.5A4.5 4.5 0 0 1 10 3a4.5 4.5 0 0 1 9 2.5C19 11 10 17 10 17z" fill="#efe2cc" stroke="#a8431f" stroke-width="1.4"/><path clip-path="url(#hc${i})" d="M10 17S1 11 1 5.5A4.5 4.5 0 0 1 10 3a4.5 4.5 0 0 1 9 2.5C19 11 10 17 10 17z" fill="#d9607f"/></svg>`}return s}
 function moodLine(id){const h=hearts(id),nm=S.name,ready=crops.filter(c=>c&&c.ready).length;
+ const GREET={selin:[`Hoş geldin ${nm}! Kahven hazır, bugün çilekli pasta var.`,`Selam ${nm}, gel otur, plak çalarda güzel bir şarkı var.`],elif:[`Merhaba ${nm}! Bugün güller açtı, gördün mü?`,`Günaydın ${nm}! Sana hangi çiçek yakışır, düşünüyordum.`],deniz:[`Selam ${nm}. Deniz bugün çok sakin.`,`Hoş geldin. Ağları yeni topladım.`],muhtar:[`Merhaba evlat! Gel bir çay iç.`],ayse:[`Hoş geldin yavrum, maşallah.`],mehmet:[`Selam usta.`],ali:[(S.char=='kadin'?'Abla':'Abi')+'! Gel oynayalım!']};
+ if(GREET[id]){const L=GREET[id];return L[dayN()%L.length]}
  if(id=='pasa')return S.tomorrowRain?'Kııt! Yarın yağmur! Yağmur!':'Kııt! '+nm+' paşa geldi!';
  if(id=='zeynep')return h<2?`Hoş geldin ${nm}! Taze tohumlar, bol bereket!`:`Ooo ${nm}! Sana kasabadan yeni haberlerim var…`;
  if(S.rain)return `Yağmur yağıyor, bugün sulamana gerek yok ${nm}. Ben de mercimek çorbası koydum ocağa.`;
@@ -1190,7 +1206,7 @@ function moodLine(id){const h=hearts(id),nm=S.name,ready=crops.filter(c=>c&&c.re
  if(h<8)return `bcm ${S.farm} seninle her gün daha güzel oluyo ya 🫰`;
  return 'bacım iyi ki varsın ya 😭 akşama menemen mi yapıyoz'}
 const portCache={};
-function portrait(id){if(portCache[id])return portCache[id];if(id=='ipek'&&IPEK_IMG.naturalWidth){const c=mk(128,192),g=c.getContext('2d'),h=184,w=IPEK_IMG.naturalWidth*h/IPEK_IMG.naturalHeight;g.drawImage(IPEK_IMG,64-w/2,4,w,h);return portCache[id]=c.toDataURL()}const c=mk(128,192),g=c.getContext('2d');if(id=='pasa'){g.translate(16,48);g.scale(2,2);drawParrot(g,0)}else drawPerson(g,LOOKS[id],'down',0);return portCache[id]=c.toDataURL()}
+function portrait(id){if(portCache[id])return portCache[id];if(id=='ipek'&&IPEK_IMG.naturalWidth){const c=mk(128,192),g=c.getContext('2d'),h=184,w=IPEK_IMG.naturalWidth*h/IPEK_IMG.naturalHeight;g.drawImage(IPEK_IMG,64-w/2,4,w,h);return portCache[id]=pix(c,.25).toDataURL()}const c=mk(128,192),g=c.getContext('2d');if(id=='pasa'){g.translate(16,48);g.scale(2,2);drawParrot(g,0)}else drawPerson(g,LOOKS[id],'down',0);return portCache[id]=pix(c,.25).toDataURL()}
 const TABS={selin:[['sohbet','Sohbet'],['hediye','Hediye'],['ask','Aşk']],elif:[['sohbet','Sohbet'],['hediye','Hediye'],['ask','Aşk']],deniz:[['sohbet','Sohbet'],['hediye','Hediye'],['ask','Aşk']],muhtar:[['sohbet','Sohbet'],['istek','İstek'],['hediye','Hediye']],ayse:[['sohbet','Sohbet'],['istek','İstek'],['hediye','Hediye']],mehmet:[['sohbet','Sohbet'],['istek','İstek'],['hediye','Hediye']],ali:[['sohbet','Sohbet'],['istek','İstek'],['hediye','Hediye']],ipek:[['sohbet','Sohbet'],['yemek','Yemek'],['hediye','Hediye'],['anlar','Anılar']],zeynep:[['sohbet','Sohbet'],['dukkan','Dükkân'],['hediye','Hediye'],['ask','Aşk']],pasa:[['sohbet','Sohbet'],['hediye','Yem ver']]};
 let curChar=null,curTab=null,aiBusy=false;const ROLE={selin:'Gül Kafe’nin sahibi',elif:'çiçekçi',deniz:'balıkçı',ipek:'en yakın arkadaşın (bacın)',zeynep:'gezgin tüccar',pasa:'konuşan papağan',muhtar:'Gül Kasabası muhtarı',ayse:'arıcı',mehmet:'marangoz',ali:'okul çocuğu'};
 function chatLogHTML(id){const R=rel(id);if(!R.log.length)return `<div class="bb npc">${esc(moodLine(id))}</div>`;
@@ -1304,11 +1320,13 @@ function storyHTML(){return STORY.map((C,i)=>`<div class="lock ${i<S.story.ch?'o
 function settingsHTML(){return `<p class="sec">Hesap</p>${accountHTML()}${installAvailable()?`<div class="btns" style="margin:8px 0"><button class="btn blue" onclick="UI.install()">Uygulamayı yükle</button></div>`:''}<p class="sec">Ayarlar</p>
   <div class="tg"><span>Anonim ziyaret ölçümü<small>Çerezsiz, Vercel Web Analytics</small></span><button class="sw ${ckGet()==='evet'?'on':''}" onclick="UI.ck()" aria-pressed="${ckGet()==='evet'}"><i></i></button></div>
   <div class="tg"><span>Doğa sesleri</span><button class="sw ${S.sound?'on':''}" onclick="UI.snd()" aria-pressed="${!!S.sound}"><i></i></button></div>
+  <div class="tg"><span>Piksel görünüm<small>Oyun piksel art olarak çizilir (yeniden yüklenir)</small></span><button class="sw ${PIXEL?'on':''}" onclick="UI.pixel()" aria-pressed="${!!PIXEL}"><i></i></button></div>
   <div class="tg"><span>Gölgeler ve yüksek grafik<small>Kapatırsan pil daha az biter</small></span><button class="sw ${QH?'on':''}" onclick="UI.q()" aria-pressed="${!!QH}"><i></i></button></div>
   ${isTouch?`<div class="tg"><span>Titreşim</span><button class="sw ${S.vib!==0?'on':''}" onclick="UI.vib()" aria-pressed="${S.vib!==0}"><i></i></button></div>`:''}
   <div class="btns" style="margin-top:18px"><button class="btn alt" onclick="UI.reset(this)">Yeni oyun başlat</button></div><nav class="sfoot" aria-label="Site bağlantıları"><a href="gizlilik.html">Gizlilik politikası</a><a href="kosullar.html">Kullanım koşulları</a><a href="iletisim.html">İletişim</a></nav>`}
 UI.eat=k=>{if(!S.inv[k])return;S.inv[k]--;S.energy=Math.min(S.maxE,S.energy+ITEMS[k].e);updHUD();toast(LBL(k)+' yedin. Ellerine sağlık İpek! +'+ITEMS[k].e+' enerji');bagPanel()};
-UI.q=()=>{QH=QH?0:1;try{localStorage.setItem('ipekQ',QH)}catch(e){}renderer.setPixelRatio(QH?Math.min(devicePixelRatio,isTouch?1.5:2):1);renderer.shadowMap.enabled=!!QH;scene.traverse(o=>{if(o.material)(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.needsUpdate=true)});resize();(phoneApp?phone('ayar'):bagPanel('canta'))};
+UI.pixel=()=>{save();try{localStorage.setItem('ipekPixel',PIXEL?'0':'1')}catch(e){}location.reload()};
+UI.q=()=>{QH=QH?0:1;try{localStorage.setItem('ipekQ',QH)}catch(e){}if(!PIXEL)renderer.setPixelRatio(QH?Math.min(devicePixelRatio,isTouch?1.5:2):1);renderer.shadowMap.enabled=!!QH;scene.traverse(o=>{if(o.material)(Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.needsUpdate=true)});resize();(phoneApp?phone('ayar'):bagPanel('canta'))};
 UI.vib=()=>{S.vib=S.vib===0?1:0;(phoneApp?phone('ayar'):bagPanel('canta'))};
 UI.snd=()=>{S.sound=S.sound?0:1;(phoneApp?phone('ayar'):bagPanel('canta'))};
 UI.reset=b=>{if(!arm(b,'Kayıt silinecek. Emin misin? Tekrar bas'))return;try{localStorage.removeItem(SK)}catch(e){}location.reload()};
